@@ -9,7 +9,7 @@ Table AR seeks to introduce a means of effective task management while leveragin
 ## SCHEDULE OF COMPLETION OF TASKS
 
 ## TRELLO BOARD
-![Trello Board](../screenshots/trello.png)
+![Trello Board](https://raw.githubusercontent.com/Geoff-Goodwin-Dev/Table-AR/master/screenshots/trello.png)
 
 ## SCREEN-BY-SCREEN DESIGN LAYOUT
  [View this PDF](./Click-Through-Prototype_Table-AR.pdf)
