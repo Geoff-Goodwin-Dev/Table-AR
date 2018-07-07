@@ -9,15 +9,58 @@
 <!-- include ar.js for A-Frame -->
 <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 <body style='margin : 0px; overflow: hidden;'>
+<div style="height: 400px; width: 600px">
+
 <a-scene embedded arjs>
   <!-- create your content here. just a box for now -->
-  <a-box position='0 0 1' material='opacity: 1.0;'></a-box>
-  <a-box position='0 0.5 0.5' material='opacity: 1.0;'></a-box>
-  <a-box position='0 1 0' material='opacity: 1.0;'></a-box>
-  <!--<a-image position="0 0.5 0" src="./Demi.jpg"></a-image>-->
-  <!--<a-text position="1 0.5 0" value="Demi Rose, a model from the UK"></a-text>-->
-  <!-- define a camera which will move according to the marker position -->
+  <a-box
+      position='0 0.375 -1.5'
+      depth="0.25"
+      height="0.75"
+      width="2"
+      material='opacity: 0.3;'
+      color="red"
+  >
+  </a-box>
+  <a-box
+      position='0.25 0.25 -1.25'
+      depth="0.25"
+      height="0.5"
+      width="2"
+      material='opacity: 0.3;'
+      color="green"
+  >
+  </a-box>
+  <!--<a-box-->
+      <!--position='0.5 0.125 -1'-->
+      <!--depth="0.25"-->
+      <!--height="0.25"-->
+      <!--width="2"-->
+      <!--material='opacity: 0.3;'-->
+      <!--color="blue"-->
+  <!--&gt;-->
+  <!--</a-box>-->
   <a-marker-camera preset='hiro'></a-marker-camera>
 </a-scene>
+
+</div>
+<button id="test" style="z-index: 99999999">Test</button>
+
+<script>
+  $("#test").on("click", (event) => {
+    event.preventDefault();
+    let newListItem = $(`<a-box
+      position='0.5 0.125 -1'
+      depth="0.25"
+      height="0.25"
+      width="2"
+      material='opacity: 0.3;'
+      color="blue"
+    >`
+    );
+    $('<a-scene>').append(newListItem);
+  });
+</script>
+
 </body>
 </html>
