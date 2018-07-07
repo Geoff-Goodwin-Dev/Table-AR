@@ -6,6 +6,7 @@ class Main extends Component {
     return (
       <Jumbotron>
         <h1>Table AR</h1>
+        <h2>By Geoffrey, Alexander, & Thomas</h2>
       </Jumbotron>
     )
   }
