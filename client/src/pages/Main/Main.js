@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import Jumbotron from "../../components/Jumbotron";
+// import Jumbotron from "../../components/Jumbotron";
+import Webcam from "react-user-media";
 
 class Main extends Component {
   render () {
     return (
-      <Jumbotron>
-        <h1>Table AR</h1>
-        <h2>By Geoffrey, Alexander, & Thomas</h2>
-      </Jumbotron>
+      <div className="text-center">
+        <Webcam height="800" width="1000" />
+      </div>
     )
   }
 }
