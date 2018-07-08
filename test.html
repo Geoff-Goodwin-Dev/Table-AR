@@ -8,15 +8,32 @@
 <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 
 <body style='margin : 0; overflow: hidden;'>
-<button id="test" style="z-index: 1">Test</button>
+<button id="test" style="z-index: 1; position: absolute; top: 10px; right: 50%;">Test</button>
 
 <a-scene embedded arjs='trackingMethod: best;'>
   <a-assets>
 
   </a-assets>
 
-  <a-plane position="0.25 0 0" rotation="-90 0 0" width="1.75" height="1.75" color="#06477D"></a-plane>
+  <a-plane position="0.25 0 0"
+           rotation="-90 0 0"
+           width="1.75"
+           height="1.75"
+           color="#06477D"
+           shadow="receive: true;"
+  >
+  </a-plane>
 
+  <a-entity
+      light="type: ambient; intensity: 0.5;"
+  >
+  </a-entity>
+
+  <a-entity
+      light="type:directional; castShadow:true; intensity:0.4;"
+      position="-3 3 -1.5"
+  >
+  </a-entity>
 
   <a-box
       rotation="-90 0 0"
@@ -24,10 +41,31 @@
       depth="0.125"
       height="0.2"
       width="1.5"
-      material='opacity: 0.7; side:double; color:#5E6C9F;'
+      shadow="receive: true;"
+      material='opacity: 0.6; side:double; color:#5E6C9F;'
   >
-    <a-text value="Test 1" color="#FFF" position="-0.7 0 0.10" scale="0.4 0.4 0.4"></a-text>
-    <a-sphere position="0.65 0 0.12" radius="0.05" color="#EF2D5E"></a-sphere>
+    <a-box
+        depth="0.08"
+        width="1.45"
+        height=".15"
+        color="white"
+        shadow="receive: true;"
+        material='opacity: 0.7; side:double; color:white;'
+    >
+    </a-box>
+    <a-text
+        value="Test 1"
+        color="#FFF"
+        position="-0.7 0 0.10"
+        scale="0.4 0.4 0.4"
+        shadow="castShadow: true"
+    >
+    </a-text>
+    <a-sphere
+        position="0.65 0 0.12"
+        radius="0.05"
+        color="#EF2D5E">
+    </a-sphere>
   </a-box>
 
   <a-box
@@ -36,10 +74,31 @@
       depth="0.125"
       height="0.2"
       width="1.5"
-      material='opacity: 0.7; side:double; color:#5E6C9F;'
+      shadow="receive: true; castShadow: true"
+      material='opacity: 0.5; side:double; color:#5E6C9F;'
   >
-    <a-text value="Test 2" color="#FFF" position="-0.7 0 0.10" scale="0.4 0.4 0.4"></a-text>
-    <a-sphere position="0.65 0 0.12" radius="0.05" color="#EF2D5E"></a-sphere>
+    <a-box
+        depth="0.08"
+        width="1.45"
+        height=".15"
+        color="white"
+        shadow="receive: true;"
+        material='opacity: 0.7; side:double; color:white;'
+    >
+    </a-box>
+    <a-text
+        value="Test 2"
+        color="#FFF"
+        position="-0.7 0 0.10"
+        scale="0.4 0.4 0.4"
+    >
+    </a-text>
+    <a-sphere
+        position="0.65 0 0.12"
+        radius="0.05"
+        color="#EF2D5E"
+    >
+    </a-sphere>
   </a-box>
 
 
@@ -49,7 +108,8 @@
       depth="0.125"
       height="0.2"
       width="1.5"
-      material='opacity: 0.7; side:double; color:#5E6C9F;'
+      shadow="receive: true; castShadow: true"
+      material='opacity: 0.5; side:double; color:#5E6C9F;'
   >
     <a-text value="Test 3" color="#FFF" position="-0.7 0 0.10" scale="0.4 0.4 0.4"></a-text>
     <a-sphere position="0.65 0 0.12" radius="0.05" color="#EF2D5E"></a-sphere>
@@ -60,12 +120,12 @@
   <!--</a-marker-camera>-->
 
   <a-marker-camera preset='hiro'></a-marker-camera>
-  <a-entity cursor="fuse: true; fuseTimeout: 500"
-            position="0 0 -1"
-            rayOrigin="entity"
-            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-            material="color: black; shader: flat">
-  </a-entity>
+  <!--<a-entity cursor="fuse: true; fuseTimeout: 500"-->
+            <!--position="0 0 -1"-->
+            <!--rayOrigin="entity"-->
+            <!--geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"-->
+            <!--material="color: black; shader: flat">-->
+  <!--</a-entity>-->
 
 </a-scene>
 
