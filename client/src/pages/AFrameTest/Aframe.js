@@ -1,5 +1,4 @@
 import 'aframe';
-import 'aframe-particle-system-component';
 import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
 import React from 'react';
