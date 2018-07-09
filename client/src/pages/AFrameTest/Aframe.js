@@ -3,6 +3,7 @@ import 'aframe-particle-system-component';
 import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
 import React from 'react';
+import Webcam from "react-user-media";
 
 class Aframe extends React.Component {
   handleClick = () => {
@@ -12,8 +13,11 @@ class Aframe extends React.Component {
 
   render () {
     return (
+      <div>
+      <Webcam height="800" width="1000" />
       <Scene>
-        {/*<Entity primitive="a-sky" color="black" position="0 0 -5"/>*/}
+        {/*<Entity primitive="a-sky">*/}
+        {/*</Entity>*/}
         <Entity primitive="a-camera">
           <Entity cursor="fuse: true; maxDistance: 30; timeout: 500"
           position="0 0 -4"
@@ -41,6 +45,7 @@ class Aframe extends React.Component {
         <EntityElement position={{x: 4, y: 0, z: -5}} />
         <EntityElement position={{x: 5, y: 0, z: -5}} />
       </Scene>
+      </div>
     );
   }
 }
