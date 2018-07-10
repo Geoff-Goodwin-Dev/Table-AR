@@ -9,97 +9,97 @@ class Main extends Component {
   state= {
     listItems: [
       {
-        itemId: 1,
+        itemId: 'one',
         posX: -2,
         posY: 3,
         posZ: -5
       },
       {
-        itemId: 2,
+        itemId: 'two',
         posX: -2,
         posY: 2,
         posZ: -5
       },
       {
-        itemId: 3,
+        itemId: 'three',
         posX: -2,
         posY: 1,
         posZ: -5
       },
       {
-        itemId: 4,
+        itemId: 'four',
         posX: -2,
         posY: 0,
         posZ: -5
       },
       {
-        itemId: 5,
+        itemId: 'five',
         posX: -1,
         posY: 0,
         posZ: -5
       },
       {
-        itemId: 6,
+        itemId: 'six',
         posX: 1,
         posY: 1,
         posZ: -5
       },
       {
-        itemId: 7,
+        itemId: 'seven',
         posX: 1,
         posY: 3,
         posZ: -5
       },
       {
-        itemId: 8,
+        itemId: 'eight',
         posX: 1,
         posY: 0,
         posZ: -5
       },
       {
-        itemId: 9,
+        itemId: 'nine',
         posX: 3,
         posY: 3,
         posZ: -5
       },
       {
-        itemId: 10,
+        itemId: 'ten',
         posX: 4,
         posY: 3,
         posZ: -5
       },
       {
-        itemId: 11,
+        itemId: 'eleven',
         posX: 5,
         posY: 3,
         posZ: -5
       },
       {
-        itemId: 12,
+        itemId: 'twelve',
         posX: 5,
         posY: 2,
         posZ: -5
       },
       {
-        itemId: 13,
+        itemId: 'thirteen',
         posX: 4,
         posY: 1,
         posZ: -5
       },
       {
-        itemId: 14,
+        itemId: 'fourteen',
         posX: 3,
         posY: 0,
         posZ: -5
       },
       {
-        itemId: 15,
+        itemId: 'fifteen',
         posX: 4,
         posY: 0,
         posZ: -5
       },
       {
-        itemId: 16,
+        itemId: 'sixteen',
         posX: 5,
         posY: 0,
         posZ: -5
@@ -109,15 +109,14 @@ class Main extends Component {
 
   handleClick = (id) => {
     const listItemsArray = this.state.listItems;
-    console.log("id:", id);
-    // let idToRemove = document.querySelector(`#${id}`);
-    // idToRemove.parentNode.removeChild(idToRemove);
-    // console.log(idToRemove);
+    let idToRemove = document.querySelector(`#${id}`);
+    idToRemove.parentNode.removeChild(idToRemove);
+    console.log('id to remove', idToRemove);
     const result = listItemsArray.find( listItem => listItem.itemId === id );
     const arrayIndex = listItemsArray.indexOf(result);
-    console.log('index of item:', arrayIndex);
+    // console.log('index of item:', arrayIndex);
     if (arrayIndex > -1) {
-      console.log(result);
+      // console.log(result);
       this.state.listItems.splice(arrayIndex, 1);
       console.log(this.state.listItems);
     }
