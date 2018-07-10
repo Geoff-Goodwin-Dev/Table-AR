@@ -4,7 +4,9 @@ import 'aframe';
 import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock"
+import ToDoListContainer from "../../components/ToDoListContainer"
 import Webcam from "react-user-media";
+
 
 class Main extends Component {
   state= {
@@ -156,6 +158,23 @@ class Main extends Component {
               click: () => this.handleAddClick('#addBlock')
             }}
           />
+
+          <ToDoListContainer>
+
+            <EntityElement/>
+          </ToDoListContainer>
+
+          <Entity id="toDoListHeader"
+                  position="0 4.25 -5"
+                  text={{
+                    color: 'white',
+                    align: 'center',
+                    value: 'To Do List:',
+                    opacity: 1,
+                    width: 6
+                  }}
+          >
+          </Entity>
 
           {this.state.listItems.map((listItem) => (
             <EntityElement key={listItem.itemId}

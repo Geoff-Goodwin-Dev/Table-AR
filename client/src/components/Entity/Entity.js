@@ -16,7 +16,7 @@ const EntityElement = props => (
     }}
     shadow='receive: true;'
 
-    {...props}/>
+      {...props}/>
 );
 
 export default EntityElement;
