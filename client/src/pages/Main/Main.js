@@ -6,7 +6,7 @@ class Main extends Component {
   render () {
     return (
       <div className="text-center">
-        <Webcam height="800" width="1000" />
+        <Webcam height="800" width="1000" audio={false} />
       </div>
     )
   }
