@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  /*background-color: #A6AAAE;*/
+  background-image: url("../images/hypnotize.png");
+}
+nav {
+  background-color: #06477D;
+  margin: 0;
+  overflow: hidden;
+}
+nav ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+nav ul li {
+  display: inline-block;
+  list-style-type: none;
+}
+nav ul li a {
+  /*color: white;*/
+  /*background-color: red;*/
+  display: block;
+  line-height: 3em;
+  padding: 1em 3em;
+  text-decoration: none;
+}
+nav ul li:first-child {
+  margin-right: auto;
+}
+nav ul li a.logo {
+  /*background-color: green;*/
+}
+nav ul li a:hover {
+  /*background-color: blue;*/
+}body {
+   margin: 0;
+   padding: 0;
+   font-size: 15px;
+ }
+nav {
+  /*background-color: black;*/
+  margin: 0;
+  overflow: hidden;
+}
+nav ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+nav ul li {
+  display: inline-block;
+  list-style-type: none;
+}
+nav ul li a {
+  color: #A6AAAE;
+  /*background-color: red;*/
+  display: block;
+  line-height: 3em;
+  padding: 1em 2em;
+  text-decoration: none;
+}
+nav ul li:first-child {
+  margin-right: auto;
+}
+nav ul li a.logo {
+  background-color: #00786B;
+  color: #A6AAAE;
+}
+nav ul li a:hover {
+  /*background-color: blue;*/
+  text-decoration: none;
+}
+#one {
+  color: #00786B;
+  font-size: 90px;
+  font-family: 'Kumar One', cursive;
+}
+#two {
+  color: #1C8479;
+}
+#three {
+  color: #06477D;
+  font-family: 'Faster One', cursive;
+  font-size: 50px;
+}
+#four {
+  color: #00786B;
+}
+#button {
+  background-color: #06477D;
+}
+#enter{
+  color: #A0A8A7;
+  text-decoration: none;
+}
