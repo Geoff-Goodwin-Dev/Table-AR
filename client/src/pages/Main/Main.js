@@ -126,7 +126,7 @@ class Main extends Component {
 
   render () {
     return (
-      <div>
+      <div className="text-center">
         <Webcam height="800" width="1000" audio={false} />
         <Scene>
           {/*<Entity primitive="a-sky">*/}
