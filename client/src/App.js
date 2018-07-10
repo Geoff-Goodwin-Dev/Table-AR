@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./pages/Main";
 import NotFound from "./pages/NotFound";
-import Aframe from "./pages/AFrameTest";
 import { Nav, NavTwo } from "./components/Nav";
 
 const App = () => (
@@ -13,7 +12,6 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/todo" component={Main} />
-        <Route exact path="/aframe" component={Aframe} />
         <Route component={NotFound} />
       </Switch>
     </div>
