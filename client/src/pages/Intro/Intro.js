@@ -12,8 +12,8 @@ const Intro = () => (
       <h4 id="two">EFFECTIVE TASK MANAGEMENT</h4>
       <h2 id="three">IN AUGMENTED REALITY</h2>
       <br/><br/><br/>
-      <button type="button" to={"/todo/"} className="btn btn-secondary btn-sm">
-        <Link id="enter" to={"/todo/"}>
+      <button type="button" to={"/login/"} className="btn btn-secondary btn-sm">
+        <Link id="enter" to={"/login/"}>
           ENTER
         </Link>
       </button>
