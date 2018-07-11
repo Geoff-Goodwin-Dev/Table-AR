@@ -19,6 +19,16 @@ const AddBlock = props => (
       shadow='receive: true;'
       {...props}
     >
+      <Entity id="addItem"
+              position="0 0.75 0"
+              text={{
+                color: 'white',
+                align: 'center',
+                value: 'Add Item',
+                opacity: 1,
+                width: 4
+              }}
+      />
       <Entity
         geometry={{
           primitive: 'box',

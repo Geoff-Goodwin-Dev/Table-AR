@@ -18,6 +18,16 @@ const ToDoListContainer = ({children}) => (
     }}
     shadow='receive: true;'
   >
+    <Entity id="toDoListHeader"
+            position="0 3.25 0"
+            text={{
+              color: 'white',
+              align: 'center',
+              value: 'To Do List:',
+              opacity: 1,
+              width: 6
+            }}
+    />
     {children}
   </Entity>
 );
