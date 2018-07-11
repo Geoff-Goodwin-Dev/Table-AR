@@ -12,14 +12,7 @@ import Webcam from "react-user-media";
 class Main extends Component {
   state= {
     listItemPosY: 3,
-    toDoList: [
-      {
-        itemId: 'test',
-        posX: 0,
-        posY: 3,
-        posZ: 5
-      }
-    ],
+    toDoList: [],
     listItems: [
       {
         itemId: 'one',
@@ -160,10 +153,12 @@ class Main extends Component {
         <form>
           <input id="newItemText" style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}/>
         </form>
+
+
+
         <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
         <Scene>
-          {/*<Entity primitive="a-sky">*/}
-          {/*</Entity>*/}
+          {/*<Entity primitive="a-sky" />*/}
 
           <Entity primitive="a-camera">
             <Entity cursor="fuse: true; maxDistance: 30; timeout: 200"
