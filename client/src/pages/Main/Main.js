@@ -5,11 +5,21 @@ import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock"
 import ToDoListContainer from "../../components/ToDoListContainer"
+import ToDoListItem from "../../components/ToDoListItems"
 import Webcam from "react-user-media";
 
 
 class Main extends Component {
   state= {
+    listItemPosY: 3,
+    toDoList: [
+      {
+        itemId: 'test',
+        posX: 0,
+        posY: 3,
+        posZ: 5
+      }
+    ],
     listItems: [
       {
         itemId: 'one',
@@ -129,8 +139,19 @@ class Main extends Component {
     this.render();
   };
 
-  handleAddClick = (id) => {
-    console.log(id, 'add click clicked');
+  handleAddClick = () => {
+    let yPosition = this.state.listItemPosY;
+    this.setState({listItemPosY: yPosition - 0.5});
+    let length = (this.state.toDoList.length + 1).toString();
+    let toDoListArray = this.state.toDoList;
+    let newListItem = {
+      itemId: length,
+      posX: 0,
+      posY: this.state.listItemPosY,
+      posZ: 0.15
+    };
+    toDoListArray.push(newListItem);
+    this.setState({toDoList: toDoListArray});
   };
 
   render () {
@@ -139,7 +160,7 @@ class Main extends Component {
         <form>
           <input id="newItemText" style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}/>
         </form>
-        <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5}}/>
+        <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
         <Scene>
           {/*<Entity primitive="a-sky">*/}
           {/*</Entity>*/}
@@ -160,21 +181,18 @@ class Main extends Component {
           />
 
           <ToDoListContainer>
-
-            <EntityElement/>
+            {/*This is where the list items get added*/}
+            {this.state.toDoList.map((listItem) => (
+              <ToDoListItem key={listItem.itemId}
+                             id={listItem.itemId}
+                             position={{
+                               x: listItem.posX,
+                               y: listItem.posY,
+                               z: listItem.posZ
+                             }}
+              />
+            ))}
           </ToDoListContainer>
-
-          <Entity id="toDoListHeader"
-                  position="0 4.25 -5"
-                  text={{
-                    color: 'white',
-                    align: 'center',
-                    value: 'To Do List:',
-                    opacity: 1,
-                    width: 6
-                  }}
-          >
-          </Entity>
 
           {this.state.listItems.map((listItem) => (
             <EntityElement key={listItem.itemId}
