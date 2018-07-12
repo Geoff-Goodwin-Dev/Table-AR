@@ -162,7 +162,7 @@ class Main extends Component {
           {/*<Entity primitive="a-sky" />*/}
 
           <Entity primitive="a-camera">
-            <Entity cursor="fuse: true; maxDistance: 30; timeout: 200"
+            <Entity cursor={{fuse: true, maxDistance: 30, fuseTimeout: 300}}
                     position="0 0 -1"
                     geometry="primitive: ring"
                     material="color: orange"
