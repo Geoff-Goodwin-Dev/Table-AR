@@ -12,6 +12,7 @@ import Webcam from "react-user-media";
 class Main extends Component {
   state= {
     listItemPosY: 3,
+    toDoListInputField: '',
     toDoList: [],
     listItems: [
       {
@@ -114,25 +115,18 @@ class Main extends Component {
   };
 
   handleClick = (id) => {
-    // if (id === "addBlock") {
-    //   console.log('add click clicked')
-    // }
     const listItemsArray = this.state.listItems;
-    let idToRemove = document.querySelector(`#${id}`);
-    idToRemove.parentNode.removeChild(idToRemove);
-    console.log('id to remove', idToRemove);
     const result = listItemsArray.find( listItem => listItem.itemId === id );
     const arrayIndex = listItemsArray.indexOf(result);
-    // console.log('index of item:', arrayIndex);
     if (arrayIndex > -1) {
-      // console.log(result);
-      this.state.listItems.splice(arrayIndex, 1);
+      listItemsArray.splice(arrayIndex,1);
+      this.setState({listItems: listItemsArray});
       console.log(this.state.listItems);
     }
-    this.render();
   };
 
   handleAddClick = () => {
+    console.log("to do list field state value", this.state.toDoListInputField);
     let yPosition = this.state.listItemPosY;
     this.setState({listItemPosY: yPosition - 0.5});
     let length = (this.state.toDoList.length + 1).toString();
@@ -141,20 +135,27 @@ class Main extends Component {
       itemId: length,
       posX: 0,
       posY: this.state.listItemPosY,
-      posZ: 0.15
+      posZ: 0.15,
+      text: this.state.toDoListInputField.trim()
     };
     toDoListArray.push(newListItem);
-    this.setState({toDoList: toDoListArray});
+    this.setState({toDoList: toDoListArray, toDoListInputField: ''});
+  };
+
+  onChangeText = (e) => {
+    this.setState({toDoListInputField: e.target.value});
   };
 
   render () {
     return (
       <div className="text-center">
-        <form>
-          <input id="newItemText" style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}/>
-        </form>
-
-
+        {/*<form>*/}
+          <input id="newItemText"
+                 onChange={this.onChangeText}
+                 maxLength={20}
+                 style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}>
+          </input>
+        {/*</form>*/}
 
         <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
         <Scene>
@@ -185,6 +186,7 @@ class Main extends Component {
                                y: listItem.posY,
                                z: listItem.posZ
                              }}
+                             text={listItem.text}
               />
             ))}
           </ToDoListContainer>
