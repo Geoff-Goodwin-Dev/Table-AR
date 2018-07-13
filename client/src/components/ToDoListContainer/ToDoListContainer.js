@@ -4,6 +4,7 @@ import {Entity} from 'aframe-react';
 const ToDoListContainer = ({children}) => (
   <Entity
     id='toDoListContainer'
+    className="not-clickable"
     geometry={{
       primitive: 'box',
       depth: 0.4,
@@ -30,8 +31,10 @@ const ToDoListContainer = ({children}) => (
         opacity: 0.3,
         side: 'double'
       }}
+      className="not-clickable"
     />
     <Entity id="toDoListHeader"
+            className="not-clickable"
             position="0 3.25 0"
             text={{
               color: 'white',
