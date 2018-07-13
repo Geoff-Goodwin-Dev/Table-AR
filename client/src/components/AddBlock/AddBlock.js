@@ -4,6 +4,7 @@ import {Entity} from 'aframe-react';
 const AddBlock = props => (
     <Entity
       id='addBlock'
+      className="clickable"
       geometry={{
         primitive: 'box',
         depth: 0.25,

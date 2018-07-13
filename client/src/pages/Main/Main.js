@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 // import Jumbotron from "../../components/Jumbotron";
 import 'aframe';
+import 'aframe-animation-component';
 import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock"
 import ToDoListContainer from "../../components/ToDoListContainer"
 import ToDoListItem from "../../components/ToDoListItems"
 import Webcam from "react-user-media";
-
 
 class Main extends Component {
   state= {
@@ -148,9 +148,9 @@ class Main extends Component {
 
   render () {
     return (
-      <div className="text-center">
+      <div className='text-center'>
         {/*<form>*/}
-          <input id="newItemText"
+          <input id='newItemText'
                  onChange={this.onChangeText}
                  maxLength={20}
                  style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}>
@@ -161,12 +161,23 @@ class Main extends Component {
         <Scene>
           {/*<Entity primitive="a-sky" />*/}
 
-          <Entity primitive="a-camera">
-            <Entity cursor={{fuse: true, maxDistance: 30, fuseTimeout: 300}}
-                    position="0 0 -1"
-                    geometry="primitive: ring"
-                    material="color: orange"
-                    scale=".01 .01 .01"
+          <Entity primitive='a-camera'>
+            <Entity cursor={{fuse: true, fuseTimeout: 500}}
+                    raycaster={{objects: '.clickable', far: 30}}
+                    position='0 0 -1'
+                    geometry='primitive: ring'
+                    material='color: orange'
+                    scale='.05 .05 .05'
+                    animation__scale={{
+                      property: 'scale',
+                      dur: 500,
+                      dir: 'alternate',
+                      loop: 2,
+                      easing: 'easeInCirc',
+                      startEvents: 'fusing',
+                      from: '0.05 0.05 0.05',
+                      to: '0.01 0.01 0.01',
+                    }}
             />
           </Entity>
 
@@ -190,6 +201,8 @@ class Main extends Component {
               />
             ))}
           </ToDoListContainer>
+
+          <Entity light={{type: 'point'}}/>
 
           {this.state.listItems.map((listItem) => (
             <EntityElement key={listItem.itemId}

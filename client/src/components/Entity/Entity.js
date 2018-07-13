@@ -3,6 +3,7 @@ import {Entity} from 'aframe-react';
 
 const EntityElement = props => (
   <Entity
+    className="clickable"
     geometry={{
       primitive: 'box',
       depth: 0.9,
