@@ -1,3 +1,5 @@
 module.exports = {
-  List: require("./todo")
+  User: require("./user"),
+  ListItem: require("./listItem"),
+  Lists: require("./list")
 };
