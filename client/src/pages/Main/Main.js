@@ -2,11 +2,12 @@ import React, { Component } from "react";
 // import Jumbotron from "../../components/Jumbotron";
 import 'aframe';
 import 'aframe-animation-component';
+import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
-import AddBlock from "../../components/AddBlock"
-import ToDoListContainer from "../../components/ToDoListContainer"
-import ToDoListItem from "../../components/ToDoListItems"
+import AddBlock from "../../components/AddBlock";
+import ToDoListContainer from "../../components/ToDoListContainer";
+import ToDoListItem from "../../components/ToDoListItems";
 import Webcam from "react-user-media";
 
 class Main extends Component {
@@ -139,35 +140,30 @@ class Main extends Component {
       text: this.state.toDoListInputField.trim()
     };
     toDoListArray.push(newListItem);
+    document.querySelector('#toDoItemInputField').value = '';
     this.setState({toDoList: toDoListArray, toDoListInputField: ''});
   };
 
-  onChangeText = (e) => {
-    this.setState({toDoListInputField: e.target.value});
+  onChangeText = (text) => {
+    console.log(text);
+    this.setState({toDoListInputField: text});
   };
 
   render () {
     return (
       <div className='text-center'>
-        {/*<form>*/}
-          <input id='newItemText'
-                 onChange={this.onChangeText}
-                 maxLength={20}
-                 style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}>
-          </input>
-        {/*</form>*/}
 
         <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
+
         <Scene>
-          {/*<Entity primitive="a-sky" />*/}
 
           <Entity primitive='a-camera'>
             <Entity cursor={{fuse: true, fuseTimeout: 500}}
                     raycaster={{objects: '.clickable', far: 30}}
-                    position='0 0 -1'
+                    position='0 0 -1.5'
                     geometry='primitive: ring'
                     material='color: orange'
-                    scale='.05 .05 .05'
+                    scale='.03 .03 .03'
                     animation__scale={{
                       property: 'scale',
                       dur: 500,
@@ -175,8 +171,7 @@ class Main extends Component {
                       loop: 2,
                       easing: 'easeInCirc',
                       startEvents: 'fusing',
-                      from: '0.05 0.05 0.05',
-                      to: '0.01 0.01 0.01',
+                      to: ' .005 .005 .005',
                     }}
             />
           </Entity>
@@ -184,6 +179,20 @@ class Main extends Component {
           <AddBlock
             events={{
               click: () => this.handleAddClick('#addBlock')
+            }}
+          />
+
+          <Entity className="clickable" primitive="a-keyboard" is-open="true" physical-keyboard="true"/>
+          <Entity
+            id="toDoItemInputField"
+            className="clickable"
+            primitive="a-input"
+            position="-0.7 1 -2.5"
+            placeholder="Description"
+            color="black"
+            width="2"
+            events={{
+              change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
             }}
           />
 
