@@ -33,13 +33,14 @@ const ToDoListItem = props => (
       }}
     />
     <Entity
-      position="-1 -0.05 0.25"
+      position="0 0 0.175"
         text={{
           color: 'white',
-          align: 'center',
-          value: 'Test1',
+          align: 'left',
+          value: props.text,
           opacity: 1,
-          width: 3
+          width: 2.65,
+          side: 'double'
         }}
     />
     <Entity

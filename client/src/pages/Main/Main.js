@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 // import Jumbotron from "../../components/Jumbotron";
 import 'aframe';
+import 'aframe-animation-component';
+import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
 import EntityElement from "../../components/Entity";
-import AddBlock from "../../components/AddBlock"
-import ToDoListContainer from "../../components/ToDoListContainer"
-import ToDoListItem from "../../components/ToDoListItems"
+import AddBlock from "../../components/AddBlock";
+import ToDoListContainer from "../../components/ToDoListContainer";
+import ToDoListItem from "../../components/ToDoListItems";
 import Webcam from "react-user-media";
-
 
 class Main extends Component {
   state= {
     listItemPosY: 3,
+    toDoListInputField: '',
     toDoList: [],
     listItems: [
       {
@@ -114,25 +116,18 @@ class Main extends Component {
   };
 
   handleClick = (id) => {
-    // if (id === "addBlock") {
-    //   console.log('add click clicked')
-    // }
     const listItemsArray = this.state.listItems;
-    let idToRemove = document.querySelector(`#${id}`);
-    idToRemove.parentNode.removeChild(idToRemove);
-    console.log('id to remove', idToRemove);
     const result = listItemsArray.find( listItem => listItem.itemId === id );
     const arrayIndex = listItemsArray.indexOf(result);
-    // console.log('index of item:', arrayIndex);
     if (arrayIndex > -1) {
-      // console.log(result);
-      this.state.listItems.splice(arrayIndex, 1);
+      listItemsArray.splice(arrayIndex,1);
+      this.setState({listItems: listItemsArray});
       console.log(this.state.listItems);
     }
-    this.render();
   };
 
   handleAddClick = () => {
+    console.log("to do list field state value", this.state.toDoListInputField);
     let yPosition = this.state.listItemPosY;
     this.setState({listItemPosY: yPosition - 0.5});
     let length = (this.state.toDoList.length + 1).toString();
@@ -141,37 +136,63 @@ class Main extends Component {
       itemId: length,
       posX: 0,
       posY: this.state.listItemPosY,
-      posZ: 0.15
+      posZ: 0.15,
+      text: this.state.toDoListInputField.trim()
     };
     toDoListArray.push(newListItem);
-    this.setState({toDoList: toDoListArray});
+    document.querySelector('#toDoItemInputField').value = '';
+    this.setState({toDoList: toDoListArray, toDoListInputField: ''});
+  };
+
+  onChangeText = (text) => {
+    console.log(text);
+    this.setState({toDoListInputField: text});
   };
 
   render () {
     return (
-      <div className="text-center">
-        <form>
-          <input id="newItemText" style={{zIndex:3, position: 'absolute', left: '50%', transform: 'translate(-50%, 0)'}}/>
-        </form>
-
-
+      <div className='text-center'>
 
         <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
-        <Scene>
-          {/*<Entity primitive="a-sky" />*/}
 
-          <Entity primitive="a-camera">
-            <Entity cursor="fuse: true; maxDistance: 30; timeout: 200"
-                    position="0 0 -1"
-                    geometry="primitive: ring"
-                    material="color: orange"
-                    scale=".01 .01 .01"
+        <Scene>
+
+          <Entity primitive='a-camera'>
+            <Entity cursor={{fuse: true, fuseTimeout: 500}}
+                    raycaster={{objects: '.clickable', far: 30}}
+                    position='0 0 -1.5'
+                    geometry='primitive: ring'
+                    material='color: orange'
+                    scale='.03 .03 .03'
+                    animation__scale={{
+                      property: 'scale',
+                      dur: 500,
+                      dir: 'alternate',
+                      loop: 2,
+                      easing: 'easeInCirc',
+                      startEvents: 'fusing',
+                      to: ' .005 .005 .005',
+                    }}
             />
           </Entity>
 
           <AddBlock
             events={{
               click: () => this.handleAddClick('#addBlock')
+            }}
+          />
+
+          <Entity className="clickable" primitive="a-keyboard" is-open="true" physical-keyboard="true"/>
+          <Entity
+            id="toDoItemInputField"
+            className="clickable"
+            primitive="a-input"
+            position="-0.7 1 -2.5"
+            placeholder="Description"
+            color="black"
+            width="2"
+            events={{
+              change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
             }}
           />
 
@@ -185,9 +206,12 @@ class Main extends Component {
                                y: listItem.posY,
                                z: listItem.posZ
                              }}
+                             text={listItem.text}
               />
             ))}
           </ToDoListContainer>
+
+          <Entity light={{type: 'point'}}/>
 
           {this.state.listItems.map((listItem) => (
             <EntityElement key={listItem.itemId}
