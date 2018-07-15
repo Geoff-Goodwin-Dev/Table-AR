@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-// import Jumbotron from "../../components/Jumbotron";
 import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
+import CameraCursor from "../../components/CameraCursor";
 import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock";
 import ToDoListContainer from "../../components/ToDoListContainer";
@@ -15,6 +15,7 @@ class Main extends Component {
     listItemPosY: 3,
     toDoListInputField: '',
     toDoList: [],
+    toDoListKeyboardIsOpen: true,
     listItems: [
       {
         itemId: 'one',
@@ -149,6 +150,11 @@ class Main extends Component {
     this.setState({toDoListInputField: text});
   };
 
+  // openToDoListKeyboard = (id) => {
+  //   console.log(id, "open keyboard triggered");
+  //   this.setState({toDoListKeyboardIsOpen: true});
+  // };
+
   render () {
     return (
       <div className='text-center'>
@@ -156,57 +162,43 @@ class Main extends Component {
         <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
 
         <Scene>
+          {/*<a-assets>*/}
+            {/*<img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>*/}
+            {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
+          {/*</a-assets>*/}
 
-          <Entity primitive='a-camera'>
-            <Entity cursor={{fuse: true, fuseTimeout: 500}}
-                    raycaster={{objects: '.clickable', far: 30}}
-                    position='0 0 -1.5'
-                    geometry='primitive: ring'
-                    material='color: orange'
-                    scale='.03 .03 .03'
-                    animation__scale={{
-                      property: 'scale',
-                      dur: 500,
-                      dir: 'alternate',
-                      loop: 2,
-                      easing: 'easeInCirc',
-                      startEvents: 'fusing',
-                      to: ' .005 .005 .005',
-                    }}
-            />
-          </Entity>
+          {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
-          <AddBlock
-            events={{
-              click: () => this.handleAddClick('#addBlock')
-            }}
-          />
+          <CameraCursor/>
 
-          <Entity className="clickable" primitive="a-keyboard" is-open="true" physical-keyboard="true"/>
+          <AddBlock events={{click: () => this.handleAddClick('#addBlock')}}/>
+
+          <Entity id="toDoListKeyboard" className="clickable" primitive="a-keyboard" physical-keyboard="true" is-open={this.state.toDoListKeyboardIsOpen}/>
           <Entity
             id="toDoItemInputField"
             className="clickable"
             primitive="a-input"
-            position="-0.7 1 -2.5"
+            position="-1 5 -5"
             placeholder="Description"
             color="black"
             width="2"
             events={{
-              change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
+              change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value),
+              // focus: () => this.openToDoListKeyboard("toDoListKeyboard")
             }}
           />
 
           <ToDoListContainer>
-            {/*This is where the list items get added*/}
             {this.state.toDoList.map((listItem) => (
-              <ToDoListItem key={listItem.itemId}
-                             id={listItem.itemId}
-                             position={{
-                               x: listItem.posX,
-                               y: listItem.posY,
-                               z: listItem.posZ
-                             }}
-                             text={listItem.text}
+              <ToDoListItem
+                key={listItem.itemId}
+                id={listItem.itemId}
+                position={{
+                  x: listItem.posX,
+                  y: listItem.posY,
+                  z: listItem.posZ
+                }}
+                text={listItem.text}
               />
             ))}
           </ToDoListContainer>
