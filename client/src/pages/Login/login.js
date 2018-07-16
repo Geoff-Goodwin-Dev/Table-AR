@@ -7,7 +7,8 @@ class Login extends Component {
   state={
     username: "",
     password: "",
-    redirectTo: null
+    redirectTo: null,
+    loggedIn: false
   };
 
   handleChange = event => {
@@ -72,6 +73,8 @@ class Login extends Component {
         if (response.status === 200) {
           // update state to redirect to home
           this.setState({
+            username: response.data.username,
+            loggedIn: true,
             redirectTo: '/todo'
           })
         }

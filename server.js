@@ -17,25 +17,29 @@ if (process.env.NODE_ENV === "production") {
 // middleware
 app.use(bodyParser.urlencoded({ useNewUrlParser: true, extended: true }));
 app.use(bodyParser.json());
-
-// Add routes, both API & view
-app.use(routes);
-
 // Sessions
 app.use(
   session({
     secret: "code-dictator",
-
     resave: false, // required
-
-    saveUninitialized: false // required
+    saveUninitialized: true // required
   })
 );
+// Add routes, both API & view
+app.use(routes);
+
 
 app.use( (req, res, next) => {
   console.log('req.session', req.session);
   return next();
 });
+
+// Sessions Testing. Need to comment out app.use(routes) ~line 29
+// app.post('/api/user', (req, res) => {
+//   console.log('user signup');
+//   req.session.username = req.body.username;
+//   res.end()
+// });
 
 // Passport
 app.use(passport.initialize());
