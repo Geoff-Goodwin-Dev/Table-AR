@@ -2,12 +2,12 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const express = require("express");
 const routes = require("./routes");
+const session = require("express-session");
+const passport = require("./passport");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 
 // Serve up static assets (heroku)
 if (process.env.NODE_ENV === "production") {
@@ -15,7 +15,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(routes);
-
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
 // Add routes, both API & view

@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export default {
   // Gets all Todos
   getTodos: () => {
@@ -13,5 +12,6 @@ export default {
   // Deletes the book with the given id
   deleteTodos: (id) => {
     return axios.delete("/api/listItems/" + id);
+
   }
 };
