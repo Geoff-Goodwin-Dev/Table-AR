@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 
-  const listItem = new Schema({
+  const listItemSchema = new Schema({
     title: {
       type: String,
       trim: true,
@@ -12,24 +12,24 @@ const Schema = mongoose.Schema;
       type: Number
     },
     createdDate: {
-      type: Date,
-      default: Date.now
-    },
-    authorID:[
-        {
-          type: Schema.Types.ObjectId,
-          ref: "user"
-        }
-      ],
-    listID: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "listItem"
-      }
-    ]
+      type: String,
+      default: String.now
+    }
+    // authorID:[
+    //     {
+    //       type: Schema.Types.ObjectId,
+    //       ref: "user"
+    //     }
+    //   ],
+    // listID: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "listItem"
+    //   }
+    // ]
 
   });
 
-  const ListItem = mongoose.model("listItem", listItem);
+  const ListItem = mongoose.model("ListItem", listItemSchema);
 
 module.exports = ListItem;

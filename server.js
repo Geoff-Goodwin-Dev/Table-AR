@@ -14,15 +14,15 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-
-
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
-mongoose.connect(MONGODB_URI);
-// Add routes, both API & view
 app.use(routes);
 
 
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
+// Add routes, both API & view
+
+
 // Connect to the Mongo DB
+mongoose.connect(MONGODB_URI);
 mongoose.Promise = Promise;
 
 app.listen(PORT, () => console.log(`🌎  ==> API Server now listening on http://localhost:${PORT} !`));

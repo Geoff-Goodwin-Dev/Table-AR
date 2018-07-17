@@ -9,7 +9,7 @@ import AddBlock from "../../components/AddBlock";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
 import Webcam from "react-user-media";
-import axios from "axios";
+import API from "../../utils/API";
 
 class Main extends Component {
   state= {
@@ -144,14 +144,7 @@ class Main extends Component {
     document.querySelector('#toDoItemInputField').value = '';
     this.setState({toDoList: toDoListArray, toDoListInputField: ''});
 
-
-    axios.get(`/api/Todos`)
-    .then(res => {
-      const listItems = res.data;
-      this.setState({ testingItems: listItems });
-      console.log(this.state.testingItems)
-    })
-
+    this.getTodos();
 
   };
 
@@ -159,6 +152,14 @@ class Main extends Component {
     console.log(text);
     this.setState({toDoListInputField: text});
   };
+
+  getTodos = () => {
+    console.log('call triggered')
+    API.getTodos().then(
+      res => console.log(res)
+    )
+  }
+
 
   render () {
     return (
