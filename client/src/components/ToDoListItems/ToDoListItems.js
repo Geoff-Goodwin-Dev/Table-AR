@@ -10,7 +10,7 @@ const ToDoListItem = props => (
       height: 0.35,
       width: 2.75
     }}
-    position="0 2.5 0.15"
+    position={`0 ${props.posY} 0.15`}
     material={{
       color: '#00786B',
       opacity: 0.5,

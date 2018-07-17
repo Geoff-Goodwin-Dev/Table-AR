@@ -6,16 +6,16 @@ import {Entity, Scene} from 'aframe-react';
 import CameraCursor from "../../components/CameraCursor";
 import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock";
+import SaveBtn from "../../components/SaveBtn";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
-// import Webcam from "react-user-media";
+import Webcam from "react-user-media";
 
 let textValue = '';
 let counter = 0;
 
 class Main extends Component {
   state= {
-    listItemPosY: 3,
     toDoListInputField: '',
     toDoListModalIsVisible: false,
     toDoList: [],
@@ -132,27 +132,34 @@ class Main extends Component {
 
   handleAddListItemClick = () => {
     this.setState({toDoListModalIsVisible: true});
-    let toDoListInput = document.querySelector('#toDoItemInputField');
-    toDoListInput.focus();
+    document.querySelector('#toDoItemInputField').focus();
   };
 
-  handleAddClick = () => {
+  handleSaveListItemClick = () => {
     let toDoListInput = document.querySelector('#toDoItemInputField');
-    toDoListInput.blur();
-    counter++;
-    console.log('counter:', counter);
-    let toDoListArray = this.state.toDoList;
-    let newListItem = {
-      itemId: counter,
-      posY: this.state.listItemPosY - 0.5,
-      text: textValue.trim()
-    };
-    toDoListArray.push(newListItem);
-    toDoListInput.value = '';
+    console.log("save clicked");
+    if(this.state.toDoListInputField.length > 0) {
+      toDoListInput.blur();
+      counter++;
+      let toDoListArray = this.state.toDoList;
+      let newListItem = {
+        itemId: counter,
+        text: textValue.trim()
+      };
+      toDoListArray.push(newListItem);
+      this.setState({
+        toDoList: toDoListArray,
+        toDoListInputField: '',
+        toDoListModalIsVisible: false
+      });
+    }
+  };
+
+  handleXListItemClick = () => {
+    console.log("x clicked");
+    document.querySelector('#toDoItemInputField').blur();
     this.setState({
-      toDoList: toDoListArray,
       toDoListInputField: '',
-      listItemPosY: this.state.listItemPosY - 0.5,
       toDoListModalIsVisible: false
     });
   };
@@ -171,7 +178,6 @@ class Main extends Component {
 
         <Scene>
           {/*<a-assets>*/}
-            {/*<img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>*/}
             {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
           {/*</a-assets>*/}
 
@@ -186,11 +192,15 @@ class Main extends Component {
           />
 
           <Entity
-            primitive="a-keyboard"
-            id="toDoListKeyboard"
-            className="clickable"
-            physical-keyboard="true"
-          />
+            position="0 0.65 0"
+          >
+            <Entity
+              primitive="a-keyboard"
+              id="toDoListKeyboard"
+              className="clickable"
+              physical-keyboard="true"
+            />
+          </Entity>
 
           <Entity
             visible={this.state.toDoListModalIsVisible}
@@ -206,16 +216,19 @@ class Main extends Component {
               <Entity
                 primitive="a-input"
                 id="toDoItemInputField"
+                disabled={!this.state.toDoListModalIsVisible}
                 position="0.25 0.6 0"
                 placeholder="Description"
                 color="black"
                 width="2"
+                value={this.state.toDoListInputField}
                 events={{
                   change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
                 }}
               />
 
               <Entity
+                className="clickable"
                 primitive="a-button"
                 position="2.25 0.85 0"
                 scale="0.4 0.4 0.4"
@@ -223,35 +236,25 @@ class Main extends Component {
                 value="X"
                 type="raised"
                 button-color="red"
+                events={{click: () => this.handleXListItemClick()}}
               />
 
-              <Entity
-                className="clickable"
-                primitive="a-button"
-                position="1.57 0.25 0"
-                scale="0.6 0.6 0.6"
-                width="1.25"
-                value="save"
-                type="raised"
-                button-color="green"
-                events={{
-                  click: () => this.handleAddClick()
-                }}
+              <SaveBtn
+                disabled={this.state.toDoListInputField === ''}
+                position="1.57 0.25 0.01"
+                events={{click: () => this.handleSaveListItemClick()}}
               />
             </Entity>
           </Entity>
 
           <ToDoListContainer>
-            {this.state.toDoList.map((listItem) => (
+            {this.state.toDoList.map((listItem, index) => (
               <ToDoListItem
+                className='toDoListItem'
                 key={listItem.itemId}
                 id={listItem.itemId}
                 text={listItem.text}
-                position={{
-                  x: 0,
-                  y: listItem.posY,
-                  z: 0.15
-                }}
+                posY={`${3 - (0.5 * (index + 1))}`}
               />
             ))}
           </ToDoListContainer>
