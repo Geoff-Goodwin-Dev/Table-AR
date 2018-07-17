@@ -1,9 +1,9 @@
+
 const router = require("express").Router();
 const todosController = require("../../controllers/todosController");
 
 router
-  .route("/")
-  .get(todosController.findAll)
+  .get("/", todosController.findAll)
   .post(todosController.create);
 
 router

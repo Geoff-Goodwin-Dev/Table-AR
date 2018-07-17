@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
       required: "Title is Required"
     },
     orderNumber:{
-      type: number
+      type: Number
     },
     createdDate: {
       type: Date,
@@ -24,7 +24,7 @@ const Schema = mongoose.Schema;
     listID: [
       {
         type: Schema.Types.ObjectId,
-        ref: "list"
+        ref: "listItem"
       }
     ]
 
