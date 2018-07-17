@@ -69,8 +69,13 @@ class Login extends Component {
     };
     API.loginUser(userInfo)
       .then(response => {
-        console.log(response)
+        console.log(response);
         if (response.status === 200) {
+          // // update Main.js state
+          // this.props.updateUser({
+          //   loggedIn: true,
+          //   username: response.data.username
+          // });
           // update state to redirect to home
           this.setState({
             username: response.data.username,
