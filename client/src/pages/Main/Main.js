@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import 'aframe';
+// import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
@@ -8,14 +8,16 @@ import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
-import Webcam from "react-user-media";
+// import Webcam from "react-user-media";
+
+let textValue = '';
+let counter = 0;
 
 class Main extends Component {
   state= {
     listItemPosY: 3,
     toDoListInputField: '',
     toDoList: [],
-    toDoListKeyboardIsOpen: true,
     listItems: [
       {
         itemId: 'one',
@@ -128,38 +130,32 @@ class Main extends Component {
   };
 
   handleAddClick = () => {
-    console.log("to do list field state value", this.state.toDoListInputField);
-    let yPosition = this.state.listItemPosY;
-    this.setState({listItemPosY: yPosition - 0.5});
-    let length = (this.state.toDoList.length + 1).toString();
+    let toDoListInput = document.querySelector('#toDoItemInputField');
+    toDoListInput.blur();
+    counter++;
+    console.log('counter:', counter);
     let toDoListArray = this.state.toDoList;
     let newListItem = {
-      itemId: length,
-      posX: 0,
-      posY: this.state.listItemPosY,
-      posZ: 0.15,
-      text: this.state.toDoListInputField.trim()
+      itemId: counter,
+      posY: this.state.listItemPosY - 0.5,
+      text: textValue.trim()
     };
     toDoListArray.push(newListItem);
-    document.querySelector('#toDoItemInputField').value = '';
-    this.setState({toDoList: toDoListArray, toDoListInputField: ''});
+    toDoListInput.value = '';
+    this.setState({toDoList: toDoListArray, toDoListInputField: '', listItemPosY: this.state.listItemPosY - 0.5});
   };
 
   onChangeText = (text) => {
     console.log(text);
     this.setState({toDoListInputField: text});
+    textValue = text;
   };
-
-  // openToDoListKeyboard = (id) => {
-  //   console.log(id, "open keyboard triggered");
-  //   this.setState({toDoListKeyboardIsOpen: true});
-  // };
 
   render () {
     return (
       <div className='text-center'>
 
-        <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
+        {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
 
         <Scene>
           {/*<a-assets>*/}
@@ -173,49 +169,87 @@ class Main extends Component {
 
           <AddBlock events={{click: () => this.handleAddClick('#addBlock')}}/>
 
-          <Entity id="toDoListKeyboard" className="clickable" primitive="a-keyboard" physical-keyboard="true" is-open={this.state.toDoListKeyboardIsOpen}/>
           <Entity
-            id="toDoItemInputField"
+            primitive="a-keyboard"
+            id="toDoListKeyboard"
             className="clickable"
-            primitive="a-input"
-            position="-1 5 -5"
-            placeholder="Description"
-            color="black"
-            width="2"
-            events={{
-              change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value),
-              // focus: () => this.openToDoListKeyboard("toDoListKeyboard")
-            }}
+            physical-keyboard="true"
           />
+
+          <Entity
+            primitive='a-rounded'
+            position="-1.25 1 -2.95"
+            width="2.5"
+            height="1"
+            radius="0.05"
+          >
+            <Entity
+              primitive="a-form"
+            >
+              <Entity
+                primitive="a-input"
+                id="toDoItemInputField"
+                className="clickable"
+                position="0.25 0.6 0"
+                placeholder="Description"
+                color="black"
+                width="2"
+                events={{
+                  change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
+                }}
+              />
+
+              <Entity
+                primitive="a-button"
+                position="0.65 0.25 0"
+                scale="0.6 0.6 0.6"
+                width="1.25"
+                value="cancel"
+                type="raised"
+                button-color="#cccccc"
+              />
+
+              <Entity
+                primitive="a-button"
+                position="1.57 0.25 0"
+                scale="0.6 0.6 0.6"
+                width="1.25"
+                value="save"
+                type="raised"
+                button-color="green"
+              />
+            </Entity>
+          </Entity>
 
           <ToDoListContainer>
             {this.state.toDoList.map((listItem) => (
               <ToDoListItem
                 key={listItem.itemId}
                 id={listItem.itemId}
-                position={{
-                  x: listItem.posX,
-                  y: listItem.posY,
-                  z: listItem.posZ
-                }}
                 text={listItem.text}
+                position={{
+                  x: 0,
+                  y: listItem.posY,
+                  z: 0.15
+                }}
               />
             ))}
           </ToDoListContainer>
 
           <Entity light={{type: 'point'}}/>
 
-          {this.state.listItems.map((listItem) => (
-            <EntityElement key={listItem.itemId}
-                           id={listItem.itemId}
-                           position={{
-                             x: listItem.posX,
-                             y: listItem.posY,
-                             z: listItem.posZ
-                           }}
-                           events={{
-                             click: () => this.handleClick(listItem.itemId)
-                           }}
+          {this.state.listItems.map((lizItem) => (
+            <EntityElement
+              key={lizItem.itemId}
+              id={lizItem.itemId}
+              position={{
+                x: lizItem.posX,
+                y: lizItem.posY,
+                z: lizItem.posZ
+              }}
+              events={{
+                click: () => this.handleClick(lizItem.itemId)
+              }}
             />
           ))}
         </Scene>
