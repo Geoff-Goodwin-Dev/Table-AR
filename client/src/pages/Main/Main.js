@@ -17,6 +17,7 @@ class Main extends Component {
   state= {
     listItemPosY: 3,
     toDoListInputField: '',
+    toDoListModalIsVisible: false,
     toDoList: [],
     listItems: [
       {
@@ -129,6 +130,12 @@ class Main extends Component {
     }
   };
 
+  handleAddListItemClick = () => {
+    this.setState({toDoListModalIsVisible: true});
+    let toDoListInput = document.querySelector('#toDoItemInputField');
+    toDoListInput.focus();
+  };
+
   handleAddClick = () => {
     let toDoListInput = document.querySelector('#toDoItemInputField');
     toDoListInput.blur();
@@ -142,7 +149,12 @@ class Main extends Component {
     };
     toDoListArray.push(newListItem);
     toDoListInput.value = '';
-    this.setState({toDoList: toDoListArray, toDoListInputField: '', listItemPosY: this.state.listItemPosY - 0.5});
+    this.setState({
+      toDoList: toDoListArray,
+      toDoListInputField: '',
+      listItemPosY: this.state.listItemPosY - 0.5,
+      toDoListModalIsVisible: false
+    });
   };
 
   onChangeText = (text) => {
@@ -167,7 +179,11 @@ class Main extends Component {
 
           <CameraCursor/>
 
-          <AddBlock events={{click: () => this.handleAddClick('#addBlock')}}/>
+          <AddBlock
+            events={{
+              click: () => this.handleAddListItemClick()
+            }}
+          />
 
           <Entity
             primitive="a-keyboard"
@@ -177,6 +193,7 @@ class Main extends Component {
           />
 
           <Entity
+            visible={this.state.toDoListModalIsVisible}
             primitive='a-rounded'
             position="-1.25 1 -2.95"
             width="2.5"
@@ -189,7 +206,6 @@ class Main extends Component {
               <Entity
                 primitive="a-input"
                 id="toDoItemInputField"
-                className="clickable"
                 position="0.25 0.6 0"
                 placeholder="Description"
                 color="black"
@@ -201,15 +217,16 @@ class Main extends Component {
 
               <Entity
                 primitive="a-button"
-                position="0.65 0.25 0"
-                scale="0.6 0.6 0.6"
-                width="1.25"
-                value="cancel"
+                position="2.25 0.85 0"
+                scale="0.4 0.4 0.4"
+                width="0.1"
+                value="X"
                 type="raised"
-                button-color="#cccccc"
+                button-color="red"
               />
 
               <Entity
+                className="clickable"
                 primitive="a-button"
                 position="1.57 0.25 0"
                 scale="0.6 0.6 0.6"
@@ -217,6 +234,9 @@ class Main extends Component {
                 value="save"
                 type="raised"
                 button-color="green"
+                events={{
+                  click: () => this.handleAddClick()
+                }}
               />
             </Entity>
           </Entity>
