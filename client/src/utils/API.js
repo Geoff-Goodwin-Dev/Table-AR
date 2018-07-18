@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default {
   // Gets all Todos
-  getTodos: () => {
-    return axios.get("/api/listItems");
+  getTodos: (listID) => {
+    return axios.get("/api/listItems/" + listID);
   },
   // Saves Todos to database
   saveTodos: (TodosData) => {

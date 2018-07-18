@@ -4,6 +4,8 @@ const controller = {
   findAll: (req, res) => {
     db.ListItem
       .find(req.query)
+      .where('listID').equals(req.params.id)
+      .sort('orderNumber')
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
