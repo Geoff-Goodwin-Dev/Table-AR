@@ -4,11 +4,11 @@ const todosController = require("../../controllers/todosController");
 
 router
   .route("/listItems")
-  .get(todosController.findAll)
   .post(todosController.create);
 
 router
   .route("/listItems/:id")
+  .get(todosController.findAll)
   .delete(todosController.remove);
 
 module.exports = router;
