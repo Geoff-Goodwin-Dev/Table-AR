@@ -120,32 +120,32 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    // this.getTodos();
-    // console.log(this.state.toDoList);
-  };
-
-  getLists = () => {
-    console.log('get triggered');
-    API.getLists().then(
-      res => {
-        console.log(res.data);
-        // this.setState({toDoList: res.data});
-      }
-    )
-  };
-
-  saveLists = (data) => {
-    console.log('post triggered');
-    API.saveLists(data).then(
-      res => {
-        console.log(res);
-        // this.getLists();
-      }
-    )
-
     this.getTodos(this.state.listInFocus);
-
+    console.log(this.state.toDoList);
   };
+
+  // getLists = () => {
+  //   console.log('get triggered');
+  //   API.getLists().then(
+  //     res => {
+  //       console.log(res.data);
+  //       this.setState({toDoList: res.data});
+  //     }
+  //   )
+  // };
+
+  // saveLists = (data) => {
+  //   console.log('post triggered');
+  //   API.saveLists(data).then(
+  //     res => {
+  //       console.log(res);
+  //       this.getLists();
+  //     }
+  //   );
+  //
+  //   this.getTodos(this.state.listInFocus);
+  //
+  // };
 
   getTodos = (listID) => {
     console.log('get list items triggered');
@@ -181,10 +181,6 @@ class Main extends Component {
   handleAddListItemClick = () => {
     this.setState({toDoListModalIsVisible: true});
     document.querySelector('#toDoItemInputField').focus();
-
-    this.getTodos();
-    this.saveLists({listTitle: "first list"});
-
   };
 
   handleSaveListItemClick = () => {
