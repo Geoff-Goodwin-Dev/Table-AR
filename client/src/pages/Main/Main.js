@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
@@ -129,6 +128,10 @@ class Main extends Component {
       this.setState({listItems: listItemsArray});
       console.log(this.state.listItems);
     }
+  };
+
+  componentDidMount() {
+    this.getTodos();
   };
 
   handleAddListItemClick = () => {
