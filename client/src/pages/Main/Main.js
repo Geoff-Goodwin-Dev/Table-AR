@@ -15,11 +15,14 @@ let textValue = '';
 
 class Main extends Component {
   state = {
-    toDoListInputField: '',
-    toDoListModalIsVisible: false,
-    toDoList: [],
-    listInFocus: '5b49ujbd0b81b00916e2b3c1',
-    listItems: [
+    listTitleInputField: '',
+    listCreateModalIsVisible: false,
+    listsOfUser: [],
+    listItemTitleInputField: '',
+    listItemCreateModalIsVisible: false,
+    listItemsOfList: [],
+    listInFocus: 'placeholderForNoLists',
+    lizItems: [
       {
         itemId: 'one',
         posX: -2,
@@ -120,49 +123,54 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    this.getTodos(this.state.listInFocus);
-    console.log(this.state.toDoList);
+    this.getListsOfUser();
   };
 
-  // getLists = () => {
-  //   console.log('get triggered');
-  //   API.getLists().then(
-  //     res => {
-  //       console.log(res.data);
-  //       this.setState({toDoList: res.data});
-  //     }
-  //   )
-  // };
+  getListsOfUser = () => {
+    console.log('get lists triggered');
+    API.getLists().then(
+      res => {
+        console.log('lists of user:', res.data);
+        if(res.data.length > 0) {
+          this.setState({
+            listsOfUser: res.data,
+            listInFocus: res.data[0]._id
+          })
+        }
+        this.getListItemsOfList(this.state.listInFocus);
+      }
+    )
+  };
 
   // saveLists = (data) => {
   //   console.log('post triggered');
   //   API.saveLists(data).then(
   //     res => {
   //       console.log(res);
-  //       this.getLists();
+  //       this.getListsOfUser();
   //     }
   //   );
   //
-  //   this.getTodos(this.state.listInFocus);
+  //   this.getListItemsOfList(this.state.listInFocus);
   //
   // };
 
-  getTodos = (listID) => {
+  getListItemsOfList = (listID) => {
     console.log('get list items triggered');
     API.getTodos(listID).then(
       res => {
-        console.log(res.data);
-        this.setState({toDoList: res.data});
+        console.log('list items of list:', res.data);
+        this.setState({listItemsOfList: res.data});
       }
     )
   };
 
-  saveTodos = (data) => {
+  saveNewListItem = (data) => {
     console.log('post triggered');
     API.saveTodos(data).then(
       res => {
         console.log(res);
-        this.getTodos(this.state.listInFocus);
+        this.getListItemsOfList(this.state.listInFocus);
       }
     )
   };
@@ -179,30 +187,30 @@ class Main extends Component {
   };
 
   handleAddListItemClick = () => {
-    this.setState({toDoListModalIsVisible: true});
+    this.setState({listItemCreateModalIsVisible: true});
     document.querySelector('#toDoItemInputField').focus();
   };
 
   handleSaveListItemClick = () => {
     let toDoListInput = document.querySelector('#toDoItemInputField');
     console.log("save clicked");
-    if(this.state.toDoListInputField.length > 0) {
+    if(this.state.listItemTitleInputField.length > 0) {
       toDoListInput.blur();
       let newListItem = {
         title: textValue.trim(),
         orderNumber: (this.findLargestOrderNumber() + 1),
         listID: this.state.listInFocus,
       };
-      this.saveTodos(newListItem);
+      this.saveNewListItem(newListItem);
       this.setState({
-        toDoListInputField: '',
-        toDoListModalIsVisible: false
+        listItemTitleInputField: '',
+        listItemCreateModalIsVisible: false
       });
     }
   };
 
   findLargestOrderNumber = () => {
-    let listItemsArray = this.state.toDoList;
+    let listItemsArray = this.state.listItemsOfList;
     console.log(listItemsArray);
     if (listItemsArray.length > 0) {
       let itemsOrderNumberArray = listItemsArray.map(item => item.orderNumber);
@@ -214,18 +222,18 @@ class Main extends Component {
     }
   };
 
-  handleXListItemClick = () => {
+  handleCloseListItemModal = () => {
     console.log("x clicked");
     document.querySelector('#toDoItemInputField').blur();
     this.setState({
-      toDoListInputField: '',
-      toDoListModalIsVisible: false
+      listItemTitleInputField: '',
+      listItemCreateModalIsVisible: false
     });
   };
 
   onChangeText = (text) => {
     console.log(text);
-    this.setState({toDoListInputField: text});
+    this.setState({listItemTitleInputField: text});
     textValue = text;
   };
 
@@ -251,6 +259,7 @@ class Main extends Component {
           />
 
           <Entity
+            id="keyboardAndModalContainer"
             position="0 0.65 0"
           >
             <Entity
@@ -259,55 +268,54 @@ class Main extends Component {
               className="clickable"
               physical-keyboard="true"
             />
-          </Entity>
-
-          <Entity
-            visible={this.state.toDoListModalIsVisible}
-            primitive='a-rounded'
-            position="-1.25 1 -2.95"
-            width="2.5"
-            height="1"
-            radius="0.05"
-          >
             <Entity
-              primitive="a-form"
+              visible={this.state.listItemCreateModalIsVisible}
+              primitive='a-rounded'
+              position="-1.25 0.45 -2.95"
+              width="2.5"
+              height="1"
+              radius="0.05"
             >
               <Entity
-                primitive="a-input"
-                id="toDoItemInputField"
-                disabled={!this.state.toDoListModalIsVisible}
-                position="0.25 0.6 0"
-                placeholder="Description"
-                color="black"
-                width="2"
-                value={this.state.toDoListInputField}
-                events={{
-                  change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
-                }}
-              />
+                primitive="a-form"
+              >
+                <Entity
+                  primitive="a-input"
+                  id="toDoItemInputField"
+                  disabled={!this.state.listItemCreateModalIsVisible}
+                  position="0.25 0.6 0"
+                  placeholder="Description"
+                  color="black"
+                  width="2"
+                  value={this.state.listItemTitleInputField}
+                  events={{
+                    change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
+                  }}
+                />
 
-              <Entity
-                className="clickable"
-                primitive="a-button"
-                position="2.25 0.85 0"
-                scale="0.4 0.4 0.4"
-                width="0.1"
-                value="X"
-                type="raised"
-                button-color="red"
-                events={{click: () => this.handleXListItemClick()}}
-              />
+                <Entity
+                  className="clickable"
+                  primitive="a-button"
+                  position="2.25 0.85 0"
+                  scale="0.4 0.4 0.4"
+                  width="0.1"
+                  value="X"
+                  type="raised"
+                  button-color="red"
+                  events={{click: () => this.handleCloseListItemModal()}}
+                />
 
-              <SaveBtn
-                disabled={this.state.toDoListInputField === ''}
-                position="1.57 0.25 0.01"
-                events={{click: () => this.handleSaveListItemClick()}}
-              />
+                <SaveBtn
+                  disabled={this.state.listItemTitleInputField === ''}
+                  position="1.57 0.25 0.01"
+                  events={{click: () => this.handleSaveListItemClick()}}
+                />
+              </Entity>
             </Entity>
           </Entity>
 
           <ToDoListContainer>
-            {this.state.toDoList.map((listItem, index) => (
+            {this.state.listItemsOfList.map((listItem, index) => (
               <ToDoListItem
                 className='toDoListItem'
                 key={listItem._id}
@@ -320,7 +328,7 @@ class Main extends Component {
 
           <Entity light={{type: 'point'}}/>
 
-          {this.state.listItems.map((lizItem) => (
+          {this.state.lizItems.map((lizItem) => (
             <EntityElement
               key={lizItem.itemId}
               id={lizItem.itemId}
