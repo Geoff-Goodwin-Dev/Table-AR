@@ -162,7 +162,7 @@ class Main extends Component {
     API.saveTodos(data).then(
       res => {
         console.log(res);
-        this.getTodos();
+        this.getTodos(this.state.listInFocus);
       }
     )
   };
