@@ -12,7 +12,6 @@ import ToDoListItem from "../../components/ToDoListItems";
 import API from "../../utils/API";
 
 let textValue = '';
-let counter = 0;
 
 class Main extends Component {
   state= {
@@ -119,60 +118,8 @@ class Main extends Component {
     ],
   };
 
-  handleClick = (id) => {
-    const listItemsArray = this.state.listItems;
-    const result = listItemsArray.find( listItem => listItem.itemId === id );
-    const arrayIndex = listItemsArray.indexOf(result);
-    if (arrayIndex > -1) {
-      listItemsArray.splice(arrayIndex,1);
-      this.setState({listItems: listItemsArray});
-      console.log(this.state.listItems);
-    }
-  };
-
   componentDidMount() {
     this.getTodos();
-  };
-
-  handleAddListItemClick = () => {
-    this.setState({toDoListModalIsVisible: true});
-    document.querySelector('#toDoItemInputField').focus();
-  };
-
-  handleSaveListItemClick = () => {
-    let toDoListInput = document.querySelector('#toDoItemInputField');
-    console.log("save clicked");
-    if(this.state.toDoListInputField.length > 0) {
-      toDoListInput.blur();
-      counter++;
-      let toDoListArray = this.state.toDoList;
-      let newListItem = {
-        itemId: counter,
-        title: textValue.trim()
-      };
-      toDoListArray.push(newListItem);
-      this.setState({
-        toDoList: toDoListArray,
-        toDoListInputField: '',
-        toDoListModalIsVisible: false
-      });
-    }
-  };
-
-  handleXListItemClick = () => {
-    console.log("x clicked");
-    document.querySelector('#toDoItemInputField').blur();
-    this.setState({
-      toDoListInputField: '',
-      toDoListModalIsVisible: false
-    });
-  };
-
-
-  onChangeText = (text) => {
-    console.log(text);
-    this.setState({toDoListInputField: text});
-    textValue = text;
   };
 
   getTodos = () => {
@@ -188,8 +135,72 @@ class Main extends Component {
   saveTodos = (data) => {
     console.log('post triggered');
     API.saveTodos(data).then(
-      res => console.log(res)
+      res => {
+        console.log(res);
+        this.getTodos();
+      }
     )
+  };
+
+  handleClick = (id) => {
+    const listItemsArray = this.state.listItems;
+    const result = listItemsArray.find( listItem => listItem.itemId === id );
+    const arrayIndex = listItemsArray.indexOf(result);
+    if (arrayIndex > -1) {
+      listItemsArray.splice(arrayIndex,1);
+      this.setState({listItems: listItemsArray});
+      console.log(this.state.listItems);
+    }
+  };
+
+  handleAddListItemClick = () => {
+    this.setState({toDoListModalIsVisible: true});
+    document.querySelector('#toDoItemInputField').focus();
+  };
+
+  handleSaveListItemClick = () => {
+    let toDoListInput = document.querySelector('#toDoItemInputField');
+    console.log("save clicked");
+    if(this.state.toDoListInputField.length > 0) {
+      toDoListInput.blur();
+      let newListItem = {
+        title: textValue.trim(),
+        orderNumber: (this.findLargestOrderNumber() + 1)
+      };
+      this.saveTodos(newListItem);
+      this.setState({
+        toDoListInputField: '',
+        toDoListModalIsVisible: false
+      });
+    }
+  };
+
+  findLargestOrderNumber = () => {
+    let listItemsArray = this.state.toDoList;
+    console.log(listItemsArray);
+    if (listItemsArray.length > 0) {
+      let itemsOrderNumberArray = listItemsArray.map(item => item.orderNumber);
+      console.log(itemsOrderNumberArray);
+      return itemsOrderNumberArray.reduce((a, b) => Math.max(a,b));
+    }
+    else {
+      return 0;
+    }
+  };
+
+  handleXListItemClick = () => {
+    console.log("x clicked");
+    document.querySelector('#toDoItemInputField').blur();
+    this.setState({
+      toDoListInputField: '',
+      toDoListModalIsVisible: false
+    });
+  };
+
+  onChangeText = (text) => {
+    console.log(text);
+    this.setState({toDoListInputField: text});
+    textValue = text;
   };
 
   render () {
