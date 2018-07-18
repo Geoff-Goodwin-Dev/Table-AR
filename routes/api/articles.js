@@ -1,13 +1,14 @@
-// const router = require("express").Router();
-// // const articlesController = require("../../controllers/articlesController");
-// //
-// // router
-// //   .route("/")
-// //   .get(articlesController.findAll)
-// //   .post(articlesController.create);
-// //
-// // router
-// //   .route("/:id")
-// //   .delete(articlesController.remove);
-// //
-// // module.exports = router;
+
+const router = require("express").Router();
+const todosController = require("../../controllers/todosController");
+
+router
+  .route("/")
+  .get(todosController.findAll)
+  .post(todosController.create);
+
+router
+  .route("/:id")
+  .delete(todosController.remove);
+
+module.exports = router;

@@ -9,6 +9,7 @@ import AddBlock from "../../components/AddBlock";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
 import Webcam from "react-user-media";
+import API from "../../utils/API";
 
 class Main extends Component {
   state= {
@@ -143,6 +144,9 @@ class Main extends Component {
     toDoListArray.push(newListItem);
     document.querySelector('#toDoItemInputField').value = '';
     this.setState({toDoList: toDoListArray, toDoListInputField: ''});
+
+    this.getTodos();
+
   };
 
   onChangeText = (text) => {
@@ -150,10 +154,20 @@ class Main extends Component {
     this.setState({toDoListInputField: text});
   };
 
-  // openToDoListKeyboard = (id) => {
-  //   console.log(id, "open keyboard triggered");
-  //   this.setState({toDoListKeyboardIsOpen: true});
-  // };
+  getTodos = () => {
+    console.log('call triggered')
+    API.getTodos().then(
+      res => console.log(res)
+    )
+  }
+
+  saveTodos = (data) => {
+    console.log('call triggered')
+    API.saveTodos(data).then(
+      res => console.log(res)
+    )
+  }
+
 
   render () {
     return (
