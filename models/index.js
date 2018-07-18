@@ -1,5 +1,5 @@
 module.exports = {
-  // User: require("./user"),
+  User: require("./user"),
   ListItem: require("./listItem"),
-  // Lists: require("./list")
+  Lists: require("./list")
 };

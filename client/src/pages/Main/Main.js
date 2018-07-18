@@ -148,7 +148,7 @@ class Main extends Component {
       let toDoListArray = this.state.toDoList;
       let newListItem = {
         itemId: counter,
-        text: textValue.trim()
+        title: textValue.trim()
       };
       toDoListArray.push(newListItem);
       this.setState({
@@ -176,14 +176,17 @@ class Main extends Component {
   };
 
   getTodos = () => {
-    console.log('call triggered');
+    console.log('get triggered');
     API.getTodos().then(
-      res => console.log(res)
+      res => {
+        console.log(res.data);
+        this.setState({toDoList: res.data});
+      }
     )
   };
 
   saveTodos = (data) => {
-    console.log('call triggered');
+    console.log('post triggered');
     API.saveTodos(data).then(
       res => console.log(res)
     )
@@ -270,9 +273,9 @@ class Main extends Component {
             {this.state.toDoList.map((listItem, index) => (
               <ToDoListItem
                 className='toDoListItem'
-                key={listItem.itemId}
-                id={listItem.itemId}
-                text={listItem.text}
+                key={listItem._id}
+                id={listItem._id}
+                text={listItem.title}
                 posY={`${3 - (0.5 * (index + 1))}`}
               />
             ))}
