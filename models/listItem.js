@@ -11,7 +11,7 @@ const listItemSchema = new Schema({
     type: Number
   },
   createdDate: {
-    type: Date,
+    type: String,
     default: String.now
   }
   // authorID:[

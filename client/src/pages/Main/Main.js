@@ -119,7 +119,28 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    this.getTodos();
+    // this.getTodos();
+    // console.log(this.state.toDoList);
+  };
+
+  getLists = () => {
+    console.log('get triggered');
+    API.getLists().then(
+      res => {
+        console.log(res.data);
+        // this.setState({toDoList: res.data});
+      }
+    )
+  };
+
+  saveLists = (data) => {
+    console.log('post triggered');
+    API.saveLists(data).then(
+      res => {
+        console.log(res);
+        // this.getLists();
+      }
+    )
   };
 
   getTodos = () => {
@@ -156,6 +177,10 @@ class Main extends Component {
   handleAddListItemClick = () => {
     this.setState({toDoListModalIsVisible: true});
     document.querySelector('#toDoItemInputField').focus();
+
+    this.getTodos();
+    this.saveLists({listTitle: "first list"});
+
   };
 
   handleSaveListItemClick = () => {

@@ -1,13 +1,14 @@
 const router = require("express").Router();
 const todosController = require("../../controllers/todosController");
 
+
 router
-  .route("/")
+  .route("/listItems")
   .get(todosController.findAll)
   .post(todosController.create);
 
 router
-  .route("/:id")
+  .route("/listItems/:id")
   .delete(todosController.remove);
 
 module.exports = router;
