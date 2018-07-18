@@ -10,14 +10,13 @@ const ToDoListItem = props => (
       height: 0.35,
       width: 2.75
     }}
-    position="0 2.5 0.15"
+    position={`0 ${props.posY} 0.15`}
     material={{
       color: '#00786B',
       opacity: 0.5,
       side: 'double'
     }}
     shadow='receive: true;'
-    {...props}
   >
     <Entity
       geometry={{
@@ -68,14 +67,6 @@ const ToDoListItem = props => (
         }}
       />
     </Entity>
-    {/*<Entity*/}
-      {/*geometry={{*/}
-        {/*primitive: "a-sphere",*/}
-        {/*radius: "0.05"*/}
-      {/*}}*/}
-      {/*position="0.65 0 0.12"*/}
-      {/*color="#EF2D5E"*/}
-    {/*/>*/}
   </Entity>
 );
 

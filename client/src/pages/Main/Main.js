@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
 import CameraCursor from "../../components/CameraCursor";
 import EntityElement from "../../components/Entity";
 import AddBlock from "../../components/AddBlock";
+import SaveBtn from "../../components/SaveBtn";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
-import Webcam from "react-user-media";
+// import Webcam from "react-user-media";
 import API from "../../utils/API";
+
+let textValue = '';
 
 class Main extends Component {
   state= {
-    listItemPosY: 3,
     toDoListInputField: '',
+    toDoListModalIsVisible: false,
     toDoList: [],
-    toDoListKeyboardIsOpen: true,
     listItems: [
       {
         itemId: 'one',
@@ -117,6 +118,30 @@ class Main extends Component {
     ],
   };
 
+  componentDidMount() {
+    this.getTodos();
+  };
+
+  getTodos = () => {
+    console.log('get triggered');
+    API.getTodos().then(
+      res => {
+        console.log(res.data);
+        this.setState({toDoList: res.data});
+      }
+    )
+  };
+
+  saveTodos = (data) => {
+    console.log('post triggered');
+    API.saveTodos(data).then(
+      res => {
+        console.log(res);
+        this.getTodos();
+      }
+    )
+  };
+
   handleClick = (id) => {
     const listItemsArray = this.state.listItems;
     const result = listItemsArray.find( listItem => listItem.itemId === id );
@@ -128,56 +153,64 @@ class Main extends Component {
     }
   };
 
-  handleAddClick = () => {
-    console.log("to do list field state value", this.state.toDoListInputField);
-    let yPosition = this.state.listItemPosY;
-    this.setState({listItemPosY: yPosition - 0.5});
-    let length = (this.state.toDoList.length + 1).toString();
-    let toDoListArray = this.state.toDoList;
-    let newListItem = {
-      itemId: length,
-      posX: 0,
-      posY: this.state.listItemPosY,
-      posZ: 0.15,
-      text: this.state.toDoListInputField.trim()
-    };
-    toDoListArray.push(newListItem);
-    document.querySelector('#toDoItemInputField').value = '';
-    this.setState({toDoList: toDoListArray, toDoListInputField: ''});
+  handleAddListItemClick = () => {
+    this.setState({toDoListModalIsVisible: true});
+    document.querySelector('#toDoItemInputField').focus();
+  };
 
-    this.getTodos();
+  handleSaveListItemClick = () => {
+    let toDoListInput = document.querySelector('#toDoItemInputField');
+    console.log("save clicked");
+    if(this.state.toDoListInputField.length > 0) {
+      toDoListInput.blur();
+      let newListItem = {
+        title: textValue.trim(),
+        orderNumber: (this.findLargestOrderNumber() + 1)
+      };
+      this.saveTodos(newListItem);
+      this.setState({
+        toDoListInputField: '',
+        toDoListModalIsVisible: false
+      });
+    }
+  };
 
+  findLargestOrderNumber = () => {
+    let listItemsArray = this.state.toDoList;
+    console.log(listItemsArray);
+    if (listItemsArray.length > 0) {
+      let itemsOrderNumberArray = listItemsArray.map(item => item.orderNumber);
+      console.log(itemsOrderNumberArray);
+      return itemsOrderNumberArray.reduce((a, b) => Math.max(a,b));
+    }
+    else {
+      return 0;
+    }
+  };
+
+  handleXListItemClick = () => {
+    console.log("x clicked");
+    document.querySelector('#toDoItemInputField').blur();
+    this.setState({
+      toDoListInputField: '',
+      toDoListModalIsVisible: false
+    });
   };
 
   onChangeText = (text) => {
     console.log(text);
     this.setState({toDoListInputField: text});
+    textValue = text;
   };
-
-  getTodos = () => {
-    console.log('call triggered')
-    API.getTodos().then(
-      res => console.log(res)
-    )
-  }
-
-  saveTodos = (data) => {
-    console.log('call triggered')
-    API.saveTodos(data).then(
-      res => console.log(res)
-    )
-  }
-
 
   render () {
     return (
       <div className='text-center'>
 
-        <Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>
+        {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
 
         <Scene>
           {/*<a-assets>*/}
-            {/*<img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>*/}
             {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
           {/*</a-assets>*/}
 
@@ -185,51 +218,94 @@ class Main extends Component {
 
           <CameraCursor/>
 
-          <AddBlock events={{click: () => this.handleAddClick('#addBlock')}}/>
-
-          <Entity id="toDoListKeyboard" className="clickable" primitive="a-keyboard" physical-keyboard="true" is-open={this.state.toDoListKeyboardIsOpen}/>
-          <Entity
-            id="toDoItemInputField"
-            className="clickable"
-            primitive="a-input"
-            position="-1 5 -5"
-            placeholder="Description"
-            color="black"
-            width="2"
+          <AddBlock
             events={{
-              change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value),
-              // focus: () => this.openToDoListKeyboard("toDoListKeyboard")
+              click: () => this.handleAddListItemClick()
             }}
           />
 
-          <ToDoListContainer>
-            {this.state.toDoList.map((listItem) => (
-              <ToDoListItem
-                key={listItem.itemId}
-                id={listItem.itemId}
-                position={{
-                  x: listItem.posX,
-                  y: listItem.posY,
-                  z: listItem.posZ
+          <Entity
+            position="0 0.65 0"
+          >
+            <Entity
+              primitive="a-keyboard"
+              id="toDoListKeyboard"
+              className="clickable"
+              physical-keyboard="true"
+            />
+          </Entity>
+
+          <Entity
+            visible={this.state.toDoListModalIsVisible}
+            primitive='a-rounded'
+            position="-1.25 1 -2.95"
+            width="2.5"
+            height="1"
+            radius="0.05"
+          >
+            <Entity
+              primitive="a-form"
+            >
+              <Entity
+                primitive="a-input"
+                id="toDoItemInputField"
+                disabled={!this.state.toDoListModalIsVisible}
+                position="0.25 0.6 0"
+                placeholder="Description"
+                color="black"
+                width="2"
+                value={this.state.toDoListInputField}
+                events={{
+                  change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
                 }}
-                text={listItem.text}
+              />
+
+              <Entity
+                className="clickable"
+                primitive="a-button"
+                position="2.25 0.85 0"
+                scale="0.4 0.4 0.4"
+                width="0.1"
+                value="X"
+                type="raised"
+                button-color="red"
+                events={{click: () => this.handleXListItemClick()}}
+              />
+
+              <SaveBtn
+                disabled={this.state.toDoListInputField === ''}
+                position="1.57 0.25 0.01"
+                events={{click: () => this.handleSaveListItemClick()}}
+              />
+            </Entity>
+          </Entity>
+
+          <ToDoListContainer>
+            {this.state.toDoList.map((listItem, index) => (
+              <ToDoListItem
+                className='toDoListItem'
+                key={listItem._id}
+                id={listItem._id}
+                text={listItem.title}
+                posY={`${3 - (0.5 * (index + 1))}`}
               />
             ))}
           </ToDoListContainer>
 
           <Entity light={{type: 'point'}}/>
 
-          {this.state.listItems.map((listItem) => (
-            <EntityElement key={listItem.itemId}
-                           id={listItem.itemId}
-                           position={{
-                             x: listItem.posX,
-                             y: listItem.posY,
-                             z: listItem.posZ
-                           }}
-                           events={{
-                             click: () => this.handleClick(listItem.itemId)
-                           }}
+          {this.state.listItems.map((lizItem) => (
+            <EntityElement
+              key={lizItem.itemId}
+              id={lizItem.itemId}
+              position={{
+                x: lizItem.posX,
+                y: lizItem.posY,
+                z: lizItem.posZ
+              }}
+              events={{
+                click: () => this.handleClick(lizItem.itemId)
+              }}
             />
           ))}
         </Scene>
