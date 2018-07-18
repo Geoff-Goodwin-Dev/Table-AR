@@ -9,7 +9,8 @@ import AddBlock from "../../components/AddBlock";
 import SaveBtn from "../../components/SaveBtn";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
-import Webcam from "react-user-media";
+// import Webcam from "react-user-media";
+import API from "../../utils/API";
 
 let textValue = '';
 let counter = 0;
@@ -164,10 +165,25 @@ class Main extends Component {
     });
   };
 
+
   onChangeText = (text) => {
     console.log(text);
     this.setState({toDoListInputField: text});
     textValue = text;
+  };
+
+  getTodos = () => {
+    console.log('call triggered');
+    API.getTodos().then(
+      res => console.log(res)
+    )
+  };
+
+  saveTodos = (data) => {
+    console.log('call triggered');
+    API.saveTodos(data).then(
+      res => console.log(res)
+    )
   };
 
   render () {
