@@ -2,8 +2,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const express = require("express");
 const routes = require("./routes");
-const session = require("express-session");
-const passport = require("./passport");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +12,9 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(routes);
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
@@ -22,6 +23,7 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
 
 // Connect to the Mongo DB
 mongoose.connect(MONGODB_URI);
+mongoose.set('bufferCommands', false);
 mongoose.Promise = Promise;
 
 app.listen(PORT, () => console.log(`🌎  ==> API Server now listening on http://localhost:${PORT} !`));

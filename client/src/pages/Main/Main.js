@@ -161,6 +161,12 @@ class Main extends Component {
     )
   }
 
+  saveTodos = (data) => {
+    console.log('call triggered')
+    API.saveTodos(data).then(
+      res => console.log(res)
+    )
+  }
 
 
   render () {

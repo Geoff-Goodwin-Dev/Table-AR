@@ -7,11 +7,11 @@ const controller = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  create: (req, res) => {
+  create: (req, res, next) => {
     db.ListItem
       .create(req.body)
       .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .catch(next);
   },
   remove: (req, res) => {
     db.ListItem
