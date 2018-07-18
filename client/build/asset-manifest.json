@@ -1,12 +1,7 @@
 {
   "main.css": "static/css/main.c2201d48.css",
   "main.css.map": "static/css/main.c2201d48.css.map",
-<<<<<<< HEAD
-  "main.js": "static/js/main.6bf890a4.js",
-  "main.js.map": "static/js/main.6bf890a4.js.map",
-=======
-  "main.js": "static/js/main.204f7273.js",
-  "main.js.map": "static/js/main.204f7273.js.map",
->>>>>>> 025b613ab212b8a86695168945ffee367fe5f832
+  "main.js": "static/js/main.c7e976b6.js",
+  "main.js.map": "static/js/main.c7e976b6.js.map",
   "static/media/hypnotize.png": "static/media/hypnotize.62c472e8.png"
 }
