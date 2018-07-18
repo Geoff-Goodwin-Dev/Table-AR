@@ -2,19 +2,20 @@ import React, { Component } from "react";
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
 import {Entity, Scene} from 'aframe-react';
-import CameraCursor from "../../components/CameraCursor";
-import EntityElement from "../../components/Entity";
-import AddBlock from "../../components/AddBlock";
-import SaveBtn from "../../components/SaveBtn";
-import ToDoListContainer from "../../components/ToDoListContainer";
-import ToDoListItem from "../../components/ToDoListItems";
-// import Webcam from "react-user-media";
-import API from "../../utils/API";
+import CameraCursor from '../../components/CameraCursor';
+import EntityElement from '../../components/Entity';
+import AddBlock from '../../components/AddBlock';
+import SaveBtn from '../../components/SaveBtn';
+import ToDoListContainer from '../../components/ToDoListContainer';
+import ToDoListItem from '../../components/ToDoListItems';
+// import Webcam from 'react-user-media';
+import API from '../../utils/API';
 
 let textValue = '';
 
 class Main extends Component {
   state = {
+    keyboardRotation: '0 0 0',
     listTitleInputField: '',
     listCreateModalIsVisible: false,
     listsOfUser: [],
@@ -142,18 +143,16 @@ class Main extends Component {
     )
   };
 
-  // saveLists = (data) => {
-  //   console.log('post triggered');
-  //   API.saveLists(data).then(
-  //     res => {
-  //       console.log(res);
-  //       this.getListsOfUser();
-  //     }
-  //   );
-  //
-  //   this.getListItemsOfList(this.state.listInFocus);
-  //
-  // };
+  saveNewList = (data) => {
+    console.log('post of list triggered');
+    API.saveLists(data).then(
+      res => {
+        console.log(res);
+        this.getListsOfUser();
+      }
+    );
+    // this.getListItemsOfList(this.state.listInFocus);
+  };
 
   getListItemsOfList = (listID) => {
     console.log('get list items triggered');
@@ -166,7 +165,7 @@ class Main extends Component {
   };
 
   saveNewListItem = (data) => {
-    console.log('post triggered');
+    console.log('post of list item triggered');
     API.saveTodos(data).then(
       res => {
         console.log(res);
@@ -187,13 +186,24 @@ class Main extends Component {
   };
 
   handleAddListItemClick = () => {
-    this.setState({listItemCreateModalIsVisible: true});
+    this.setState({
+      keyboardRotation: '0 0 0',
+      listItemCreateModalIsVisible: true
+    });
     document.querySelector('#toDoItemInputField').focus();
+  };
+
+  handleAddListClick = () => {
+    this.setState({
+      keyboardRotation: '0 45 0',
+      listCreateModalIsVisible: true
+    });
+    document.querySelector('#listInputField').focus();
   };
 
   handleSaveListItemClick = () => {
     let toDoListInput = document.querySelector('#toDoItemInputField');
-    console.log("save clicked");
+    console.log('save list item clicked');
     if(this.state.listItemTitleInputField.length > 0) {
       toDoListInput.blur();
       let newListItem = {
@@ -205,6 +215,22 @@ class Main extends Component {
       this.setState({
         listItemTitleInputField: '',
         listItemCreateModalIsVisible: false
+      });
+    }
+  };
+
+  handleSaveListClick = () => {
+    let ListInput = document.querySelector('#listInputField');
+    console.log('save list clicked');
+    if(this.state.listTitleInputField.length > 0) {
+      ListInput.blur();
+      let newList = {
+        listTitle: textValue.trim()
+      };
+      this.saveNewList(newList);
+      this.setState({
+        listTitleInputField: '',
+        listCreateModalIsVisible: false
       });
     }
   };
@@ -223,7 +249,7 @@ class Main extends Component {
   };
 
   handleCloseListItemModal = () => {
-    console.log("x clicked");
+    console.log('x clicked');
     document.querySelector('#toDoItemInputField').blur();
     this.setState({
       listItemTitleInputField: '',
@@ -231,9 +257,15 @@ class Main extends Component {
     });
   };
 
-  onChangeText = (text) => {
+  onChangeListItemText = (text) => {
     console.log(text);
     this.setState({listItemTitleInputField: text});
+    textValue = text;
+  };
+
+  onChangeListText = (text) => {
+    console.log(text);
+    this.setState({listTitleInputField: text});
     textValue = text;
   };
 
@@ -252,82 +284,216 @@ class Main extends Component {
 
           <CameraCursor/>
 
-          <AddBlock
-            events={{
-              click: () => this.handleAddListItemClick()
-            }}
-          />
-
           <Entity
-            id="keyboardAndModalContainer"
-            position="0 0.65 0"
+            rotation={this.state.keyboardRotation}
+            position='0 0.65 0'
           >
             <Entity
-              primitive="a-keyboard"
-              id="toDoListKeyboard"
-              className="clickable"
-              physical-keyboard="true"
+              primitive='a-keyboard'
+              id='listOfListsKeyboard'
+              className='clickable'
+              physical-keyboard='true'
             />
-            <Entity
-              visible={this.state.listItemCreateModalIsVisible}
-              primitive='a-rounded'
-              position="-1.25 0.45 -2.95"
-              width="2.5"
-              height="1"
-              radius="0.05"
-            >
-              <Entity
-                primitive="a-form"
-              >
-                <Entity
-                  primitive="a-input"
-                  id="toDoItemInputField"
-                  disabled={!this.state.listItemCreateModalIsVisible}
-                  position="0.25 0.6 0"
-                  placeholder="Description"
-                  color="black"
-                  width="2"
-                  value={this.state.listItemTitleInputField}
-                  events={{
-                    change: () => this.onChangeText(document.querySelector("#toDoItemInputField").value)
-                  }}
-                />
-
-                <Entity
-                  className="clickable"
-                  primitive="a-button"
-                  position="2.25 0.85 0"
-                  scale="0.4 0.4 0.4"
-                  width="0.1"
-                  value="X"
-                  type="raised"
-                  button-color="red"
-                  events={{click: () => this.handleCloseListItemModal()}}
-                />
-
-                <SaveBtn
-                  disabled={this.state.listItemTitleInputField === ''}
-                  position="1.57 0.25 0.01"
-                  events={{click: () => this.handleSaveListItemClick()}}
-                />
-              </Entity>
-            </Entity>
           </Entity>
 
-          <ToDoListContainer>
-            {this.state.listItemsOfList.map((listItem, index) => (
-              <ToDoListItem
-                className='toDoListItem'
-                key={listItem._id}
-                id={listItem._id}
-                text={listItem.title}
-                posY={`${3 - (0.5 * (index + 1))}`}
-              />
-            ))}
-          </ToDoListContainer>
+          {/*=============================================================================================
+              List of Lists Scene Container
+          ==============================================================================================*/}
+          <Entity
+            id='ListOfListsSceneComponent'
+            rotation='0 45 0'
+          >
+            {/*=============================================================================================
+              Modal Container
+             ==============================================================================================*/}
+            <Entity
+              id='listOfListsModalContainer'
+              position='0 0.65 0'
+            >
+              <Entity
+                visible={this.state.listCreateModalIsVisible}
+                primitive='a-rounded'
+                position='-1.25 0.45 -2.95'
+                width='2.5'
+                height='1'
+                radius='0.05'
+              >
+                <Entity
+                  primitive='a-form'
+                >
+                  <Entity
+                    primitive='a-input'
+                    id='listInputField'
+                    disabled={!this.state.listCreateModalIsVisible}
+                    position='0.25 0.6 0'
+                    placeholder='Description'
+                    color='black'
+                    width='2'
+                    value={this.state.listTitleInputField}
+                    events={{
+                      change: () => this.onChangeListText(document.querySelector('#listInputField').value)
+                    }}
+                  />
 
+                  <Entity
+                    className='clickable'
+                    primitive='a-button'
+                    position='2.25 0.85 0'
+                    scale='0.4 0.4 0.4'
+                    width='0.1'
+                    value='X'
+                    type='raised'
+                    button-color='red'
+                    // events={{click: () => this.handleCloseListItemModal()}}
+                  />
+
+                  <SaveBtn
+                    disabled={this.state.listTitleInputField === ''}
+                    position='1.57 0.25 0.01'
+                    events={{click: () => this.handleSaveListClick()}}
+                  />
+                </Entity>
+              </Entity>
+            </Entity>
+
+            {/*=============================================================================================
+                To Do List Container
+            ==============================================================================================*/}
+            <ToDoListContainer>
+              <AddBlock
+                events={{
+                  click: () => this.handleAddListClick()
+                }}
+              />
+
+              <Entity
+                id="listInFocusCaption"
+                position='0 3.25 0'
+                text={{
+                  color: 'white',
+                  align: 'center',
+                  value: this.state.listInFocus,
+                  opacity: 1,
+                  width: 4,
+                  side: 'double'
+                }}
+              />
+
+              {this.state.listsOfUser.map((listItem, index) => (
+                <ToDoListItem
+                  className='lists'
+                  key={listItem._id}
+                  id={listItem._id}
+                  text={listItem.listTitle}
+                  posY={`${3 - (0.5 * (index + 1))}`}
+                />
+              ))}
+            </ToDoListContainer>
+          </Entity>
+
+          {/*=============================================================================================
+              To Do List Items Scene Container
+          ==============================================================================================*/}
+          <Entity
+            id='toDoListItemsSceneComponent'
+            rotation='0 0 0'
+          >
+            {/*=============================================================================================
+              Modal Container
+             ==============================================================================================*/}
+            <Entity
+              id='ModalContainer'
+              position='0 0.65 0'
+            >
+              <Entity
+                visible={this.state.listItemCreateModalIsVisible}
+                primitive='a-rounded'
+                position='-1.25 0.45 -2.95'
+                width='2.5'
+                height='1'
+                radius='0.05'
+              >
+                <Entity
+                  primitive='a-form'
+                >
+                  <Entity
+                    primitive='a-input'
+                    id='toDoItemInputField'
+                    disabled={!this.state.listItemCreateModalIsVisible}
+                    position='0.25 0.6 0'
+                    placeholder='Description'
+                    color='black'
+                    width='2'
+                    value={this.state.listItemTitleInputField}
+                    events={{
+                      change: () => this.onChangeListItemText(document.querySelector('#toDoItemInputField').value)
+                    }}
+                  />
+
+                  <Entity
+                    className='clickable'
+                    primitive='a-button'
+                    position='2.25 0.85 0'
+                    scale='0.4 0.4 0.4'
+                    width='0.1'
+                    value='X'
+                    type='raised'
+                    button-color='red'
+                    events={{click: () => this.handleCloseListItemModal()}}
+                  />
+
+                  <SaveBtn
+                    disabled={this.state.listItemTitleInputField === ''}
+                    position='1.57 0.25 0.01'
+                    events={{click: () => this.handleSaveListItemClick()}}
+                  />
+                </Entity>
+              </Entity>
+            </Entity>
+
+            {/*=============================================================================================
+                To Do List Container
+            ==============================================================================================*/}
+            <ToDoListContainer>
+              <AddBlock
+                events={{
+                  click: () => this.handleAddListItemClick()
+                }}
+              />
+
+              <Entity
+                id="listInFocusCaption"
+                position='0 3.25 0'
+                text={{
+                  color: 'white',
+                  align: 'center',
+                  value: this.state.listInFocus,
+                  opacity: 1,
+                  width: 4,
+                  side: 'double'
+                }}
+              />
+
+              {this.state.listItemsOfList.map((listItem, index) => (
+                <ToDoListItem
+                  className='toDoListItem'
+                  key={listItem._id}
+                  id={listItem._id}
+                  text={listItem.title}
+                  posY={`${3 - (0.5 * (index + 1))}`}
+                />
+              ))}
+            </ToDoListContainer>
+          </Entity>
+
+          {/*=============================================================================================
+              Scene Lighting
+          ==============================================================================================*/}
           <Entity light={{type: 'point'}}/>
 
+          {/*=============================================================================================
+              Liz Items Container
+          ==============================================================================================*/}
           {this.state.lizItems.map((lizItem) => (
             <EntityElement
               key={lizItem.itemId}

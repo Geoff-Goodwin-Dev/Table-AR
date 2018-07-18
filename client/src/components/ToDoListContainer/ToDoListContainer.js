@@ -31,16 +31,17 @@ const ToDoListContainer = ({children}) => (
         side: 'double'
       }}
     />
-    <Entity id="toDoListHeader"
-            position="0 3.25 0"
-            text={{
-              color: 'white',
-              align: 'center',
-              value: 'To Do List:',
-              opacity: 1,
-              width: 6,
-              side: 'double'
-            }}
+    <Entity
+      id="toDoListHeader"
+      position="0 3.5 0"
+      text={{
+        color: 'white',
+        align: 'center',
+        value: 'To Do List:',
+        opacity: 1,
+        width: 6,
+        side: 'double'
+      }}
     />
     {children}
   </Entity>

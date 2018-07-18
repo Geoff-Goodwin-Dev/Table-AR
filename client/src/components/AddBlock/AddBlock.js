@@ -11,7 +11,7 @@ const AddBlock = props => (
         height: 0.5,
         width: 0.5
       }}
-      position="-2 3.75 -5"
+      position="-2 2.75 0"
       material={{
         color: 'green',
         opacity: 0.3,
