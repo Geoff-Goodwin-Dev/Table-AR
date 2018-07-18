@@ -14,12 +14,14 @@ const listItemSchema = new Schema({
     type: Date,
     default: Date.now
   },
+
   // authorID:[
   //     {
   //       type: Schema.Types.ObjectId,
   //       ref: "user"
   //     }
   //   ],
+  
   listID: {
     type: String,
     required: "List ID is required"
