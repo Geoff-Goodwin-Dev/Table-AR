@@ -14,10 +14,11 @@ import API from "../../utils/API";
 let textValue = '';
 
 class Main extends Component {
-  state= {
+  state = {
     toDoListInputField: '',
     toDoListModalIsVisible: false,
     toDoList: [],
+    listInFocus: '5b49ujbd0b81b00916e2b3c1',
     listItems: [
       {
         itemId: 'one',
@@ -115,16 +116,16 @@ class Main extends Component {
         posY: 0,
         posZ: 5
       },
-    ],
+    ]
   };
 
   componentDidMount() {
-    this.getTodos();
+    this.getTodos(this.state.listInFocus);
   };
 
-  getTodos = () => {
-    console.log('get triggered');
-    API.getTodos().then(
+  getTodos = (listID) => {
+    console.log('get list items triggered');
+    API.getTodos(listID).then(
       res => {
         console.log(res.data);
         this.setState({toDoList: res.data});
@@ -165,7 +166,8 @@ class Main extends Component {
       toDoListInput.blur();
       let newListItem = {
         title: textValue.trim(),
-        orderNumber: (this.findLargestOrderNumber() + 1)
+        orderNumber: (this.findLargestOrderNumber() + 1),
+        listID: this.state.listInFocus,
       };
       this.saveTodos(newListItem);
       this.setState({

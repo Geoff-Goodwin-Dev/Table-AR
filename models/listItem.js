@@ -5,30 +5,28 @@ const listItemSchema = new Schema({
   title: {
     type: String,
     trim: true,
-    required: "Title is Required"
+    required: "Title is required"
   },
   orderNumber:{
     type: Number
   },
   createdDate: {
     type: Date,
-    default: String.now
-  }
+    default: Date.now
+  },
   // authorID:[
   //     {
   //       type: Schema.Types.ObjectId,
   //       ref: "user"
   //     }
   //   ],
-  // listID: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "listItem"
-  //   }
-  // ]
+  listID: {
+    type: String,
+    required: "List ID is required"
+  }
 
 });
 
-const ListItem = mongoose.model("ListItem", listItemSchema);
+const  ListItem = mongoose.model("ListItem", listItemSchema);
 
 module.exports = ListItem;

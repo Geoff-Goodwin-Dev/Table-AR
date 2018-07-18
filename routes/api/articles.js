@@ -3,11 +3,11 @@ const todosController = require("../../controllers/todosController");
 
 router
   .route("/")
-  .get(todosController.findAll)
   .post(todosController.create);
 
 router
   .route("/:id")
+  .get(todosController.findAll)
   .delete(todosController.remove);
 
 module.exports = router;
