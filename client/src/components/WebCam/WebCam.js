@@ -27,7 +27,8 @@ class WebCam extends Component {
         <video
           src={this.state.videoSrc}
           autoPlay="true"
-          playsinline
+          playsInline="true"
+          muted
           style={{
             position: "absolute",
             left: "50%",
