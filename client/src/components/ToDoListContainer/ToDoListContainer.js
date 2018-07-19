@@ -1,7 +1,7 @@
 import React from "react";
 import {Entity} from 'aframe-react';
 
-const ToDoListContainer = ({children}) => (
+const ToDoListContainer = (props) => (
   <Entity
     id='toDoListContainer'
     geometry={{
@@ -37,13 +37,13 @@ const ToDoListContainer = ({children}) => (
       text={{
         color: 'white',
         align: 'center',
-        value: 'To Do List:',
+        value: props.caption,
         opacity: 1,
         width: 6,
         side: 'double'
       }}
     />
-    {children}
+    {props.children}
   </Entity>
 );
 

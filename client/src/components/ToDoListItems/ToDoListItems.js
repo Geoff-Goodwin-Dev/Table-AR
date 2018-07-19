@@ -3,7 +3,8 @@ import {Entity} from 'aframe-react';
 
 const ToDoListItem = props => (
   <Entity
-    id={`listItem${props.id}`}
+    id={`${props.id}`}
+    className={(props.type === 'list' ) ? 'clickable' : 'listItem'}
     geometry={{
       primitive: 'box',
       depth: 0.3,
@@ -17,6 +18,10 @@ const ToDoListItem = props => (
       side: 'double'
     }}
     shadow='receive: true;'
+    events={{
+      click: props.events.click()
+    }}
+
   >
     <Entity
       geometry={{
@@ -42,31 +47,7 @@ const ToDoListItem = props => (
           side: 'double'
         }}
     />
-    <Entity
-      geometry={{
-        primitive: 'box',
-        depth: 0.19,
-        height: 0.19,
-        width: 0.19
-      }}
-      position="1.15 0 0.1"
-      material={{
-        color: 'red',
-        opacity: 0.5,
-        side: 'double'
-      }}
-    >
-      <Entity
-        position="0 0 0.1"
-        text={{
-          color: 'white',
-          align: 'center',
-          value: 'x',
-          opacity: 1,
-          width: 3
-        }}
-      />
-    </Entity>
+    {props.children}
   </Entity>
 );
 
