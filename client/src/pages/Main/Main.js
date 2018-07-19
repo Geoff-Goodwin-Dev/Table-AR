@@ -9,7 +9,7 @@ import AddBlock from "../../components/AddBlock";
 import ToDoListContainer from "../../components/ToDoListContainer";
 import ToDoListItem from "../../components/ToDoListItems";
 import Webcam from "react-user-media";
-import axios from "axios";
+import API from "../../utils/API";
 
 class Main extends Component {
   constructor() {
@@ -18,6 +18,7 @@ class Main extends Component {
       test: "foopie",
       loggedIn: false,
       username: null,
+      saved: [],
       listItemPosY: 3,
       toDoListInputField: '',
       toDoList: [],
@@ -122,38 +123,48 @@ class Main extends Component {
       ],
     };
 
-    this.getUser = this.getUser.bind(this);
+    // this.getUser = this.getUser.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.updateUser = this.updateUser.bind(this);
   }
 
-  componentDidMount() {
-    this.getUser();
-  }
+  // componentDidMount() {
+  //   this.getUsers();
+  // }
 
   updateUser (userObject) {
     this.setState(userObject);
   }
 
-  getUser() {
-    axios.get('/user/').then(response => {
-      console.log('Get user response: ');
-      console.log(response.data);
-      if (response.data.user) {
-        console.log('Get User: There is a user saved in the server session: ');
+  componentDidMount() {
+    this.loadUsers();
+  }
 
-        this.setState({
-          loggedIn: true,
-          username: response.data.user.username
-        })
-      } else {
-        console.log('Get user: no user');
-        this.setState({
-          loggedIn: false,
-          username: null
-        })
-      }
-    })
+  // getUser() {
+  //   axios.get('/user/').then(response => {
+  //     console.log('Get user response: ');
+  //     console.log(response.data);
+  //     if (response.data.user) {
+  //       console.log('Get User: There is a user saved in the server session: ');
+  //
+  //       this.setState({
+  //         loggedIn: true,
+  //         username: response.data.user.username
+  //       })
+  //     } else {
+  //       console.log('Get user: no user');
+  //       this.setState({
+  //         loggedIn: false,
+  //         username: null
+  //       })
+  //     }
+  //   })
+  // };
+
+  loadUsers = () => {
+    API.getUsers()
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
   };
 
   handleClick = (id) => {
