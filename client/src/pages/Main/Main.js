@@ -24,6 +24,9 @@ class Main extends Component {
     listItemCreateModalIsVisible: false,
     listItemsOfList: [],
     listInFocus: 'placeholderForNoLists',
+    listInFocusText: 'none',
+    userIdInFocus: 'placeholderForNoId',
+    usernameInFocus: 'TestUser',
     lizItems: [
       {
         itemId: 'one',
@@ -136,7 +139,8 @@ class Main extends Component {
         if(res.data.length > 0) {
           this.setState({
             listsOfUser: res.data,
-            listInFocus: res.data[0]._id
+            listInFocus: res.data[0]._id,
+            listInFocusText: res.data[0].listTitle
           })
         }
         this.getListItemsOfList(this.state.listInFocus);
@@ -186,13 +190,13 @@ class Main extends Component {
   };
 
   handleClick = (id) => {
-    const listItemsArray = this.state.listItems;
-    const result = listItemsArray.find( listItem => listItem.itemId === id );
-    const arrayIndex = listItemsArray.indexOf(result);
+    const lizItemsArray = this.state.lizItems;
+    const result = lizItemsArray.find(lizItem => lizItem.itemId === id);
+    const arrayIndex = lizItemsArray.indexOf(result);
     if (arrayIndex > -1) {
-      listItemsArray.splice(arrayIndex,1);
-      this.setState({listItems: listItemsArray});
-      console.log(this.state.listItems);
+      lizItemsArray.splice(arrayIndex,1);
+      this.setState({lizItems: lizItemsArray});
+      console.log(this.state.lizItems);
     }
   };
 
@@ -265,7 +269,13 @@ class Main extends Component {
   handleSelectListClick = (event) => {
     const {id} = event.target;
     console.log(id, 'selected as list in focus');
-    this.setState({listInFocus: id});
+    let result = this.state.listsOfUser.filter(list => {
+      return list._id === id
+    });
+    this.setState({
+      listInFocus: id,
+      listInFocusText: result[0].listTitle
+    });
     this.getListItemsOfList(id);
   };
 
@@ -389,7 +399,9 @@ class Main extends Component {
             {/*=============================================================================================
                 To Do List Container
             ==============================================================================================*/}
-            <ToDoListContainer>
+            <ToDoListContainer
+              caption='Lists for User:'
+            >
               <AddBlock
                 events={{
                   click: () => this.handleAddListClick()
@@ -397,12 +409,12 @@ class Main extends Component {
               />
 
               <Entity
-                id="listInFocusCaption"
+                id="userInFocusCaption"
                 position='0 3.25 0'
                 text={{
                   color: 'white',
                   align: 'center',
-                  value: this.state.listInFocus,
+                  value: this.state.usernameInFocus,
                   opacity: 1,
                   width: 4,
                   side: 'double'
@@ -487,7 +499,9 @@ class Main extends Component {
             {/*=============================================================================================
                 To Do List Items Container
             ==============================================================================================*/}
-            <ToDoListContainer>
+            <ToDoListContainer
+              caption='To Do List:'
+            >
               <AddBlock
                 events={{
                   click: () => this.handleAddListItemClick()
@@ -500,7 +514,7 @@ class Main extends Component {
                 text={{
                   color: 'white',
                   align: 'center',
-                  value: this.state.listInFocus,
+                  value: this.state.listInFocusText,
                   opacity: 1,
                   width: 4,
                   side: 'double'
