@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./login.css";
+import "./Login.css";
 import API from "../../utils/API";
 import { Redirect } from "react-router-dom";
 
@@ -11,10 +11,6 @@ class Login extends Component {
     loggedIn: false
   };
 
-  componentDidMount() {
-    this.loadUsers();
-  }
-
   handleChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
@@ -24,13 +20,6 @@ class Login extends Component {
       [name]: value
     });
   };
-
-  loadUsers = () => {
-    API.getUsers()
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
-  };
-
 
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
@@ -46,9 +35,9 @@ class Login extends Component {
     };
     API.saveUser(userInfo)
       .then(response => {
-        console.log(response)
+        console.log(response);
         if (response.data) {
-          console.log("successful signup!!")
+          console.log("successful signup!!");
           this.setState({
             redirectTo: '/todo'
           })
@@ -66,44 +55,44 @@ class Login extends Component {
 
   };
 
-  handleFormLogin = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-
-    console.log(`log-in-form, username: ${this.state.username}`);
-
-    // request to server here
-
-    let userInfo = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    API.loginUser(userInfo)
-      .then(response => {
-        console.log(response);
-        if (response.status === 200) {
-          // // update Main.js state
-          // this.props.updateUser({
-          //   loggedIn: true,
-          //   username: response.data.username
-          // });
-          // update state to redirect to home
-          this.setState({
-            username: response.data.username,
-            loggedIn: true,
-            redirectTo: '/todo'
-          })
-        }
-      }).catch(error => {
-      console.log(`login error: ${error}`);
-    });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
-
-  };
+  // handleFormLogin = event => {
+  //   // Preventing the default behavior of the form submit (which is to refresh the page)
+  //   event.preventDefault();
+  //
+  //   console.log(`log-in-form, username: ${this.state.username}`);
+  //
+  //   // request to server here
+  //
+  //   let userInfo = {
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   };
+  //   API.loginUser(userInfo)
+  //     .then(response => {
+  //       console.log(response);
+  //       if (response.status === 200) {
+  //         // // update Main.js state
+  //         // this.props.updateUser({
+  //         //   loggedIn: true,
+  //         //   username: response.data.username
+  //         // });
+  //         // update state to redirect to home
+  //         this.setState({
+  //           username: response.data.username,
+  //           loggedIn: true,
+  //           redirectTo: '/todo'
+  //         })
+  //       }
+  //     }).catch(error => {
+  //     console.log(`login error: ${error}`);
+  //   });
+  //
+  //   // this.setState({
+  //   //   username: "",
+  //   //   password: ""
+  //   // });
+  //
+  // };
 
   render() {
     if (this.state.redirectTo) {
