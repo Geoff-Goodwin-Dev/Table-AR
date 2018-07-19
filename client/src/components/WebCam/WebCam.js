@@ -16,6 +16,18 @@ class WebCam extends Component {
     // Update the state, triggering the component to re-render with the correct stream
     this.setState({videoSrc: window.URL.createObjectURL(stream)});
     console.log('video feed initiated');
+    const video = document.querySelector('video');
+    const promise = video.play();
+    // promise won’t be defined in browsers that don't support promisified play()
+    if (promise === undefined) {
+      console.log('Promisified video play() not supported');
+    } else {
+      promise.then(() => {
+        console.log('Video playback successfully initiated, returning a promise');
+      }).catch((error) => {
+        console.log('Error initiating video playback: ', error);
+      });
+    }
   };
 
   videoError = () => {
