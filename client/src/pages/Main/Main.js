@@ -251,6 +251,13 @@ class Main extends Component {
     }
   };
 
+  handleSelectListClick = (event) => {
+    const {id} = event.target;
+    console.log(id);
+    this.setState({listInFocus: id});
+    this.getListItemsOfList(id);
+  };
+
   handleCloseModal = () => {
     console.log('x clicked');
     document.querySelector('#toDoItemInputField').blur();
@@ -385,13 +392,16 @@ class Main extends Component {
                 }}
               />
 
-              {this.state.listsOfUser.map((listItem, index) => (
+              {this.state.listsOfUser.map((list, index) => (
                 <ToDoListItem
-                  className='lists'
-                  key={listItem._id}
-                  id={listItem._id}
-                  text={listItem.listTitle}
+                  key={list._id}
+                  id={list._id}
+                  text={list.listTitle}
                   posY={`${3 - (0.5 * (index + 1))}`}
+                  type='list'
+                  events={{
+                    click: () => this.handleSelectListClick
+                  }}
                 />
               ))}
             </ToDoListContainer>
@@ -487,6 +497,9 @@ class Main extends Component {
                   id={listItem._id}
                   text={listItem.title}
                   posY={`${3 - (0.5 * (index + 1))}`}
+                  events={{
+                    click: () => this.handleSelectListClick
+                  }}
                 />
               ))}
             </ToDoListContainer>

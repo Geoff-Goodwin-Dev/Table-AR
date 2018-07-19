@@ -3,7 +3,8 @@ import {Entity} from 'aframe-react';
 
 const ToDoListItem = props => (
   <Entity
-    id={`listItem${props.id}`}
+    id={`${props.id}`}
+    className='clickable'
     geometry={{
       primitive: 'box',
       depth: 0.3,
@@ -17,6 +18,10 @@ const ToDoListItem = props => (
       side: 'double'
     }}
     shadow='receive: true;'
+    events={{
+      click: (props.type === 'list' ) ? props.events.click() : () => console.log('list item clicked')
+    }}
+
   >
     <Entity
       geometry={{
