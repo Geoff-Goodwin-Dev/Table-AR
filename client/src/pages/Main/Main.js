@@ -8,6 +8,7 @@ import AddBlock from '../../components/AddBlock';
 import SaveBtn from '../../components/SaveBtn';
 import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
+import CloseCube from '../../components/CloseCube';
 // import Webcam from 'react-user-media';
 import API from '../../utils/API';
 
@@ -174,6 +175,16 @@ class Main extends Component {
     )
   };
 
+  deleteListItem = (id) => {
+    console.log('delete of list item triggered');
+    API.deleteTodos(id).then(
+      res => {
+        console.log(res);
+        this.getListItemsOfList(this.state.listInFocus);
+      }
+    )
+  };
+
   handleClick = (id) => {
     const listItemsArray = this.state.listItems;
     const result = listItemsArray.find( listItem => listItem.itemId === id );
@@ -253,8 +264,15 @@ class Main extends Component {
 
   handleSelectListClick = (event) => {
     const {id} = event.target;
-    console.log(id);
+    console.log(id, 'selected as list in focus');
     this.setState({listInFocus: id});
+    this.getListItemsOfList(id);
+  };
+
+  handleDeleteListItem = (event) => {
+    const {id} = event.target.parentEl;
+    console.log(id, 'clicked for deletion');
+    this.deleteListItem(id);
     this.getListItemsOfList(id);
   };
 
@@ -271,7 +289,6 @@ class Main extends Component {
   };
 
   onChangeListItemText = (text) => {
-    console.log(text);
     this.setState({listItemTitleInputField: text});
     textValue = text;
   };
@@ -468,7 +485,7 @@ class Main extends Component {
             </Entity>
 
             {/*=============================================================================================
-                To Do List Container
+                To Do List Items Container
             ==============================================================================================*/}
             <ToDoListContainer>
               <AddBlock
@@ -498,9 +515,13 @@ class Main extends Component {
                   text={listItem.title}
                   posY={`${3 - (0.5 * (index + 1))}`}
                   events={{
-                    click: () => this.handleSelectListClick
+                    click: () => this.handleDeleteListItem
                   }}
-                />
+                >
+                  <CloseCube
+                    id={listItem._id}
+                  />
+                </ToDoListItem>
               ))}
             </ToDoListContainer>
           </Entity>
