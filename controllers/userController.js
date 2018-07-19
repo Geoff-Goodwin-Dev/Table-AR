@@ -1,4 +1,4 @@
-const db = require('../models/User');
+const db = require('../models');
 
 module.exports = {
   findOne: (req, res) => {
