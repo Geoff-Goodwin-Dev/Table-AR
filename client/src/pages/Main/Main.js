@@ -433,18 +433,22 @@ class Main extends Component {
                 }}
               />
 
-              {this.state.listsOfUser.map((list, index) => (
-                <ToDoListItem
-                  key={list._id}
-                  id={list._id}
-                  text={list.listTitle}
-                  posY={`${3 - (0.5 * (index + 1))}`}
-                  type='list'
-                  events={{
-                    click: () => this.handleSelectListClick
-                  }}
-                />
-              ))}
+              {(this.state.listsOfUser.length > 0) ? (
+                this.state.listsOfUser.map((list, index) => (
+                  <ToDoListItem
+                    key={list._id}
+                    id={list._id}
+                    text={list.listTitle}
+                    posY={`${3 - (0.5 * (index + 1))}`}
+                    type='list'
+                    events={{
+                      click: () => this.handleSelectListClick
+                    }}
+                  />
+                ))) : (
+                  <p>No Lists</p>
+                )
+              }
             </ToDoListContainer>
           </Entity>
 
