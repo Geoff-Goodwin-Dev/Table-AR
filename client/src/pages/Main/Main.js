@@ -8,6 +8,7 @@ import AddBlock from '../../components/AddBlock';
 import SaveBtn from '../../components/SaveBtn';
 import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
+import CloseCube from '../../components/CloseCube';
 // import Webcam from 'react-user-media';
 import API from '../../utils/API';
 
@@ -23,6 +24,9 @@ class Main extends Component {
     listItemCreateModalIsVisible: false,
     listItemsOfList: [],
     listInFocus: 'placeholderForNoLists',
+    listInFocusText: 'none',
+    userIdInFocus: 'placeholderForNoId',
+    usernameInFocus: 'TestUser',
     lizItems: [
       {
         itemId: 'one',
@@ -124,19 +128,27 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    this.getListsOfUser();
+    this.getListsOfUser('pageLoad');
   };
 
-  getListsOfUser = () => {
+  getListsOfUser = (triggeringEvent) => {
     console.log('get lists triggered');
     API.getLists().then(
       res => {
         console.log('lists of user:', res.data);
         if(res.data.length > 0) {
-          this.setState({
-            listsOfUser: res.data,
-            listInFocus: res.data[0]._id
-          })
+          if(triggeringEvent === 'pageLoad'){
+            this.setState({
+              listsOfUser: res.data,
+              listInFocus: res.data[0]._id,
+              listInFocusText: res.data[0].listTitle
+            })
+          }
+          else {
+            this.setState({
+              listsOfUser: res.data
+            })
+          }
         }
         this.getListItemsOfList(this.state.listInFocus);
       }
@@ -149,6 +161,12 @@ class Main extends Component {
       res => {
         console.log(res);
         this.getListsOfUser();
+        this.setState({
+          listInFocus: res.data._id,
+          listInFocusText: res.data.listTitle
+        });
+        console.log('list now in focus', this.state.listInFocus);
+        console.log('list now in focus text', this.state.listInFocusText);
       }
     );
     // this.getListItemsOfList(this.state.listInFocus);
@@ -174,15 +192,22 @@ class Main extends Component {
     )
   };
 
-  handleClick = (id) => {
-    const listItemsArray = this.state.listItems;
-    const result = listItemsArray.find( listItem => listItem.itemId === id );
-    const arrayIndex = listItemsArray.indexOf(result);
-    if (arrayIndex > -1) {
-      listItemsArray.splice(arrayIndex,1);
-      this.setState({listItems: listItemsArray});
-      console.log(this.state.listItems);
-    }
+  deleteListItem = (id) => {
+    console.log('delete of list item triggered');
+    API.deleteTodos(id).then(
+      res => {
+        console.log(res);
+        this.getListItemsOfList(this.state.listInFocus);
+      }
+    )
+  };
+
+  handleClickLizItem = (id) => {
+    const lizItemsArray = this.state.lizItems;
+    const result = lizItemsArray.find(lizItem => lizItem.itemId === id);
+    const arrayIndex = lizItemsArray.indexOf(result);
+    if (arrayIndex > -1) {lizItemsArray.splice(arrayIndex, 1)};
+    this.setState({lizItems: lizItemsArray});
   };
 
   handleAddListItemClick = () => {
@@ -190,7 +215,6 @@ class Main extends Component {
       keyboardRotation: '0 0 0',
       listItemCreateModalIsVisible: true,
       listCreateModalIsVisible: false
-
     });
     document.querySelector('#toDoItemInputField').focus();
   };
@@ -253,8 +277,21 @@ class Main extends Component {
 
   handleSelectListClick = (event) => {
     const {id} = event.target;
-    console.log(id);
-    this.setState({listInFocus: id});
+    console.log(id, 'selected as list in focus');
+    let result = this.state.listsOfUser.filter(list => {
+      return list._id === id
+    });
+    this.setState({
+      listInFocus: id,
+      listInFocusText: result[0].listTitle
+    });
+    this.getListItemsOfList(id);
+  };
+
+  handleDeleteListItem = (event) => {
+    const {id} = event.target.parentEl;
+    console.log(id, 'clicked for deletion');
+    this.deleteListItem(id);
     this.getListItemsOfList(id);
   };
 
@@ -271,7 +308,6 @@ class Main extends Component {
   };
 
   onChangeListItemText = (text) => {
-    console.log(text);
     this.setState({listItemTitleInputField: text});
     textValue = text;
   };
@@ -372,7 +408,9 @@ class Main extends Component {
             {/*=============================================================================================
                 To Do List Container
             ==============================================================================================*/}
-            <ToDoListContainer>
+            <ToDoListContainer
+              caption='Lists for User:'
+            >
               <AddBlock
                 events={{
                   click: () => this.handleAddListClick()
@@ -380,12 +418,12 @@ class Main extends Component {
               />
 
               <Entity
-                id="listInFocusCaption"
+                id="userInFocusCaption"
                 position='0 3.25 0'
                 text={{
                   color: 'white',
                   align: 'center',
-                  value: this.state.listInFocus,
+                  value: this.state.usernameInFocus,
                   opacity: 1,
                   width: 4,
                   side: 'double'
@@ -468,9 +506,11 @@ class Main extends Component {
             </Entity>
 
             {/*=============================================================================================
-                To Do List Container
+                To Do List Items Container
             ==============================================================================================*/}
-            <ToDoListContainer>
+            <ToDoListContainer
+              caption='To Do List:'
+            >
               <AddBlock
                 events={{
                   click: () => this.handleAddListItemClick()
@@ -483,7 +523,7 @@ class Main extends Component {
                 text={{
                   color: 'white',
                   align: 'center',
-                  value: this.state.listInFocus,
+                  value: this.state.listInFocusText,
                   opacity: 1,
                   width: 4,
                   side: 'double'
@@ -498,9 +538,13 @@ class Main extends Component {
                   text={listItem.title}
                   posY={`${3 - (0.5 * (index + 1))}`}
                   events={{
-                    click: () => this.handleSelectListClick
+                    click: () => this.handleDeleteListItem
                   }}
-                />
+                >
+                  <CloseCube
+                    id={listItem._id}
+                  />
+                </ToDoListItem>
               ))}
             </ToDoListContainer>
           </Entity>
@@ -523,7 +567,7 @@ class Main extends Component {
                 z: lizItem.posZ
               }}
               events={{
-                click: () => this.handleClick(lizItem.itemId)
+                click: () => this.handleClickLizItem(lizItem.itemId)
               }}
             />
           ))}
