@@ -9,6 +9,7 @@ import SaveBtn from '../../components/SaveBtn';
 import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
 import CloseCube from '../../components/CloseCube';
+import WebCam from '../../components/WebCam';
 // import Webcam from 'react-user-media';
 import API from '../../utils/API';
 
@@ -23,7 +24,7 @@ class Main extends Component {
     listItemTitleInputField: '',
     listItemCreateModalIsVisible: false,
     listItemsOfList: [],
-    listInFocus: 'placeholderForNoLists',
+    listInFocus: '',
     listInFocusText: 'none',
     userIdInFocus: 'placeholderForNoId',
     usernameInFocus: 'TestUser',
@@ -221,7 +222,7 @@ class Main extends Component {
 
   handleAddListClick = () => {
     this.setState({
-      keyboardRotation: '0 45 0',
+      keyboardRotation: '0 90 0',
       listCreateModalIsVisible: true,
       listItemCreateModalIsVisible: false
     });
@@ -321,6 +322,7 @@ class Main extends Component {
   render () {
     return (
       <div className='text-center'>
+        <WebCam/>
 
         {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
 
@@ -332,6 +334,7 @@ class Main extends Component {
           {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
           <CameraCursor/>
+
 
           <Entity
             rotation={this.state.keyboardRotation}
@@ -350,7 +353,7 @@ class Main extends Component {
           ==============================================================================================*/}
           <Entity
             id='ListOfListsSceneComponent'
-            rotation='0 45 0'
+            rotation='0 90 0'
           >
             {/*=============================================================================================
               Modal Container
