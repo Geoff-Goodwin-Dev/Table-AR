@@ -188,7 +188,9 @@ class Main extends Component {
   handleAddListItemClick = () => {
     this.setState({
       keyboardRotation: '0 0 0',
-      listItemCreateModalIsVisible: true
+      listItemCreateModalIsVisible: true,
+      listCreateModalIsVisible: false
+
     });
     document.querySelector('#toDoItemInputField').focus();
   };
@@ -196,7 +198,8 @@ class Main extends Component {
   handleAddListClick = () => {
     this.setState({
       keyboardRotation: '0 45 0',
-      listCreateModalIsVisible: true
+      listCreateModalIsVisible: true,
+      listItemCreateModalIsVisible: false
     });
     document.querySelector('#listInputField').focus();
   };
