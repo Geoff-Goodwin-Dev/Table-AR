@@ -2,55 +2,26 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const express = require("express");
 const routes = require("./routes");
-const session = require("express-session");
-const passport = require("./passport");
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-
 
 // Serve up static assets (heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// middleware
-app.use(bodyParser.urlencoded({ useNewUrlParser: true, extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// Sessions
-app.use(
-  session({
-    secret: "code-dictator",
-    resave: false, // required
-    saveUninitialized: true // required
-  })
-);
-// Add routes, both API & view
+
 app.use(routes);
 
-
-app.use( (req, res, next) => {
-  console.log('req.session', req.session);
-  return next();
-});
-
-// Sessions Testing. Need to comment out app.use(routes) ~line 29
-// app.post('/api/user', (req, res) => {
-//   console.log('user signup');
-//   req.session.username = req.body.username;
-//   res.end()
-// });
-
-// Passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
+// Add routes, both API & view
+
 
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
+mongoose.set('bufferCommands', false);
+mongoose.Promise = Promise;
 
 app.listen(PORT, () => console.log(`🌎  ==> API Server now listening on http://localhost:${PORT} !`));
