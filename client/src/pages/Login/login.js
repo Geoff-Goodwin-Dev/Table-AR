@@ -11,6 +11,10 @@ class Login extends Component {
     loggedIn: false
   };
 
+  componentDidMount() {
+    this.loadUsers();
+  }
+
   handleChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
@@ -20,6 +24,13 @@ class Login extends Component {
       [name]: value
     });
   };
+
+  loadUsers = () => {
+    API.getUsers()
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+  };
+
 
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
@@ -69,8 +80,13 @@ class Login extends Component {
     };
     API.loginUser(userInfo)
       .then(response => {
-        console.log(response)
+        console.log(response);
         if (response.status === 200) {
+          // // update Main.js state
+          // this.props.updateUser({
+          //   loggedIn: true,
+          //   username: response.data.username
+          // });
           // update state to redirect to home
           this.setState({
             username: response.data.username,

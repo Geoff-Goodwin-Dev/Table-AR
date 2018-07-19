@@ -4,6 +4,7 @@ const userController = require("../../controllers/userController");
 router
   .route("/")
   .post(userController.create)
-  .post(userController.findOne);
+  .post(userController.findOne)
+  .get(userController.findAll);
 
 module.exports = router;

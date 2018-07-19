@@ -1,7 +1,15 @@
 import axios from "axios";
 
 export default {
-  // Gets all Todos
+  saveUser: (userData) => {
+    return axios.post("/api/users", userData);
+  },
+  loginUser: (userData) => {
+    return axios.post("/api/user/login", userData);
+  },
+  getUsers: () => {
+    return axios.get("/api/users");
+  },
   getTodos: (listID) => {
     return axios.get("/api/routes/listItems/" + listID);
   },
