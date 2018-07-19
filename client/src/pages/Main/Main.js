@@ -188,7 +188,9 @@ class Main extends Component {
   handleAddListItemClick = () => {
     this.setState({
       keyboardRotation: '0 0 0',
-      listItemCreateModalIsVisible: true
+      listItemCreateModalIsVisible: true,
+      listCreateModalIsVisible: false
+
     });
     document.querySelector('#toDoItemInputField').focus();
   };
@@ -196,7 +198,8 @@ class Main extends Component {
   handleAddListClick = () => {
     this.setState({
       keyboardRotation: '0 45 0',
-      listCreateModalIsVisible: true
+      listCreateModalIsVisible: true,
+      listItemCreateModalIsVisible: false
     });
     document.querySelector('#listInputField').focus();
   };
@@ -248,10 +251,13 @@ class Main extends Component {
     }
   };
 
-  handleCloseListItemModal = () => {
+  handleCloseModal = () => {
     console.log('x clicked');
     document.querySelector('#toDoItemInputField').blur();
+    document.querySelector('#listInputField').blur();
     this.setState({
+      listTitleInputField: '',
+      listCreateModalIsVisible: false,
       listItemTitleInputField: '',
       listItemCreateModalIsVisible: false
     });
@@ -344,7 +350,7 @@ class Main extends Component {
                     value='X'
                     type='raised'
                     button-color='red'
-                    // events={{click: () => this.handleCloseListItemModal()}}
+                    events={{click: () => this.handleCloseModal()}}
                   />
 
                   <SaveBtn
@@ -439,7 +445,7 @@ class Main extends Component {
                     value='X'
                     type='raised'
                     button-color='red'
-                    events={{click: () => this.handleCloseListItemModal()}}
+                    events={{click: () => this.handleCloseModal()}}
                   />
 
                   <SaveBtn
