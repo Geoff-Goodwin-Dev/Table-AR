@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./Login.css";
 import API from "../../utils/API";
+import "./Login.css";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
@@ -34,9 +34,9 @@ class Login extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-   console.log(`sign-up-form, username: ${this.state.username}`);
+    console.log(`sign-up-form, username: ${this.state.username}`);
 
-   // request to server here
+    // request to server here
 
     let userInfo = {
       username: this.state.username,
@@ -54,7 +54,7 @@ class Login extends Component {
           console.log("signup error");
         }
       }).catch(error => {
-        console.log(`signup server error: ${error}`);
+      console.log(`signup server error: ${error}`);
     });
 
     // this.setState({
