@@ -36,10 +36,10 @@ class SignUp extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    API.loginUser(userInfo)
+    API.saveUser(userInfo)
       .then(response => {
-        console.log(response);
-        if (response.status === 200) {
+        console.log('signup.js saveUser line 39 Response:', response);
+        if (response.data.username) {
           // update App.js state
           this.props.updateUser({
             loggedIn: true,

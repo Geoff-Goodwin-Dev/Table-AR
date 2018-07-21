@@ -1,0 +1,18 @@
+
+#logOut{
+  width: 150px;
+  background: #00786B;
+  margin: 12%;
+}
+
+#logOut:hover{
+  background: rgb(0, 165, 149);
+}
+
+@media (max-width: 445px) { 
+  #logOut{
+    width: 90px;
+    background: #00786B;
+    margin: 20%;
+  }
+}
