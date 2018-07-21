@@ -23,7 +23,14 @@ const Nav = props => (
       {(props.loggedIn
         ) ? (
           <li>
-            <button type="button" id="logOut" className="btn btn-primary">LOG OUT</button>
+            <button
+              type="button"
+              id="logOut"
+              className="btn btn-primary"
+              onClick={(event) => props.logout(event)}
+            >
+              LOGOUT
+            </button>
           </li>
         ) : (
           <li/>
