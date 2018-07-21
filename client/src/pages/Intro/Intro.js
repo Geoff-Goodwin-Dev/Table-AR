@@ -18,8 +18,8 @@ const Intro = () => (
           LOGIN
         </Link>
       </button>
-      <button type="button" to={"/signUp/"} className="introButton btn btn-secondary btn-lg">
-        <Link id="enter" to={"/signUp/"}>
+      <button type="button" to={"/signUp"} className="introButton btn btn-secondary btn-lg">
+        <Link id="enter" to={"/signUp"}>
           SIGN UP
         </Link>
       </button>

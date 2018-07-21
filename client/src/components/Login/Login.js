@@ -76,7 +76,6 @@ class Login extends Component {
                   placeholder="Enter username"
                   value={this.state.username}
                   onChange={this.handleChange} />
-                <small id="textHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>

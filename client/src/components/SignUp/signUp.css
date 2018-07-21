@@ -23,3 +23,13 @@
 .btn:hover{
   background: rgb(0, 165, 149);
 }
+
+@media (max-width: 400px) { 
+  #signUpHeading{
+    margin: 10% 0 0 0%;
+    color: #00786B;
+    font-size: 40px;
+    font-family: 'Kumar One', cursive;
+    text-align: center;
+  }
+}

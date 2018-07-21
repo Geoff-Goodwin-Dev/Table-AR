@@ -57,7 +57,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav/>
+          <Nav loggedIn={this.state.loggedIn}/>
           <Switch>
             <Route exact path="/" component={Intro} />
             <Route exact path="/todo" component={Main}  />
