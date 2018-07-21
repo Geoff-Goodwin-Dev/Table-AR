@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import "./Login.css";
 import API from "../../utils/API";
+import "./Login.css";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
     super();
-    this.state = {
+    this.state={
       username: "",
       password: "",
       redirectTo: null,
@@ -17,51 +17,10 @@ class Login extends Component {
 
   }
 
-
-
-
   handleChange = event => {
-    // Getting the value and name of the input which triggered the change
-    const { name, value } = event.target;
-
-    // Updating the input's state
     this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-
-    console.log(`sign-up-form, username: ${this.state.username}`);
-
-    // request to server here
-
-    let userInfo = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    API.saveUser(userInfo)
-      .then(response => {
-        console.log(response);
-        if (response.data) {
-          console.log("successful signup!!");
-          this.setState({
-            redirectTo: '/todo'
-          })
-        } else {
-          console.log("signup error");
-        }
-      }).catch(error => {
-        console.log(`signup server error: ${error}`);
-      });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
-
+      [event.target.name]: event.target.value
+    })
   };
 
   handleFormLogin = event => {
@@ -91,13 +50,8 @@ class Login extends Component {
           })
         }
       }).catch(error => {
-        console.log(`login error: ${error}`);
-      });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
+      console.log(`login error: ${error}`);
+    });
 
   };
 
@@ -123,29 +77,29 @@ class Login extends Component {
                   value={this.state.username}
                   onChange={this.handleChange} />
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  className="form-control"
-                  id="exampleInputPassword1"
-                  value={this.state.password}
-                  placeholder="Password"
-                  onChange={this.handleChange} />
-              </div>
-              <button
-                id="oldUser"
-                type="submit"
-                className="btn btn-primary"
-                onClick={this.handleFormLogin}
-              >
-                Login
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1">Password</label>
+              <input
+                name="password"
+                type="password"
+                className="form-control"
+                id="exampleInputPassword1"
+                value={this.state.password}
+                placeholder="Password"
+                onChange={this.handleChange} />
+            </div>
+            <button
+              id="oldUser"
+              type="submit"
+              className="btn btn-primary"
+              onClick={this.handleFormLogin}
+            >
+              Login
             </button>
 
-            </form>
-          </div>
+          </form>
         </div>
+      </div>
       );
     }
   }
