@@ -1,5 +1,5 @@
 import React from "react";
-import "../../pages/Login/login.css";
+import "../../pages/Login/Login.css";
 
 export const SignUp = () => (
   <div id="loginForm">
