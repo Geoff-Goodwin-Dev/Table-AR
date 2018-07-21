@@ -5,7 +5,7 @@ export default {
     return axios.post("/user", userData);
   },
   loginUser: (userData) => {
-    return axios.post("/api/user/login", userData);
+    return axios.post("/user/login", userData);
   },
   getUser: (user) => {
     return axios.get("/api/users", user);

@@ -1,7 +1,5 @@
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const express = require("express");
-// const routes = require("./routes");
 const session = require("express-session");
 const dbConnection = require('./database');
 const passport = require("./passport");
@@ -21,12 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/tablear";
-// // Connect to the Mongo DB
-// mongoose.connect(MONGODB_URI);
-// mongoose.set('bufferCommands', false);
-// mongoose.Promise = Promise;
-
 // Sessions
 app.use(
   session({
@@ -37,12 +29,12 @@ app.use(
   })
 );
 
-// For testing sessions
 app.use( (req, res, next) => {
   console.log('req.session', req.session);
   return next();
 });
 
+// For testing sessions
 // app.post('/api/users', (req, res) => {
 //   console.log('user signup');
 //   req.session.username = req.body.username;

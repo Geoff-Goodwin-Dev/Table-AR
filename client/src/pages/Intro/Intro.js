@@ -15,7 +15,7 @@ const Intro = () => (
       <br/>
       <button type="button" to={"/login/"} className="introButton btn btn-secondary btn-lg">
         <Link id="enter" to={"/login/"}>
-          ENTER
+          LOGIN
         </Link>
       </button>
       <button type="button" to={"/signUp/"} className="introButton btn btn-secondary btn-lg">

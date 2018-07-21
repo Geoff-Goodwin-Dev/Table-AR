@@ -17,51 +17,10 @@ class Login extends Component {
 
   }
 
-
-
-
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     })
-  };
-
-  handleFormSubmit = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-
-    console.log(`sign-up-form, username: ${this.state.username}`);
-
-    // request to server here
-
-    let userInfo = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    API.saveUser(userInfo)
-      .then(response => {
-        console.log(response);
-        if (response.status === 200) {
-          this.props.updateUser({
-            loggedIn: true,
-            username: response.data.username
-          });
-          console.log("successful signup!!");
-          this.setState({
-            redirectTo: '/todo'
-          })
-        } else {
-          console.log("signup error");
-        }
-      }).catch(error => {
-      console.log(`signup server error: ${error}`);
-    });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
-
   };
 
   handleFormLogin = event => {
@@ -93,11 +52,6 @@ class Login extends Component {
       }).catch(error => {
       console.log(`login error: ${error}`);
     });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
 
   };
 
@@ -143,17 +97,10 @@ class Login extends Component {
             >
               Login
             </button>
-            <button
-              id="newUser"
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleFormSubmit}
-            >
-              Submit
-            </button>
 
           </form>
         </div>
+      </div>
       );
     }
   }

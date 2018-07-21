@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 //your local database url
-//27017 is the default mongoDB port
 const uri = 'mongodb://localhost/tablear';
 
 mongoose.connect(uri).then(

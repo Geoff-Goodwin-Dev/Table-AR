@@ -1,22 +1,9 @@
-// const router = require("express").Router();
-// const userController = require("../../controllers/userController");
-//
-// router
-//   .route("/users")
-//   .post(userController.create)
-//   .get(userController.findOne);
-//
-//
-// module.exports = router;
-
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user');
 const passport = require('../../passport');
 
-
-// HEY GUYS, DONT FORGET TO SWAP THE POST URLS!!!!!!!!!!!!!!
-router.post('/login', (req, res) => {
+router.post('/', (req, res) => {
   console.log('user signup');
 
   const { username, password } = req.body;
@@ -43,7 +30,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post(
-  '/',
+  '/login',
   function (req, res, next) {
     console.log('routes/user.js, login, req.body: ');
     console.log(req.body);
