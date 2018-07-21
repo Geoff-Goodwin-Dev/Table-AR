@@ -13,13 +13,13 @@ const Intro = () => (
       <h4 id="two">EFFECTIVE TASK MANAGEMENT</h4>
       <h2 id="three">IN AUGMENTED REALITY</h2>
       <br/>
-      <button type="button" to={"/login/"} className="introButton btn btn-secondary btn-lg">
-        <Link id="enter" to={"/login/"}>
+      <button type="button" to={"/login"} className="introButton btn btn-secondary btn-lg">
+        <Link id="enter" to={"/login"}>
           ENTER
         </Link>
       </button>
-      <button type="button" to={"/signUp/"} className="introButton btn btn-secondary btn-lg">
-        <Link id="enter" to={"/signUp/"}>
+      <button type="button" to={"/signUp"} className="introButton btn btn-secondary btn-lg">
+        <Link id="enter" to={"/signUp"}>
           SIGN UP
         </Link>
       </button>
