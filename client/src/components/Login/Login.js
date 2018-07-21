@@ -17,51 +17,10 @@ class Login extends Component {
 
   }
 
-
-
-
   handleChange = event => {
-    // Getting the value and name of the input which triggered the change
-    const { name, value } = event.target;
-
-    // Updating the input's state
     this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-
-    console.log(`sign-up-form, username: ${this.state.username}`);
-
-    // request to server here
-
-    let userInfo = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    API.saveUser(userInfo)
-      .then(response => {
-        console.log(response);
-        if (response.data) {
-          console.log("successful signup!!");
-          this.setState({
-            redirectTo: '/todo'
-          })
-        } else {
-          console.log("signup error");
-        }
-      }).catch(error => {
-      console.log(`signup server error: ${error}`);
-    });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
-
+      [event.target.name]: event.target.value
+    })
   };
 
   handleFormLogin = event => {
@@ -94,11 +53,6 @@ class Login extends Component {
       console.log(`login error: ${error}`);
     });
 
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
-
   };
 
   render() {
@@ -106,22 +60,23 @@ class Login extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
-        <div id="loginForm">
-          <form>
-            <h1>Login</h1>
-            <div className="form-group">
-              <label htmlFor="exampleInputText">Username</label>
-              <input
-                name="username"
-                type="text"
-                className="form-control"
-                id="exampleInputText"
-                aria-describedby="textHelp"
-                placeholder="Enter username"
-                value={this.state.username}
-                onChange={this.handleChange} />
-              <small id="textHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
+        <div>
+          <h1 id="loginHeading">Login</h1>
+          <br/><br/><br/>
+          <div id="loginForm">
+            <form>
+              <div className="form-group">
+                <label htmlFor="exampleInputText">Username</label>
+                <input
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  id="exampleInputText"
+                  aria-describedby="textHelp"
+                  placeholder="Enter username"
+                  value={this.state.username}
+                  onChange={this.handleChange} />
+              </div>
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
               <input
@@ -141,17 +96,10 @@ class Login extends Component {
             >
               Login
             </button>
-            <button
-              id="newUser"
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleFormSubmit}
-            >
-              Submit
-            </button>
 
           </form>
         </div>
+      </div>
       );
     }
   }
