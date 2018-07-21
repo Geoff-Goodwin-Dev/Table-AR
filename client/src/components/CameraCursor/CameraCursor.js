@@ -4,7 +4,7 @@ import {Entity} from 'aframe-react';
 const CameraCursor = () => (
   <Entity
     primitive='a-camera'
-    // position='0 1 0'
+    wasd-controls-enabled='false'
   >
     <Entity
       cursor={{fuse: true, fuseTimeout: 500}}
@@ -23,7 +23,6 @@ const CameraCursor = () => (
         to: ' .005 .005 .005',
       }}
     />
-
     <Entity
       cursor={{
         rayOrigin: 'mouse'
