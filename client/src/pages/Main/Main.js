@@ -138,6 +138,26 @@ class Main extends Component {
     this.getListsOfUser('pageLoad');
   };
 
+  addKeyboardListener = (objectTarget) => {
+    console.log('add keyboard listener triggered');
+    let modalVisable = this.state.listCreateModalIsVisible || this.state.listItemCreateModalIsVisible;
+    document.addEventListener('keyup', function (event) {
+      console.log(modalVisable);
+      console.log('object target:', objectTarget);
+      if (event.defaultPrevented) {
+        return;
+      }
+      if (modalVisable) {
+        console.log('modal is visable');
+        let key = event.key || event.keyCode;
+        console.log('key pressed', key);
+        if (key === 'Escape' || key === 'Esc' || key === 27) {
+          console.log('escape pressed:', key);
+        }
+      }
+    });
+  };
+
   getListsOfUser = (triggeringEvent) => {
     console.log('get lists triggered');
     API.getLists().then(
@@ -223,6 +243,7 @@ class Main extends Component {
       listItemCreateModalIsVisible: true,
       listCreateModalIsVisible: false
     });
+    this.addKeyboardListener('toDoItemInputField');
     document.querySelector('#toDoItemInputField').focus();
   };
 
@@ -232,6 +253,7 @@ class Main extends Component {
       listCreateModalIsVisible: true,
       listItemCreateModalIsVisible: false
     });
+    this.addKeyboardListener('listInputField');
     document.querySelector('#listInputField').focus();
   };
 
