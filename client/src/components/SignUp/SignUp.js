@@ -34,7 +34,8 @@ class SignUp extends Component {
 
     let userInfo = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      email: this.state.email
     };
     API.saveUser(userInfo)
       .then(response => {
