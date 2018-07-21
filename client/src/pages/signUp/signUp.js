@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import "./Login.css";
+import "./signUp.css";
 import API from "../../utils/API";
 import { Redirect } from "react-router-dom";
 
-class Login extends Component {
+class SignUp extends Component {
   constructor() {
     super();
     this.state = {
       username: "",
       password: "",
+      email: "",
       redirectTo: null,
       loggedIn: false
     };
@@ -101,16 +102,16 @@ class Login extends Component {
 
   };
 
-  render() {
+  render() {  
     if (this.state.redirectTo) {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
         <div>
-          <h1 id="loginHeading">Login</h1>
-          <br/><br/><br/>
-          <div id="loginForm">
+          <h1 id="signUpHeading">Sign Up</h1>
+          <div id="signUpForm">
             <form>
+
               <div className="form-group">
                 <label htmlFor="exampleInputText">Username</label>
                 <input
@@ -121,6 +122,17 @@ class Login extends Component {
                   aria-describedby="textHelp"
                   placeholder="Enter username"
                   value={this.state.username}
+                  onChange={this.handleChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  className="form-control"
+                  id="inputEmail"
+                  value={this.state.email}
+                  placeholder="email@email.com"
                   onChange={this.handleChange} />
                 <small id="textHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
@@ -135,13 +147,24 @@ class Login extends Component {
                   placeholder="Password"
                   onChange={this.handleChange} />
               </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword2">Confirm Password</label>
+                <input
+                  name="password2"
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword2"
+                  placeholder="Password"
+                  onChange={this.handleChange} />
+              </div>
+
               <button
-                id="oldUser"
+                id="submit"
                 type="submit"
                 className="btn btn-primary"
-                onClick={this.handleFormLogin}
+                onClick={this.handleFormSubmit}
               >
-                Login
+                Sign Up!
             </button>
 
             </form>
@@ -152,4 +175,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SignUp;

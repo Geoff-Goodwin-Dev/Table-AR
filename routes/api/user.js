@@ -5,6 +5,7 @@ router
   .route("/users")
   .post(userController.create)
   .get(userController.findOne)
+  .get(userController.findAll);
   // .get(userController.findAll);
-
+  
 module.exports = router;
