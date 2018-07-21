@@ -13,16 +13,12 @@ const Intro = () => (
       <h4 id="two">EFFECTIVE TASK MANAGEMENT</h4>
       <h2 id="three">IN AUGMENTED REALITY</h2>
       <br/>
-      <button type="button" to={"/login"} className="introButton btn btn-secondary btn-lg">
-        <Link id="enter" to={"/login"}>
-          ENTER
-        </Link>
-      </button>
-      <button type="button" to={"/signUp"} className="introButton btn btn-secondary btn-lg">
-        <Link id="enter" to={"/signUp"}>
-          SIGN UP
-        </Link>
-      </button>
+      <a type="button" href={"/login"} className="introButton btn btn-lg">
+        LOGIN
+      </a>
+      <a type="button" href={"/signUp"} className="introButton btn btn-sm">
+        SIGN UP
+      </a>
       <br/><br/>
       <h6 id="four">By the creators of The Code Dictator & Skynet Flight Command</h6>
     </div>
