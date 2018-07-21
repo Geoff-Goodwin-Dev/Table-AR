@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passwordHash = require("password-hash");
+mongoose.promise = Promise;
 
 const user = new Schema({
   username: {
@@ -43,7 +44,5 @@ user.pre('save', function (next) {
   }
 });
 
-
-  const User = mongoose.model("User", user);
-
+const User = mongoose.model("User", user);
 module.exports = User;

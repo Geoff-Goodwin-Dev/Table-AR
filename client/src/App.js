@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./pages/Main";
 import NotFound from "./pages/NotFound";
-// import Login from "./pages/Login";
 import Intro from "./pages/Intro";
 import Nav from "./components/Nav";
 import "./styles/Intro.css";
-import API from "./utils/API";
 import axios from "axios";
-import Login from "./pages/Login";
-import SignUp from "./pages/signUp";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 
 class App extends Component {
@@ -34,7 +32,7 @@ class App extends Component {
   }
 
   getUser = () => {
-    axios.get('/api/users')
+    axios.get('/user')
     .then(response => {
       console.log('Get user response: ');
       console.log(response.data);
@@ -63,12 +61,19 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Intro} />
             <Route exact path="/todo" component={Main}  />
-            <Route exact path="/signUp" component={SignUp}  />
-            <Route exact path="/login"
-                   render={() =>
-                      <Login
-                        updateUser={this.updateUser}
-                      />}
+            <Route
+              exact path="/signUp"
+              render={() =>
+               <SignUp
+                 updateUser={this.updateUser}
+               />}
+             />
+            <Route
+              exact path="/login"
+              render={() =>
+                <Login
+                  updateUser={this.updateUser}
+                />}
             />
             <Route component={NotFound} />
           </Switch>
@@ -79,30 +84,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-//
-//
-// // BEFORE
-// const App = () => (
-//   <Router>
-//     <div>
-//       <Nav/>
-//       <Switch>
-//         <Route exact path="/" component={Intro} />
-//         <Route exact path="/todo" component={Main} />
-//         <Route exact path="/login" component={Login} />
-//         <Route component={NotFound} />
-//       </Switch>
-//     </div>
-//   </Router>
-// );
-//
-// export default App;
