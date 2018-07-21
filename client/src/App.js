@@ -31,6 +31,23 @@ class App extends Component {
     this.setState(userObject)
   }
 
+  logoutUser = (event) => {
+    event.preventDefault();
+    console.log('logging out');
+    axios.post('/user/logout')
+      .then(response => {
+        console.log(response.data);
+        if (response.status === 200) {
+          this.updateUser({
+            loggedIn: false,
+            username: null
+          })
+        }
+      }).catch(error => {
+        console.log('Woops! Logout error!', error);
+    });
+  };
+
   getUser = () => {
     axios.get('/user')
     .then(response => {
@@ -57,7 +74,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav loggedIn={this.state.loggedIn}/>
+          <Nav loggedIn={this.state.loggedIn} logout={this.logoutUser}/>
           <Switch>
             <Route exact path="/" component={Intro} />
             <Route exact path="/todo" component={Main}  />
