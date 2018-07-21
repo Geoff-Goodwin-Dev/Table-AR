@@ -1,4 +1,4 @@
-#loginForm{
+#signUpForm{
   height: 80%;
   width: 70%;
   border: 1px solid grey;
@@ -9,7 +9,7 @@
   color: aliceblue;
 }
 
-#loginHeading{
+#signUpHeading{
   margin: 5% 0 0 15%;
   color: #00786B;
   font-size: 70px;

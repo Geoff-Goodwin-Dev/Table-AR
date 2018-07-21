@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import "./signUp.css";
 import API from "../../utils/API";
-import "./Login.css";
 import { Redirect } from "react-router-dom";
 
-class Login extends Component {
+class SignUp extends Component {
   constructor() {
     super();
-    this.state={
+    this.state = {
       username: "",
       password: "",
+      email: "",
       redirectTo: null,
       loggedIn: false
     };
@@ -21,9 +22,13 @@ class Login extends Component {
 
 
   handleChange = event => {
+    // Getting the value and name of the input which triggered the change
+    const { name, value } = event.target;
+
+    // Updating the input's state
     this.setState({
-      [event.target.name]: event.target.value
-    })
+      [name]: value
+    });
   };
 
   handleFormSubmit = event => {
@@ -41,11 +46,7 @@ class Login extends Component {
     API.saveUser(userInfo)
       .then(response => {
         console.log(response);
-        if (response.status === 200) {
-          this.props.updateUser({
-            loggedIn: true,
-            username: response.data.username
-          });
+        if (response.data) {
           console.log("successful signup!!");
           this.setState({
             redirectTo: '/todo'
@@ -54,8 +55,8 @@ class Login extends Component {
           console.log("signup error");
         }
       }).catch(error => {
-      console.log(`signup server error: ${error}`);
-    });
+        console.log(`signup server error: ${error}`);
+      });
 
     // this.setState({
     //   username: "",
@@ -91,8 +92,8 @@ class Login extends Component {
           })
         }
       }).catch(error => {
-      console.log(`login error: ${error}`);
-    });
+        console.log(`login error: ${error}`);
+      });
 
     // this.setState({
     //   username: "",
@@ -101,16 +102,16 @@ class Login extends Component {
 
   };
 
-  render() {
+  render() {  
     if (this.state.redirectTo) {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
         <div>
-          <h1 id="loginHeading">Login</h1>
-          <br/><br/><br/>
-          <div id="loginForm">
+          <h1 id="signUpHeading">Sign Up</h1>
+          <div id="signUpForm">
             <form>
+
               <div className="form-group">
                 <label htmlFor="exampleInputText">Username</label>
                 <input
@@ -122,41 +123,56 @@ class Login extends Component {
                   placeholder="Enter username"
                   value={this.state.username}
                   onChange={this.handleChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  className="form-control"
+                  id="inputEmail"
+                  value={this.state.email}
+                  placeholder="email@email.com"
+                  onChange={this.handleChange} />
                 <small id="textHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
-            <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Password</label>
-              <input
-                name="password"
-                type="password"
-                className="form-control"
-                id="exampleInputPassword1"
-                value={this.state.password}
-                placeholder="Password"
-                onChange={this.handleChange} />
-            </div>
-            <button
-              id="oldUser"
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleFormLogin}
-            >
-              Login
-            </button>
-            <button
-              id="newUser"
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleFormSubmit}
-            >
-              Submit
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Password</label>
+                <input
+                  name="password"
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword1"
+                  value={this.state.password}
+                  placeholder="Password"
+                  onChange={this.handleChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword2">Confirm Password</label>
+                <input
+                  name="password2"
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword2"
+                  placeholder="Password"
+                  onChange={this.handleChange} />
+              </div>
+
+              <button
+                id="submit"
+                type="submit"
+                className="btn btn-primary"
+                onClick={this.handleFormSubmit}
+              >
+                Sign Up!
             </button>
 
-          </form>
+            </form>
+          </div>
         </div>
       );
     }
   }
 }
 
-export default Login;
+export default SignUp;

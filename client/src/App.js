@@ -8,7 +8,9 @@ import Nav from "./components/Nav";
 import "./styles/Intro.css";
 // import API from "./utils/API";
 import axios from "axios";
-import Login from "./components/Login";
+import Login from "./pages/Login";
+import SignUp from "./pages/signUp";
+
 
 class App extends Component {
   constructor() {
@@ -61,6 +63,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Intro} />
             <Route exact path="/todo" component={Main}  />
+            <Route exact path="/signUp" component={SignUp}  />
             <Route exact path="/login"
                    render={() =>
                       <Login

@@ -2,12 +2,24 @@
   height: 80%;
   width: 70%;
   border: 1px solid grey;
-  border-radius: 15px;
-  margin: 10% 15%;
+  /* border-radius: 15px; */
+  margin: 0% 15%;
   padding: 2%;
-  background: white;
+  background:#06477D;
+  color: aliceblue;
 }
 
-#newUser{
-  margin-left: 2%;
+#loginHeading{
+  margin: 5% 0 0 15%;
+  color: #00786B;
+  font-size: 70px;
+  font-family: 'Kumar One', cursive;
+}
+
+.btn{
+  background: #00786B;
+}
+
+.btn:hover{
+  background: rgb(0, 165, 149);
 }
