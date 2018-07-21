@@ -21,13 +21,9 @@ class Login extends Component {
 
 
   handleChange = event => {
-    // Getting the value and name of the input which triggered the change
-    const { name, value } = event.target;
-
-    // Updating the input's state
     this.setState({
-      [name]: value
-    });
+      [event.target.name]: event.target.value
+    })
   };
 
   handleFormSubmit = event => {
@@ -45,7 +41,11 @@ class Login extends Component {
     API.saveUser(userInfo)
       .then(response => {
         console.log(response);
-        if (response.data) {
+        if (response.status === 200) {
+          this.props.updateUser({
+            loggedIn: true,
+            username: response.data.username
+          });
           console.log("successful signup!!");
           this.setState({
             redirectTo: '/todo'

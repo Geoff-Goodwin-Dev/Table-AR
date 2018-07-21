@@ -21,13 +21,9 @@ class Login extends Component {
 
 
   handleChange = event => {
-    // Getting the value and name of the input which triggered the change
-    const { name, value } = event.target;
-
-    // Updating the input's state
     this.setState({
-      [name]: value
-    });
+      [event.target.name]: event.target.value
+    })
   };
 
   handleFormSubmit = event => {
@@ -46,6 +42,10 @@ class Login extends Component {
       .then(response => {
         console.log(response);
         if (response.data) {
+          this.props.updateUser({
+            loggedIn: true,
+            username: response.data.username
+          });
           console.log("successful signup!!");
           this.setState({
             redirectTo: '/todo'
@@ -64,42 +64,42 @@ class Login extends Component {
 
   };
 
-  handleFormLogin = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-
-    console.log(`log-in-form, username: ${this.state.username}`);
-
-    // request to server here
-
-    let userInfo = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    API.loginUser(userInfo)
-      .then(response => {
-        console.log(response);
-        if (response.status === 200) {
-          // update Main.js state
-          this.props.updateUser({
-            loggedIn: true,
-            username: response.data.username
-          });
-          // update state to redirect to home
-          this.setState({
-            redirectTo: '/todo'
-          })
-        }
-      }).catch(error => {
-      console.log(`login error: ${error}`);
-    });
-
-    // this.setState({
-    //   username: "",
-    //   password: ""
-    // });
-
-  };
+  // handleFormLogin = event => {
+  //   // Preventing the default behavior of the form submit (which is to refresh the page)
+  //   event.preventDefault();
+  //
+  //   console.log(`log-in-form, username: ${this.state.username}`);
+  //
+  //   // request to server here
+  //
+  //   let userInfo = {
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   };
+  //   API.loginUser(userInfo)
+  //     .then(response => {
+  //       console.log(response);
+  //       if (response.status === 200) {
+  //         // update Main.js state
+  //         this.props.updateUser({
+  //           loggedIn: true,
+  //           username: response.data.username
+  //         });
+  //         // update state to redirect to home
+  //         this.setState({
+  //           redirectTo: '/todo'
+  //         })
+  //       }
+  //     }).catch(error => {
+  //     console.log(`login error: ${error}`);
+  //   });
+  //
+  //   // this.setState({
+  //   //   username: "",
+  //   //   password: ""
+  //   // });
+  //
+  // };
 
   render() {
     if (this.state.redirectTo) {
@@ -133,14 +133,14 @@ class Login extends Component {
                 placeholder="Password"
                 onChange={this.handleChange} />
             </div>
-            <button
-              id="oldUser"
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleFormLogin}
-            >
-              Login
-            </button>
+            {/*<button*/}
+              {/*id="oldUser"*/}
+              {/*type="submit"*/}
+              {/*className="btn btn-primary"*/}
+              {/*onClick={this.handleFormLogin}*/}
+            {/*>*/}
+              {/*Login*/}
+            {/*</button>*/}
             <button
               id="newUser"
               type="submit"

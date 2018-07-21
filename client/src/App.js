@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound";
 import Intro from "./pages/Intro";
 import Nav from "./components/Nav";
 import "./styles/Intro.css";
-import API from "./utils/API";
+// import API from "./utils/API";
 import axios from "axios";
 import Login from "./components/Login";
 
@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   getUser = () => {
-    axios.get('/api/users')
+    axios.get('/user')
     .then(response => {
       console.log('Get user response: ');
       console.log(response.data);
