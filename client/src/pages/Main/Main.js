@@ -136,26 +136,30 @@ class Main extends Component {
 
   componentDidMount() {
     this.getListsOfUser('pageLoad');
+    this.addKeyboardListener();
   };
 
-  addKeyboardListener = (objectTarget) => {
+  keyboardListener = (event) => {
+    if (event.defaultPrevented) {
+      return;
+    }
+    let key = event.key || event.keyCode;
+    if (key === 'Escape' || key === 'Esc' || key === 27) {
+      console.log('escape pressed:', key);
+    }
+
+    let valueOfInputField = document.querySelector('#toDoItemInputField').value;
+    valueOfInputField += key;
+    console.log('valueOfInputField', valueOfInputField);
+    console.log('key pressed', key);
+    console.log(event);
+    this.setState({listItemTitleInputField : valueOfInputField});
+  };
+
+
+  addKeyboardListener = () => {
     console.log('add keyboard listener triggered');
-    let modalVisable = this.state.listCreateModalIsVisible || this.state.listItemCreateModalIsVisible;
-    document.addEventListener('keyup', function (event) {
-      console.log(modalVisable);
-      console.log('object target:', objectTarget);
-      if (event.defaultPrevented) {
-        return;
-      }
-      if (modalVisable) {
-        console.log('modal is visable');
-        let key = event.key || event.keyCode;
-        console.log('key pressed', key);
-        if (key === 'Escape' || key === 'Esc' || key === 27) {
-          console.log('escape pressed:', key);
-        }
-      }
-    });
+    document.addEventListener('keyup', (event) => this.keyboardListener(event));
   };
 
   getListsOfUser = (triggeringEvent) => {
@@ -243,7 +247,6 @@ class Main extends Component {
       listItemCreateModalIsVisible: true,
       listCreateModalIsVisible: false
     });
-    this.addKeyboardListener('toDoItemInputField');
     document.querySelector('#toDoItemInputField').focus();
   };
 
@@ -253,7 +256,6 @@ class Main extends Component {
       listCreateModalIsVisible: true,
       listItemCreateModalIsVisible: false
     });
-    this.addKeyboardListener('listInputField');
     document.querySelector('#listInputField').focus();
   };
 
@@ -354,7 +356,9 @@ class Main extends Component {
 
         {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
 
-        <Scene>
+        <Scene
+          keyboard-shortcuts={{enterVR: false}}
+        >
           {/*<a-assets>*/}
             {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
           {/*</a-assets>*/}
