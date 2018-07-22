@@ -19,6 +19,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
+      inVrMode: false,
       keyboardRotation: '0 0 0',
       listTitleInputField: '',
       listCreateModalIsVisible: false,
@@ -137,6 +138,8 @@ class Main extends Component {
   componentDidMount() {
     this.getListsOfUser('pageLoad');
     this.addKeyboardListener();
+    this.addVrEnterListener();
+    this.addVrExitListener();
   };
 
   keyboardListener = (event) => {
@@ -156,10 +159,29 @@ class Main extends Component {
     this.setState({listItemTitleInputField : valueOfInputField});
   };
 
-
   addKeyboardListener = () => {
     console.log('add keyboard listener triggered');
     document.addEventListener('keyup', (event) => this.keyboardListener(event));
+  };
+
+  enterVr = () => {
+    console.log("you've entered VR");
+    this.setState({inVrMode: true});
+  };
+
+  exitVr = () => {
+    console.log("you've exited VR");
+    this.setState({inVrMode: false});
+  };
+
+  addVrEnterListener = () => {
+    console.log('add vr listener triggered');
+    document.addEventListener('enter-vr', (event) => this.enterVr());
+  };
+
+  addVrExitListener = () => {
+    console.log('add vr listener triggered');
+    document.addEventListener('enter-vr', (event) => this.exitVr());
   };
 
   getListsOfUser = (triggeringEvent) => {
@@ -352,12 +374,15 @@ class Main extends Component {
   render () {
     return (
       <div className='text-center'>
-        <WebCam/>
+        <WebCam inVrMode={this.state.inVrMode}/>
 
         {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
 
         <Scene
           keyboard-shortcuts={{enterVR: false}}
+          // events={{
+          //   enter-vr: (event) => console.log('event', event)
+          // }}
         >
           {/*<a-assets>*/}
             {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
