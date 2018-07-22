@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 //your local database url
-const uri = 'mongodb://localhost/tablear';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/tablear';
 
-mongoose.connect(uri).then(
+mongoose.connect(MONGODB_URI).then(
   () => {
     /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
     console.log('Connected to Mongo');
