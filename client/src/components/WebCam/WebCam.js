@@ -23,44 +23,80 @@ class WebCam extends Component {
   render() {
 
     return (
-      <div id='videoBackgroundContainer'>
-        <video
-          id='videoL'
-          playsInline
-          muted
-          loop
-          autoPlay
+      <div id='videoBackgroundContainer'
+      style={{
+        display: 'flex',
+        position: 'absolute',
+        left: 0,
+        width: '100%'
+      }}
+
+      >
+        <div
+          id='leftVideoContainer'
           style={
             (!this.props.inVrMode) ? ({
-              position: 'absolute',
-              left: 0,
               width: '100%',
               zIndex: -6
             }) : ({
-              position: 'absolute',
-              left: 0,
               width: '50%',
-              zIndex: -6
+              maxWidth: '50%',
+              zIndex: -6,
+              // transform: 'translate(-50%)',
+              // overflow: 'hidden'
             })
           }
-        />
-        <video
-          id='videoR'
-          playsInline
-          muted
-          loop
-          autoPlay
+        >
+          <video
+            id='videoL'
+            playsInline
+            muted
+            loop
+            autoPlay
+            style={
+              (!this.props.inVrMode) ? ({
+                position: 'absolute',
+                left: 0,
+                width: '100%',
+                zIndex: -6
+              }) : ({
+                height: '100vh',
+                // width: '100%',
+                zIndex: -6
+              })
+            }
+          />
+        </div>
+        <div
+          id='leftVideoContainer'
           style={
             (!this.props.inVrMode) ? ({
               display: 'none'
             }) : ({
-              position: 'absolute',
-              left: '50%',
               width: '50%',
-              zIndex: -6
+              maxWidth: '50%',
+              zIndex: -6,
+              // transform: 'translate(-50%)',
+              // overflow: 'hidden'
             })
           }
-        />
+        >
+          <video
+            id='videoR'
+            playsInline
+            muted
+            loop
+            autoPlay
+            style={
+              (!this.props.inVrMode) ? ({
+                display: 'none'
+              }) : ({
+                height: '100vh',
+                zIndex: -6
+              })
+            }
+          />
+        </div>
       </div>
     )
   };
