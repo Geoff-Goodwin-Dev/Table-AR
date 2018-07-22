@@ -19,6 +19,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
+      inVrMode: false,
       keyboardRotation: '0 0 0',
       listTitleInputField: '',
       listCreateModalIsVisible: false,
@@ -137,6 +138,8 @@ class Main extends Component {
   componentDidMount() {
     this.getListsOfUser('pageLoad');
     this.addKeyboardListener();
+    this.addVrEnterListener();
+    this.addVrExitListener();
   };
 
   keyboardListener = (event) => {
@@ -156,10 +159,29 @@ class Main extends Component {
     this.setState({listItemTitleInputField : valueOfInputField});
   };
 
-
   addKeyboardListener = () => {
     console.log('add keyboard listener triggered');
     document.addEventListener('keyup', (event) => this.keyboardListener(event));
+  };
+
+  enterVr = () => {
+    console.log("you've entered VR");
+    this.setState({inVrMode: true});
+  };
+
+  exitVr = () => {
+    console.log("you've exited VR");
+    this.setState({inVrMode: false});
+  };
+
+  addVrEnterListener = () => {
+    console.log('add vr listener triggered');
+    document.addEventListener('enter-vr', (event) => this.enterVr());
+  };
+
+  addVrExitListener = () => {
+    console.log('add vr listener triggered');
+    document.addEventListener('exit-vr', (event) => this.exitVr());
   };
 
   getListsOfUser = (triggeringEvent) => {
@@ -352,7 +374,7 @@ class Main extends Component {
   render () {
     return (
       <div className='text-center'>
-        <WebCam/>
+        <WebCam inVrMode={this.state.inVrMode}/>
 
         {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
 
@@ -365,7 +387,20 @@ class Main extends Component {
 
           {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
-          <CameraCursor/>
+          <CameraCursor>
+            <Entity
+              id="userInFocusCaption"
+              position='2 3 -5'
+              text={{
+                color: 'white',
+                align: 'center',
+                value: this.state.inVrMode,
+                opacity: 1,
+                width: 4,
+                side: 'double'
+              }}
+            />
+          </CameraCursor>
 
 
           <Entity

@@ -1,7 +1,7 @@
 import React from "react";
 import {Entity} from 'aframe-react';
 
-const CameraCursor = () => (
+const CameraCursor = (props) => (
   <Entity
     primitive='a-camera'
     wasd-controls-enabled='false'
@@ -28,6 +28,7 @@ const CameraCursor = () => (
         rayOrigin: 'mouse'
       }}
     />
+    {props.children}
   </Entity>
 );
 
