@@ -181,7 +181,7 @@ class Main extends Component {
 
   addVrExitListener = () => {
     console.log('add vr listener triggered');
-    document.addEventListener('enter-vr', (event) => this.exitVr());
+    document.addEventListener('exit-vr', (event) => this.exitVr());
   };
 
   getListsOfUser = (triggeringEvent) => {
@@ -380,9 +380,6 @@ class Main extends Component {
 
         <Scene
           keyboard-shortcuts={{enterVR: false}}
-          // events={{
-          //   enter-vr: (event) => console.log('event', event)
-          // }}
         >
           {/*<a-assets>*/}
             {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
@@ -390,7 +387,20 @@ class Main extends Component {
 
           {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
-          <CameraCursor/>
+          <CameraCursor>
+            <Entity
+              id="userInFocusCaption"
+              position='2 3 -5'
+              text={{
+                color: 'white',
+                align: 'center',
+                value: this.state.inVrMode,
+                opacity: 1,
+                width: 4,
+                side: 'double'
+              }}
+            />
+          </CameraCursor>
 
 
           <Entity
