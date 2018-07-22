@@ -28,9 +28,9 @@ const Intro = () => (
 
       <br/><br/>
       <h6 id="four">By the creators of
-        <a className="links" href="https://geoff-goodwin-dev.github.io/TheTable-TheCodeDictator/"> The Code Dictator </a>
+        <a className="links" target="_blank" href="https://geoff-goodwin-dev.github.io/TheTable-TheCodeDictator/"> The Code Dictator </a>
         &
-        <a className="links" href="https://the-table-skynet.herokuapp.com/"> Skynet Flight Command</a>
+        <a className="links" target="_blank" href="https://the-table-skynet.herokuapp.com/"> Skynet Flight Command</a>
       </h6>
     </div>
 
