@@ -19,7 +19,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
-      inVrMode: true,
+      inVrMode: false,
       keyboardRotation: '0 0 0',
       listTitleInputField: '',
       listCreateModalIsVisible: false,
