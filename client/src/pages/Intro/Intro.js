@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/Intro.css";
 import "./intro.css";
+import { Link } from "react-router-dom";
 
 const Intro = () => (
 
@@ -12,17 +13,25 @@ const Intro = () => (
       <h4 id="two">EFFECTIVE TASK MANAGEMENT</h4>
       <h2 id="three">IN AUGMENTED REALITY</h2>
       <br/>
-      <a href="/login">
-      <button type="button" className="introButton btn btn-primary btn-lg">
-        LOGIN
-      </button></a>
 
-      <a href="/signUp"><button type="button" className="introButton btn btn-primary btn-lg">
-        SIGN UP
-      </button></a>
+      <Link id="loginButton" to={"/login/"}>
+        <button type="button" className="introButton btn btn-primary btn-lg">
+          LOGIN
+        </button>
+      </Link>
+
+      <Link id="signUpButton" to={"/signUp/"}>
+        <button type="button" className="introButton btn btn-primary btn-lg">
+            SIGN UP
+        </button>
+      </Link>
 
       <br/><br/>
-      <h6 id="four">By the creators of The Code Dictator & Skynet Flight Command</h6>
+      <h6 id="four">By the creators of
+        <a className="links" href="https://geoff-goodwin-dev.github.io/TheTable-TheCodeDictator/"> The Code Dictator </a>
+        &
+        <a className="links" href="https://the-table-skynet.herokuapp.com/"> Skynet Flight Command</a>
+      </h6>
     </div>
 
   </div>
