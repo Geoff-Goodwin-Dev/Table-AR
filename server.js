@@ -48,5 +48,4 @@ app.use(passport.session());
 app.use('/user', user);
 // app.use(routes);
 
-
 app.listen(PORT, () => console.log(`🌎  ==> API Server now listening on http://localhost:${PORT} !`));
