@@ -1,16 +1,12 @@
 import React from "react";
-import Jumbotron from "../../components/Jumbotron";
+import "./NotFound.css";
 
 const NotFound = () => (
-        <Jumbotron>
-          <h1>404 Page Not Found, Bro</h1>
-          <br/>
-          <h1>
-            <span role="img" aria-label="Skull & Cross Bones">
-              ☢☹☣
-            </span>
-          </h1>
-        </Jumbotron>
+        <div id="fourohfour">
+          <h1 id="fouroh">404</h1>
+          <h1 id="noPage">Page Not Found Bro!</h1>
+          <h1 id="sentence">You have been limited to two dimensions.</h1>
+        </div>
 );
 
 export default NotFound;
