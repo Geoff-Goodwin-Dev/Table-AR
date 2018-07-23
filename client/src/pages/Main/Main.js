@@ -137,7 +137,7 @@ class Main extends Component {
 
   componentDidMount() {
     this.getListsOfUser('pageLoad');
-    this.addKeyboardListener();
+    // this.addKeyboardListener();
     this.addVrEnterListener();
     this.addVrExitListener();
   };
