@@ -6,8 +6,8 @@ const passport = require("./passport");
 const app = express();
 const PORT = process.env.PORT || 3001;
 const morgan = require("morgan");
-const user = require('./routes/api/user');
 const MongoStore = require('connect-mongo')(session);
+const routes = require('./routes');
 
 // Serve up static assets (heroku)
 if (process.env.NODE_ENV === "production") {
@@ -45,8 +45,8 @@ app.use( (req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/user', user);
 // app.use(routes);
+app.use('/', routes);
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function(err) {

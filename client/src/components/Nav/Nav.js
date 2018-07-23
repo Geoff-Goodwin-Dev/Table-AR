@@ -20,7 +20,7 @@ class Nav extends Component {
   logoutUser = (event) => {
     event.preventDefault();
     console.log('logging out');
-    axios.post('/user/logout')
+    axios.post('api/user/logout')
       .then(response => {
         console.log(response.data);
         if (response.status === 200) {
