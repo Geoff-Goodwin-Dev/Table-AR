@@ -7,8 +7,8 @@ export default {
   loginUser: (userData) => {
     return axios.post("/api/user/login", userData);
   },
-  getUser: (user) => {
-    return axios.get("/api/users", user);
+  getUser: () => {
+    return axios.get("/api/user");
   },
   getTodos: (listID) => {
     return axios.get("/api/routes/listItems/" + listID);

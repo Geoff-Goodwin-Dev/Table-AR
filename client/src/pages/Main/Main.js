@@ -136,10 +136,12 @@ class Main extends Component {
 
 
   componentDidMount() {
+    document.addEventListener('enter-vr', (event) => this.toggleVr('enter'));
+    console.log('add enter vr listener triggered');
+    document.addEventListener('exit-vr', (event) => this.toggleVr('exit'));
+    console.log('add exit vr listener triggered');
     this.getListsOfUser('pageLoad');
     // this.addKeyboardListener();
-    this.addVrEnterListener();
-    this.addVrExitListener();
   };
 
   keyboardListener = (event) => {
@@ -164,24 +166,16 @@ class Main extends Component {
     document.addEventListener('keyup', (event) => this.keyboardListener(event));
   };
 
-  enterVr = () => {
-    console.log("you've entered VR");
-    this.setState({inVrMode: true});
-  };
-
-  exitVr = () => {
-    console.log("you've exited VR");
-    this.setState({inVrMode: false});
-  };
-
-  addVrEnterListener = () => {
-    console.log('add vr listener triggered');
-    document.addEventListener('enter-vr', (event) => this.enterVr());
-  };
-
-  addVrExitListener = () => {
-    console.log('add vr listener triggered');
-    document.addEventListener('exit-vr', (event) => this.exitVr());
+  toggleVr = (enterExit) => {
+    if (enterExit === 'enter') {
+      this.setState({inVrMode: true});
+    }
+    else if (enterExit === 'exit') {
+      this.setState({inVrMode: false});
+    }
+    else {
+      console.log('something went wrong on entering or exiting VR mode')
+    }
   };
 
   getListsOfUser = (triggeringEvent) => {
