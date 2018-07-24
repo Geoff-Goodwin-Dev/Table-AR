@@ -16,6 +16,7 @@ class SignUp extends Component {
       usernameValidation: "",
       passwordValidation: "",
       emailValidation: "",
+      userError: ""
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -35,7 +36,8 @@ class SignUp extends Component {
       username: this.state.username,
       password: this.state.password,
       passwordConfirm: this.state.passwordConfirm,
-      email: this.state.email
+      email: this.state.email,
+      userError: this.state.userError
     };
 
     let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -83,6 +85,11 @@ class SignUp extends Component {
             console.log("successful signup!!");
             this.setState({
               redirectTo: '/todo'
+            })
+          }
+          else if(response.data.error){
+            this.setState({
+              userError: response.data.error
             })
           }
         }).catch(error => {
@@ -164,9 +171,9 @@ class SignUp extends Component {
                 Sign Up!
               </button>
 
-              <br />
+              
 
-              <span id="validate">{this.state.validation}</span>
+              <span id="userError">{this.state.userError}</span>
 
             </form>
           </div>
