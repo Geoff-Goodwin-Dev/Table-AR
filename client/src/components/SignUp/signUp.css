@@ -16,6 +16,10 @@
   font-family: 'Kumar One', cursive;
 }
 
+.validation{
+  color: red;
+}
+
 .btn{
   background: #00786B;
 }

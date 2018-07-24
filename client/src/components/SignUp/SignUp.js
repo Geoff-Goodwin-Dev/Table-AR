@@ -12,7 +12,10 @@ class SignUp extends Component {
       passwordConfirm: "",
       email: "",
       redirectTo: null,
-      loggedIn: false
+      loggedIn: false,
+      usernameValidation: "",
+      passwordValidation: "",
+      emailValidation: "",
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -38,10 +41,31 @@ class SignUp extends Component {
     let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
     if (userInfo.password !== userInfo.passwordConfirm) {
-      alert("Your password and password confirmation do not match.")
+      this.setState({
+        passwordValidation: "Your password and password confirmation do not match",
+        usernameValidation: "",
+        emailValidation: ""
+      })
     }
     else if (!reg.test(userInfo.email)) {
-      alert("Please input a valid email address.")
+      this.setState({
+        emailValidation: "Please enter a valid email address",
+        usernameValidation: "",
+        passwordValidation: ""
+      })    }
+    else if (userInfo.username === "") {
+      this.setState({
+        usernameValidation: "Please enter a username",
+        passwordValidation: "",
+        emailValidation: ""
+      })
+    }
+    else if (userInfo.password === "") {
+      this.setState({
+        passwordValidation: "Password is a required field",
+        usernameValidation: "",
+        emailValidation: ""
+      })
     }
     else {
       console.log(`sign-up-form, username: ${this.state.username}`);
@@ -78,6 +102,8 @@ class SignUp extends Component {
             <form>
 
               <div className="form-group">
+                <span className="validation" id="usernameValidate">{this.state.usernameValidation}</span>
+                <br/>
                 <label htmlFor="exampleInputText">Username</label>
                 <input
                   name="username"
@@ -90,6 +116,8 @@ class SignUp extends Component {
                   onChange={this.handleChange} />
               </div>
               <div className="form-group">
+                <span className="validation" id="emailValidate">{this.state.emailValidation}</span>
+                <br/>
                 <label htmlFor="exampleInputEmail1">Email</label>
                 <input
                   name="email"
@@ -102,6 +130,8 @@ class SignUp extends Component {
                 <small id="textHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
               <div className="form-group">
+                <span className="validation" id="passwordValidate">{this.state.passwordValidation}</span>
+                <br/>
                 <label htmlFor="exampleInputPassword1">Password</label>
                 <input
                   name="password"
@@ -113,6 +143,7 @@ class SignUp extends Component {
                   onChange={this.handleChange} />
               </div>
               <div className="form-group">
+              <br/>
                 <label htmlFor="exampleInputPassword2">Confirm Password</label>
                 <input
                   name="passwordConfirm"
@@ -132,6 +163,10 @@ class SignUp extends Component {
               >
                 Sign Up!
               </button>
+
+              <br />
+
+              <span id="validate">{this.state.validation}</span>
 
             </form>
           </div>
