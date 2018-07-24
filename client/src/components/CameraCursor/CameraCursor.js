@@ -9,10 +9,10 @@ const CameraCursor = (props) => (
     <Entity
       cursor={{fuse: true, fuseTimeout: 500}}
       raycaster={{objects: '.clickable', far: 30}}
-      position='0 0 -1'
+      position='0 0 -2'
       geometry='primitive: ring'
       material='color: orange'
-      scale='.03 .03 .03'
+      scale='.06 .06 .06'
       animation__scale={{
         property: 'scale',
         dur: 500,
@@ -20,7 +20,7 @@ const CameraCursor = (props) => (
         loop: 2,
         easing: 'easeInCirc',
         startEvents: 'fusing',
-        to: ' .005 .005 .005',
+        to: ' .01 .01 .01',
       }}
     />
     <Entity
