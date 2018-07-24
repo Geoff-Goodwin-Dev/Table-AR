@@ -11,6 +11,7 @@ import ToDoListItem from '../../components/ToDoListItems';
 import CloseCube from '../../components/CloseCube';
 import WebCam from '../../components/WebCam';
 import API from '../../utils/API';
+import { Redirect } from "react-router-dom";
 
 let textValue = '';
 
@@ -129,7 +130,6 @@ class Main extends Component {
         },
       ]
     };
-    this.logoutUser = this.logoutUser.bind(this);
   }
 
 
@@ -147,6 +147,9 @@ class Main extends Component {
       console.log('this.props.loggedIn', this.props.loggedIn);
       console.log('this.props.userRecordId', this.props.userRecordId);
       this.setState({pageLoadListsCalled: true});
+    }
+    if (this.props.redirectTo) {
+      this.setState({ redirectTo: this.props.redirectTo })
     }
   }
 
@@ -378,26 +381,6 @@ class Main extends Component {
     console.log(text);
     this.setState({listTitleInputField: text});
     textValue = text;
-  };
-
-  logoutUser = (event) => {
-    event.preventDefault();
-    console.log('logging out');
-    axios.post('/user/logout')
-      .then(response => {
-        console.log(response.data);
-        if (response.status === 200) {
-          this.props.updateUser({
-            loggedIn: false,
-            username: null
-          });
-          this.setState({
-            redirectTo: '/'
-          })
-        }
-      }).catch(error => {
-      console.log('Woops! Logout error!', error);
-    })
   };
 
   render() {

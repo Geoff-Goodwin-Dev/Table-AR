@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../../styles/Intro.css";
 import "./Nav.css";
-import axios from "axios";
 
 
 class Nav extends Component {

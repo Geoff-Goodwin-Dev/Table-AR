@@ -73,6 +73,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   if (req.user) {
+    console.log('REQ USER:', req.user);
     req.logout();
     res.send({ msg: 'logging out' })
   } else {

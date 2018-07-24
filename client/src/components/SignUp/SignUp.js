@@ -44,7 +44,8 @@ class SignUp extends Component {
           // update App.js state
           this.props.updateUser({
             loggedIn: true,
-            username: response.data.username
+            username: response.data.username,
+            userRecordId: response.data._id
           });
           console.log("successful signup!!");
           this.setState({
