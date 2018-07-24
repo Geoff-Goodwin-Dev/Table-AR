@@ -18,10 +18,6 @@ const ToDoListItem = props => (
       side: 'double'
     }}
     shadow='receive: true;'
-    events={{
-      click: props.events.click()
-    }}
-
   >
     <Entity
       geometry={{
