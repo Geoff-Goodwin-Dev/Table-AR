@@ -11,8 +11,6 @@ import ToDoListItem from '../../components/ToDoListItems';
 import CloseCube from '../../components/CloseCube';
 import WebCam from '../../components/WebCam';
 import API from '../../utils/API';
-import { Redirect } from "react-router-dom";
-import axios from "axios";
 
 let textValue = '';
 
@@ -32,7 +30,6 @@ class Main extends Component {
       listInFocus: '',
       listInFocusText: 'none',
       username: null,
-      redirectTo: null,
       lizItems: [
         {
           itemId: 'one',
@@ -135,6 +132,7 @@ class Main extends Component {
     this.logoutUser = this.logoutUser.bind(this);
   }
 
+
   componentDidMount() {
     document.addEventListener('enter-vr', (event) => this.toggleVr('enter'));
     console.log('add enter vr listener triggered');
@@ -191,27 +189,27 @@ class Main extends Component {
     console.log('this.props.userRecordId', this.props.userRecordId);
     API.getLists(this.props.userRecordId)
       .then(
-      res => {
-        console.log('lists of user:', res.data);
-        if (res.data.length > 0) {
-          if (triggeringEvent === 'pageLoad') {
-            this.setState({
-              listsOfUser: res.data,
-              listInFocus: res.data[0]._id,
-              listInFocusText: res.data[0].listTitle
-            })
+        res => {
+          console.log('lists of user:', res.data);
+          if (res.data.length > 0) {
+            if (triggeringEvent === 'pageLoad') {
+              this.setState({
+                listsOfUser: res.data,
+                listInFocus: res.data[0]._id,
+                listInFocusText: res.data[0].listTitle
+              })
+            }
+            else {
+              this.setState({
+                listsOfUser: res.data
+              })
+            }
           }
-          else {
-            this.setState({
-              listsOfUser: res.data
-            })
+          if (this.state.listsOfUser.length > 0) {
+            this.getListItemsOfList(this.state.listInFocus);
           }
         }
-        if (this.state.listsOfUser.length > 0) {
-          this.getListItemsOfList(this.state.listInFocus);
-        }
-      }
-    )
+      )
   };
 
   saveNewList = (data) => {
@@ -404,7 +402,7 @@ class Main extends Component {
 
   render() {
     if (this.state.redirectTo) {
-      return <Redirect to={{ pathname: this.state.redirectTo }} />
+      return <Redirect to={{pathname: this.state.redirectTo}}/>
     } else {
       return (
         <div className='text-center'>
@@ -421,7 +419,7 @@ class Main extends Component {
 
             {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
-          <CameraCursor />
+            <CameraCursor/>
 
             <Entity
               rotation={this.state.keyboardRotation}
@@ -498,42 +496,41 @@ class Main extends Component {
               {/*=============================================================================================
                 To Do List Container
             ==============================================================================================*/}
+              <ToDoListContainer
+                caption='Lists for User:'
+              >
+                <AddBlock
+                  events={{
+                    click: () => this.handleAddListClick()
+                  }}
+                />
 
-            <ToDoListContainer
-              caption='Lists for User:'
-            >
-              <AddBlock
-                events={{
-                  click: () => this.handleAddListClick()
-                }}
-              />
+                <Entity
+                  id="userInFocusCaption"
+                  position='0 3.25 0'
+                  text={{
+                    color: 'white',
+                    align: 'center',
+                    value: this.props.username,
+                    opacity: 1,
+                    width: 4,
+                    side: 'double'
+                  }}
+                />
 
-              <Entity
-                id="userInFocusCaption"
-                position='0 3.25 0'
-                text={{
-                  color: 'white',
-                  align: 'center',
-                  value: this.props.username,
-                  opacity: 1,
-                  width: 4,
-                  side: 'double'
-                }}
-              />
-
-              {(this.state.listsOfUser.length > 0) ? (
-                this.state.listsOfUser.map((list, index) => (
-                  <ToDoListItem
-                    key={list._id}
-                    id={list._id}
-                    text={list.listTitle}
-                    posY={`${3 - (0.5 * (index + 1))}`}
-                    type='list'
-                    events={{
-                      click: () => this.handleSelectListClick
-                    }}
-                  />
-                ))) : (
+                {(this.state.listsOfUser.length > 0) ? (
+                  this.state.listsOfUser.map((list, index) => (
+                    <ToDoListItem
+                      key={list._id}
+                      id={list._id}
+                      text={list.listTitle}
+                      posY={`${3 - (0.5 * (index + 1))}`}
+                      type='list'
+                      events={{
+                        click: () => this.handleSelectListClick
+                      }}
+                    />
+                  ))) : (
                   <Entity
                     position='0 2.5 0.5'
                     text={{

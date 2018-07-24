@@ -8,6 +8,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import API from './utils/API';
 import './styles/Intro.css';
+import axios from 'axios';
 
 class App extends Component {
   constructor() {
