@@ -9,6 +9,7 @@ class SignUp extends Component {
     this.state = {
       username: "",
       password: "",
+      passwordConfirm: "",
       email: "",
       redirectTo: null,
       loggedIn: false
@@ -28,32 +29,50 @@ class SignUp extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-    console.log(`sign-up-form, username: ${this.state.username}`);
-
-    // request to server here
-
     let userInfo = {
       username: this.state.username,
       password: this.state.password,
+      passwordConfirm: this.state.passwordConfirm,
       email: this.state.email
     };
-    API.saveUser(userInfo)
-      .then(response => {
-        console.log('signup.js saveUser line 39 Response:', response);
-        if (response.data.username) {
-          // update App.js state
-          this.props.updateUser({
-            loggedIn: true,
-            username: response.data.username
-          });
-          console.log("successful signup!!");
-          this.setState({
-            redirectTo: '/todo'
-          })
-        }
-      }).catch(error => {
-      console.log(`signup server error: ${error}`);
-    });
+
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+    if (userInfo.password !== userInfo.passwordConfirm) {
+      alert("Your password and password confirmation do not match.")
+    }
+    else if (!reg.test(userInfo.email)) {
+      alert("Please input a valid email address.")
+    }
+    else {
+      // =================================================================
+
+      console.log(`sign-up-form, username: ${this.state.username}`);
+
+      // request to server here
+
+
+      API.saveUser(userInfo)
+        .then(response => {
+          console.log('signup.js saveUser line 39 Response:', response);
+          if (response.data.username) {
+            // update App.js state
+            this.props.updateUser({
+              loggedIn: true,
+              username: response.data.username
+            });
+            console.log("successful signup!!");
+            this.setState({
+              redirectTo: '/todo'
+            })
+          }
+        }).catch(error => {
+          console.log(`signup server error: ${error}`);
+        });
+
+      // ==============================================================
+    }
+
 
   };
 
@@ -105,10 +124,11 @@ class SignUp extends Component {
               <div className="form-group">
                 <label htmlFor="exampleInputPassword2">Confirm Password</label>
                 <input
-                  name="password2"
+                  name="passwordConfirm"
                   type="password"
                   className="form-control"
                   id="exampleInputPassword2"
+                  value={this.state.passwordConfirm}
                   placeholder="Password"
                   onChange={this.handleChange} />
               </div>
