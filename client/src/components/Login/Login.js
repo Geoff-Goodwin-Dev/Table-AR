@@ -51,14 +51,9 @@ class Login extends Component {
             redirectTo: '/todo'
           })
         }
-        // else{
-        //   this.setState({
-        //     loginFail: "Username or password is not in our records"
-        //   })
-        // }
       }).catch(error => {
         console.log(`login error: ${error}`);
-        
+
         if (this.state.username === "") {
           this.setState({
             loginFail: "Please enter a valid username"
