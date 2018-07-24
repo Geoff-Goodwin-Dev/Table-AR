@@ -15,11 +15,8 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       username: null,
-<<<<<<< HEAD
-      redirectTo: null
-=======
+      redirectTo: null,
       userRecordId: null
->>>>>>> 2e0cb9dd5389dfd7104ef4d0a0dce49458d548da
     };
 
     this.getUser = this.getUser.bind(this);
@@ -84,11 +81,6 @@ class App extends Component {
         <div>
           <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} logout={this.logoutUser} />
           <Switch>
-<<<<<<< HEAD
-            <Route exact path="/" component={Intro} />
-            <Route exact path="/logout" component={Intro} />
-            <Route exact path="/todo" component={Main}  />
-=======
             <Route exact path='/' component={Intro} />
             <Route
               exact path='/todo'
@@ -100,7 +92,6 @@ class App extends Component {
                 />
               }
             />
->>>>>>> 2e0cb9dd5389dfd7104ef4d0a0dce49458d548da
             <Route
               exact path='/signUp'
               render={() =>
