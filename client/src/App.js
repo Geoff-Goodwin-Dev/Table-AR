@@ -50,9 +50,6 @@ class App extends Component {
           this.setState({
             redirectTo: '/'
           })
-            .then(() => {
-              this.setState({ redirectTo: null })
-            })
         }
       }).catch(error => {
         console.log('Woops! Logout error!', error);
@@ -81,13 +78,26 @@ class App extends Component {
     })
   };
 
+  resetRedirect = () => {
+    this.setState({redirectTo: null})
+  };
+
   render() {
     return (
       <Router>
         <div>
           <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} logout={this.logoutUser} />
           <Switch>
-            <Route exact path='/' component={Intro} />
+            <Route
+              exact path='/'
+              render={() =>
+                <Intro
+                  loggedIn={this.state.loggedIn}
+                  redirectTo={this.state.redirectTo}
+                  resetRedirect={this.resetRedirect}
+                />
+              }
+            />
             <Route
               exact path='/todo'
               render={() =>
