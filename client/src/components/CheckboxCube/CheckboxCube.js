@@ -1,7 +1,7 @@
 import React from "react";
 import {Entity} from 'aframe-react';
 
-const CloseCube = props => (
+const CheckboxCube = props => (
   <Entity
     parentID={props.id}
     className="clickable"
@@ -11,9 +11,9 @@ const CloseCube = props => (
       height: 0.19,
       width: 0.19
     }}
-    position="1.16 0 0.1"
+    position="0.85 0 0.1"
     material={{
-      color: 'red',
+      color: 'white',
       opacity: 0.5,
       side: 'double'
     }}
@@ -21,17 +21,8 @@ const CloseCube = props => (
       click: props.events.click()
     }}
   >
-    <Entity
-      position="0 0 0.1"
-      text={{
-        color: 'white',
-        align: 'center',
-        value: 'x',
-        opacity: 1,
-        width: 3
-      }}
-    />
+    {props.children}
   </Entity>
 );
 
-export default CloseCube;
+export default CheckboxCube;

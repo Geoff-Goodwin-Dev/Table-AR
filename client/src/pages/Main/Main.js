@@ -9,6 +9,7 @@ import SaveBtn from '../../components/SaveBtn';
 import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
 import CloseCube from '../../components/CloseCube';
+import CheckboxCube from '../../components/CheckboxCube';
 import WebCam from '../../components/WebCam';
 import API from '../../utils/API';
 import { Redirect } from "react-router-dom";
@@ -392,6 +393,10 @@ class Main extends Component {
     textValue = text;
   };
 
+  handleToggleDone = () => {
+    console.log("Done checkbox toggled")
+  };
+
   render() {
     if (this.state.redirectTo) {
       return <Redirect to={{pathname: this.state.redirectTo}}/>
@@ -630,12 +635,30 @@ class Main extends Component {
                     id={listItem._id}
                     text={listItem.title}
                     posY={`${3 - (0.5 * (index + 1))}`}
-                    events={{
-                      click: () => this.handleDeleteListItem
-                    }}
+                    // events={{
+                    //   click: () => this.handleDeleteListItem
+                    // }}
                   >
+                    <CheckboxCube
+                      parentItemId={listItem._id}
+                      events={{
+                        click: () => this.handleToggleDone
+                      }}
+                    >
+                      <Entity
+                        className='clickable'
+                        primitive='a-checkbox'
+                        position="-0.105 -0.015 0.1"
+                        width='.15'
+                        checked='true'
+                        name={`checkbox${listItem._id}`}
+                      />
+                    </CheckboxCube>
                     <CloseCube
                       id={listItem._id}
+                      events={{
+                        click: () => this.handleDeleteListItem
+                      }}
                     />
                   </ToDoListItem>
                 ))}
