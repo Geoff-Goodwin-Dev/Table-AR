@@ -9,6 +9,12 @@ const controller = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  findOne: (req, res) => {
+    db.ListItem(req.query)
+      .where('_id').equals(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   create: (req, res, next) => {
     db.ListItem
       .create(req.body)
