@@ -80,7 +80,16 @@ class App extends Component {
           <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} />
           <Switch>
             <Route exact path='/' component={Intro} />
-            <Route exact path='/todo' component={Main}  />
+            <Route
+              exact path='/todo'
+              render={() =>
+                <Main
+                  loggedIn={this.state.loggedIn}
+                  username={this.state.username}
+                  userRecordId={this.state.userRecordId}
+                />
+              }
+            />
             <Route
               exact path='/signUp'
               render={() =>
