@@ -8,6 +8,8 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import API from './utils/API';
 import './styles/Intro.css';
+import axios from 'axios';
+
 
 class App extends Component {
   constructor() {
@@ -15,12 +17,14 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       username: null,
+      redirectTo: null,
       userRecordId: null
     };
 
     this.getUser = this.getUser.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.logoutUser = this.logoutUser.bind(this);
   }
 
   componentDidMount() {
@@ -31,25 +35,29 @@ class App extends Component {
     this.setState(userObject)
   }
 
-  // logoutUser = (event) => {
-  //   event.preventDefault();
-  //   console.log('logging out');
-  //   axios.post('/user/logout')
-  //     .then(response => {
-  //       console.log(response.data);
-  //       if (response.status === 200) {
-  //         this.updateUser({
-  //           loggedIn: false,
-  //           username: null
-  //         });
-  //         this.setState({
-  //           redirectTo: '/'
-  //         })
-  //       }
-  //     }).catch(error => {
-  //       console.log('Woops! Logout error!', error);
-  //   });
-  // };
+  logoutUser = (event) => {
+    event.preventDefault();
+    console.log('logging out');
+    axios.post('/api/user/logout')
+      .then(response => {
+        console.log(response.data);
+        if (response.status === 200) {
+          this.updateUser({
+            loggedIn: false,
+            username: null,
+            userRecordId: null
+          });
+          this.setState({
+            redirectTo: '/'
+          })
+            .then(() => {
+              this.setState({ redirectTo: null })
+            })
+        }
+      }).catch(error => {
+        console.log('Woops! Logout error!', error);
+    });
+  };
 
   getUser = () => {
     API.getUser()
@@ -77,7 +85,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} />
+          <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} logout={this.logoutUser} />
           <Switch>
             <Route exact path='/' component={Intro} />
             <Route
@@ -87,6 +95,7 @@ class App extends Component {
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}
                   userRecordId={this.state.userRecordId}
+                  redirectTo={this.state.redirectTo}
                 />
               }
             />

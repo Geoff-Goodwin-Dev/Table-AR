@@ -19,7 +19,6 @@ class SignUp extends Component {
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
   }
 
   handleChange = event => {
@@ -39,7 +38,7 @@ class SignUp extends Component {
       email: this.state.email
     };
 
-    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
     if (userInfo.password !== userInfo.passwordConfirm) {
       this.setState({
@@ -69,12 +68,7 @@ class SignUp extends Component {
       })
     }
     else {
-      // =================================================================
-
       console.log(`sign-up-form, username: ${this.state.username}`);
-
-      // request to server here
-
 
       API.saveUser(userInfo)
         .then(response => {
@@ -83,7 +77,8 @@ class SignUp extends Component {
             // update App.js state
             this.props.updateUser({
               loggedIn: true,
-              username: response.data.username
+              username: response.data.username,
+              userRecordId: response.data._id
             });
             console.log("successful signup!!");
             this.setState({
@@ -93,11 +88,7 @@ class SignUp extends Component {
         }).catch(error => {
           console.log(`signup server error: ${error}`);
         });
-
-      // ==============================================================
     }
-
-
   };
 
   render() {
