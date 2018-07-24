@@ -16,16 +16,17 @@
   font-family: 'Kumar One', cursive;
 }
 
-.validation{
-  color: red;
-}
-
 .btn{
   background: #00786B;
 }
 
 .btn:hover{
   background: rgb(0, 165, 149);
+}
+
+#userError{
+  color: red;
+  margin: 0 20px;
 }
 
 @media (max-width: 400px) { 
