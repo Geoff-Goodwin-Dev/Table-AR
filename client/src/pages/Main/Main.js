@@ -29,8 +29,6 @@ class Main extends Component {
       listItemsOfList: [],
       listInFocus: '',
       listInFocusText: 'none',
-      userIdInFocus: 'placeholderForNoId',
-      usernameInFocus: 'TestUser',
       username: null,
       lizItems: [
         {
@@ -295,6 +293,7 @@ class Main extends Component {
         title: textValue.trim(),
         orderNumber: (this.findLargestOrderNumber() + 1),
         listID: this.state.listInFocus,
+        authorId: this.props.userRecordId
       };
       this.saveNewListItem(newListItem);
       this.setState({
@@ -393,21 +392,7 @@ class Main extends Component {
 
           {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
-          <CameraCursor>
-            <Entity
-              id="userInFocusCaption"
-              position='2 3 -5'
-              text={{
-                color: 'white',
-                align: 'center',
-                value: this.state.inVrMode,
-                opacity: 1,
-                width: 4,
-                side: 'double'
-              }}
-            />
-          </CameraCursor>
-
+          <CameraCursor />
 
           <Entity
             rotation={this.state.keyboardRotation}
@@ -499,7 +484,7 @@ class Main extends Component {
                 text={{
                   color: 'white',
                   align: 'center',
-                  value: this.state.usernameInFocus,
+                  value: this.props.username,
                   opacity: 1,
                   width: 4,
                   side: 'double'
