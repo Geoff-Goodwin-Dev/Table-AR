@@ -28,7 +28,7 @@ router.post(
         newUser.save((err, savedUser) => {
           if (err) return res.json(err);
           console.log('this is the saved user:', savedUser);
-          // res.json(savedUser)
+          // res.json(savedUser);
           next();
         });
       }
@@ -38,7 +38,8 @@ router.post(
   (req, res) => {
     console.log('logged in', req.user);
     let userInfo = {
-      username: req.user.username
+      username: req.user.username,
+      _id: req.user._id
     };
     res.send(userInfo);
   }
