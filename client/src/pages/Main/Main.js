@@ -393,9 +393,23 @@ class Main extends Component {
     textValue = text;
   };
 
-  handleToggleDone = () => {
-    console.log("Done checkbox toggled")
+  handleToggleDone = (event) => {
+    console.log("Done checkbox toggled");
+    console.log(event);
+    const {id} = event.target.parentEl.parentEl.parentEl;
+    console.log(id, 'clicked for toggle of done status');
+    // this.toggleDoneListItem(itemId);
+    // this.getListItemsOfList(id);
   };
+
+  // toggleDoneListItem = (itemId) => {
+  //   API.updateTodos(itemId).then(
+  //     res => {
+  //       console.log(res);
+  //       this.getListItemsOfList(this.state.listInFocus);
+  //     }
+  //   )
+  // };
 
   render() {
     if (this.state.redirectTo) {
@@ -518,6 +532,7 @@ class Main extends Component {
                 {(this.state.listsOfUser.length > 0) ? (
                   this.state.listsOfUser.map((list, index) => (
                     <ToDoListItem
+                      class='clickable'
                       key={list._id}
                       id={list._id}
                       text={list.listTitle}
@@ -635,9 +650,9 @@ class Main extends Component {
                     id={listItem._id}
                     text={listItem.title}
                     posY={`${3 - (0.5 * (index + 1))}`}
-                    // events={{
-                    //   click: () => this.handleDeleteListItem
-                    // }}
+                    events={{
+                      click: () => console.log('list item clicked')
+                    }}
                   >
                     <CheckboxCube
                       parentItemId={listItem._id}
@@ -650,7 +665,7 @@ class Main extends Component {
                         primitive='a-checkbox'
                         position="-0.105 -0.015 0.1"
                         width='.15'
-                        checked='true'
+                        checked={listItem.complete}
                         name={`checkbox${listItem._id}`}
                       />
                     </CheckboxCube>

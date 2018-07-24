@@ -21,6 +21,10 @@ export default {
   deleteTodos: (id) => {
     return axios.delete("/api/routes/listItems/" + id);
   },
+  // Updates done status
+  updateTodos: (id) => {
+    return axios.put("/api/routes/listItems/" + id);
+  },
   // Gets all Lists
   getLists: (userRecordId) => {
     return axios.get("/api/routes/list/" + userRecordId);

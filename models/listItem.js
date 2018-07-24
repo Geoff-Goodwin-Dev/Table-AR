@@ -14,6 +14,10 @@ const listItemSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  complete: {
+    type: Boolean,
+    default: false
+  },
   authorId: {
     type: String,
     required: 'Author ID is required'
