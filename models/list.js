@@ -10,9 +10,10 @@ const list = new Schema({
   createdDate: {
     type: Date,
     default: Date.now
-  // },
-  // listID: {
-  //   type: Schema.Types.ObjectId
+  },
+  authorId: {
+    type: String,
+    required: 'Author ID is required'
   }
 },
   {

@@ -2,13 +2,13 @@ import axios from "axios";
 
 export default {
   saveUser: (userData) => {
-    return axios.post("/user", userData);
+    return axios.post("/api/user", userData);
   },
   loginUser: (userData) => {
-    return axios.post("/user/login", userData);
+    return axios.post("/api/user/login", userData);
   },
-  getUser: (user) => {
-    return axios.get("/api/users", user);
+  getUser: () => {
+    return axios.get("/api/user");
   },
   getTodos: (listID) => {
     return axios.get("/api/routes/listItems/" + listID);
@@ -22,8 +22,8 @@ export default {
     return axios.delete("/api/routes/listItems/" + id);
   },
   // Gets all Lists
-  getLists: () => {
-    return axios.get("/api/routes/list");
+  getLists: (userRecordId) => {
+    return axios.get("/api/routes/list/" + userRecordId);
   },
   // Saves List to database
   saveLists: (listData) => {

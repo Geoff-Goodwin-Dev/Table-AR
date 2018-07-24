@@ -10,7 +10,6 @@ import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
 import CloseCube from '../../components/CloseCube';
 import WebCam from '../../components/WebCam';
-// import Webcam from 'react-user-media';
 import API from '../../utils/API';
 import { Redirect } from "react-router-dom";
 import axios from "axios";
@@ -21,6 +20,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
+      pageLoadListsCalled: false,
       inVrMode: false,
       keyboardRotation: '0 0 0',
       listTitleInputField: '',
@@ -31,9 +31,6 @@ class Main extends Component {
       listItemsOfList: [],
       listInFocus: '',
       listInFocusText: 'none',
-      userIdInFocus: 'placeholderForNoId',
-      usernameInFocus: 'TestUser',
-      loggedIn: false,
       username: null,
       redirectTo: null,
       lizItems: [
@@ -139,11 +136,21 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    this.getListsOfUser('pageLoad');
-    this.addKeyboardListener();
-    this.addVrEnterListener();
-    this.addVrExitListener();
+    document.addEventListener('enter-vr', (event) => this.toggleVr('enter'));
+    console.log('add enter vr listener triggered');
+    document.addEventListener('exit-vr', (event) => this.toggleVr('exit'));
+    console.log('add exit vr listener triggered');
+    // this.addKeyboardListener();
   };
+
+  componentDidUpdate() {
+    if (this.props.loggedIn && this.props.userRecordId && !this.state.pageLoadListsCalled) {
+      this.getListsOfUser('pageLoad');
+      console.log('this.props.loggedIn', this.props.loggedIn);
+      console.log('this.props.userRecordId', this.props.userRecordId);
+      this.setState({pageLoadListsCalled: true});
+    }
+  }
 
   keyboardListener = (event) => {
     if (event.defaultPrevented) {
@@ -167,29 +174,23 @@ class Main extends Component {
     document.addEventListener('keyup', (event) => this.keyboardListener(event));
   };
 
-  enterVr = () => {
-    console.log("you've entered VR");
-    this.setState({inVrMode: true});
-  };
-
-  exitVr = () => {
-    console.log("you've exited VR");
-    this.setState({inVrMode: false});
-  };
-
-  addVrEnterListener = () => {
-    console.log('add vr listener triggered');
-    document.addEventListener('enter-vr', (event) => this.enterVr());
-  };
-
-  addVrExitListener = () => {
-    console.log('add vr listener triggered');
-    document.addEventListener('exit-vr', (event) => this.exitVr());
+  toggleVr = (enterExit) => {
+    if (enterExit === 'enter') {
+      this.setState({inVrMode: true});
+    }
+    else if (enterExit === 'exit') {
+      this.setState({inVrMode: false});
+    }
+    else {
+      console.log('something went wrong on entering or exiting VR mode')
+    }
   };
 
   getListsOfUser = (triggeringEvent) => {
     console.log('get lists triggered');
-    API.getLists().then(
+    console.log('this.props.userRecordId', this.props.userRecordId);
+    API.getLists(this.props.userRecordId)
+      .then(
       res => {
         console.log('lists of user:', res.data);
         if (res.data.length > 0) {
@@ -206,7 +207,9 @@ class Main extends Component {
             })
           }
         }
-        this.getListItemsOfList(this.state.listInFocus);
+        if (this.state.listsOfUser.length > 0) {
+          this.getListItemsOfList(this.state.listInFocus);
+        }
       }
     )
   };
@@ -296,6 +299,7 @@ class Main extends Component {
         title: textValue.trim(),
         orderNumber: (this.findLargestOrderNumber() + 1),
         listID: this.state.listInFocus,
+        authorId: this.props.userRecordId
       };
       this.saveNewListItem(newListItem);
       this.setState({
@@ -311,7 +315,8 @@ class Main extends Component {
     if (this.state.listTitleInputField.length > 0) {
       ListInput.blur();
       let newList = {
-        listTitle: textValue.trim()
+        listTitle: textValue.trim(),
+        authorId: this.props.userRecordId
       };
       this.saveNewList(newList);
       this.setState({
@@ -416,21 +421,7 @@ class Main extends Component {
 
             {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
 
-            <CameraCursor>
-              <Entity
-                id="userInFocusCaption"
-                position='2 3 -5'
-                text={{
-                  color: 'white',
-                  align: 'center',
-                  value: this.state.inVrMode,
-                  opacity: 1,
-                  width: 4,
-                  side: 'double'
-                }}
-              />
-            </CameraCursor>
-
+          <CameraCursor />
 
             <Entity
               rotation={this.state.keyboardRotation}
@@ -507,42 +498,52 @@ class Main extends Component {
               {/*=============================================================================================
                 To Do List Container
             ==============================================================================================*/}
-              <ToDoListContainer
-                caption='Lists for User:'
-              >
-                <AddBlock
-                  events={{
-                    click: () => this.handleAddListClick()
-                  }}
-                />
 
-                <Entity
-                  id="userInFocusCaption"
-                  position='0 3.25 0'
-                  text={{
-                    color: 'white',
-                    align: 'center',
-                    value: this.state.usernameInFocus,
-                    opacity: 1,
-                    width: 4,
-                    side: 'double'
-                  }}
-                />
+            <ToDoListContainer
+              caption='Lists for User:'
+            >
+              <AddBlock
+                events={{
+                  click: () => this.handleAddListClick()
+                }}
+              />
 
-                {(this.state.listsOfUser.length > 0) ? (
-                  this.state.listsOfUser.map((list, index) => (
-                    <ToDoListItem
-                      key={list._id}
-                      id={list._id}
-                      text={list.listTitle}
-                      posY={`${3 - (0.5 * (index + 1))}`}
-                      type='list'
-                      events={{
-                        click: () => this.handleSelectListClick
-                      }}
-                    />
-                  ))) : (
-                  <p>No Lists</p>
+              <Entity
+                id="userInFocusCaption"
+                position='0 3.25 0'
+                text={{
+                  color: 'white',
+                  align: 'center',
+                  value: this.props.username,
+                  opacity: 1,
+                  width: 4,
+                  side: 'double'
+                }}
+              />
+
+              {(this.state.listsOfUser.length > 0) ? (
+                this.state.listsOfUser.map((list, index) => (
+                  <ToDoListItem
+                    key={list._id}
+                    id={list._id}
+                    text={list.listTitle}
+                    posY={`${3 - (0.5 * (index + 1))}`}
+                    type='list'
+                    events={{
+                      click: () => this.handleSelectListClick
+                    }}
+                  />
+                ))) : (
+                  <Entity
+                    position='0 2.5 0.5'
+                    text={{
+                      color: 'white',
+                      align: 'center',
+                      value: 'No lists created',
+                      opacity: 1,
+                      width: 4,
+                    }}
+                  />
                 )
                 }
               </ToDoListContainer>

@@ -1,14 +1,13 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Main from "./pages/Main";
-import NotFound from "./pages/NotFound";
-import Intro from "./pages/Intro";
-import Nav from "./components/Nav";
-import "./styles/Intro.css";
-import axios from "axios";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Main from './pages/Main';
+import NotFound from './pages/NotFound';
+import Intro from './pages/Intro';
+import Nav from './components/Nav';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import API from './utils/API';
+import './styles/Intro.css';
 
 class App extends Component {
   constructor() {
@@ -16,7 +15,11 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       username: null,
+<<<<<<< HEAD
       redirectTo: null
+=======
+      userRecordId: null
+>>>>>>> 2e0cb9dd5389dfd7104ef4d0a0dce49458d548da
     };
 
     this.getUser = this.getUser.bind(this);
@@ -54,19 +57,19 @@ class App extends Component {
   };
 
   getUser = () => {
-    axios.get('/user')
+    API.getUser()
     .then(response => {
       console.log('Get user response: ');
       console.log(response.data);
       if (response.data.user) {
-        console.log('Get User: There is a user saved in the server session: ');
-
+        console.log('Get user result: There is a user saved in the server session');
         this.setState({
           loggedIn: true,
-          username: response.data.user.username
+          username: response.data.user.username,
+          userRecordId: response.data.user._id
         })
       } else {
-        console.log('Get user: no user');
+        console.log('Get user result: No active user session. Login or Sign Up needed');
         this.setState({
           loggedIn: false,
           username: null
@@ -81,18 +84,32 @@ class App extends Component {
         <div>
           <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} logout={this.logoutUser} />
           <Switch>
+<<<<<<< HEAD
             <Route exact path="/" component={Intro} />
             <Route exact path="/logout" component={Intro} />
             <Route exact path="/todo" component={Main}  />
+=======
+            <Route exact path='/' component={Intro} />
             <Route
-              exact path="/signUp"
+              exact path='/todo'
+              render={() =>
+                <Main
+                  loggedIn={this.state.loggedIn}
+                  username={this.state.username}
+                  userRecordId={this.state.userRecordId}
+                />
+              }
+            />
+>>>>>>> 2e0cb9dd5389dfd7104ef4d0a0dce49458d548da
+            <Route
+              exact path='/signUp'
               render={() =>
                <SignUp
                  updateUser={this.updateUser}
                />}
              />
             <Route
-              exact path="/login"
+              exact path='/login'
               render={() =>
                 <Login
                   updateUser={this.updateUser}

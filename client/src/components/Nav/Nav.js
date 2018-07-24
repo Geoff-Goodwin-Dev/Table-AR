@@ -11,6 +11,7 @@ class Nav extends Component {
       username: "",
       password: "",
     };
+
   }
 
   render() {

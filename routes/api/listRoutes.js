@@ -4,11 +4,11 @@ const listController = require("../../controllers/listController");
 
 router
   .route("/list")
-  .get(listController.findAll)
   .post(listController.create);
 
 router
   .route("/list/:id")
+  .get(listController.findAll)
   .delete(listController.remove);
 
 module.exports = router;
