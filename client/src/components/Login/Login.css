@@ -24,6 +24,14 @@
   background: rgb(0, 165, 149);
 }
 
+#oldUser{
+  margin-right: 20px;
+}
+
+#loginFail{
+  color: red;
+}
+
 @media (max-width: 400px) { 
   #loginHeading{
     margin: 10% 0 0 0%;

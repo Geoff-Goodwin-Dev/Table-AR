@@ -6,11 +6,12 @@ import { Redirect } from "react-router-dom";
 class Login extends Component {
   constructor() {
     super();
-    this.state={
+    this.state = {
       username: "",
       password: "",
       redirectTo: null,
-      loggedIn: false
+      loggedIn: false,
+      loginFail: ""
     };
     this.handleFormLogin = this.handleFormLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -51,8 +52,24 @@ class Login extends Component {
           })
         }
       }).catch(error => {
-      console.log(`login error: ${error}`);
-    });
+        console.log(`login error: ${error}`);
+
+        if (this.state.username === "") {
+          this.setState({
+            loginFail: "Please enter a valid username"
+          })
+        }
+        else if (this.state.password === "") {
+          this.setState({
+            loginFail: "Please enter a valid password"
+          })
+        }
+        else if (error) {
+          this.setState({
+            loginFail: "Username or password is not in our records"
+          })
+        }
+      });
 
   };
 
@@ -63,7 +80,7 @@ class Login extends Component {
       return (
         <div>
           <h1 id="loginHeading">Login</h1>
-          <br/><br/><br/>
+          <br /><br /><br />
           <div id="loginForm">
             <form>
               <div className="form-group">
@@ -78,29 +95,30 @@ class Login extends Component {
                   value={this.state.username}
                   onChange={this.handleChange} />
               </div>
-            <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Password</label>
-              <input
-                name="password"
-                type="password"
-                className="form-control"
-                id="exampleInputPassword1"
-                value={this.state.password}
-                placeholder="Password"
-                onChange={this.handleChange} />
-            </div>
-            <button
-              id="oldUser"
-              type="submit"
-              className="btn btn-primary"
-              onClick={this.handleFormLogin}
-            >
-              Login
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Password</label>
+                <input
+                  name="password"
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword1"
+                  value={this.state.password}
+                  placeholder="Password"
+                  onChange={this.handleChange} />
+              </div>
+              <button
+                id="oldUser"
+                type="submit"
+                className="btn btn-primary"
+                onClick={this.handleFormLogin}
+              >
+                Login
             </button>
+              <span id="loginFail">{this.state.loginFail}</span>
 
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       );
     }
   }
