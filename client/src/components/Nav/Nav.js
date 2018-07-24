@@ -14,7 +14,6 @@ class Nav extends Component {
       redirectTo: null,
     };
     this.logoutUser = this.logoutUser.bind(this);
-
   }
 
   logoutUser = (event) => {

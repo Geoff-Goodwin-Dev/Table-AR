@@ -10,7 +10,6 @@ import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
 import CloseCube from '../../components/CloseCube';
 import WebCam from '../../components/WebCam';
-// import Webcam from 'react-user-media';
 import API from '../../utils/API';
 
 let textValue = '';
@@ -19,6 +18,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
+      pageLoadListsCalled: false,
       inVrMode: false,
       keyboardRotation: '0 0 0',
       listTitleInputField: '',
@@ -31,7 +31,6 @@ class Main extends Component {
       listInFocusText: 'none',
       userIdInFocus: 'placeholderForNoId',
       usernameInFocus: 'TestUser',
-      loggedIn: false,
       username: null,
       lizItems: [
         {
@@ -140,9 +139,17 @@ class Main extends Component {
     console.log('add enter vr listener triggered');
     document.addEventListener('exit-vr', (event) => this.toggleVr('exit'));
     console.log('add exit vr listener triggered');
-    this.getListsOfUser('pageLoad');
     // this.addKeyboardListener();
   };
+
+  componentDidUpdate() {
+    if (this.props.loggedIn && this.props.userRecordId && !this.state.pageLoadListsCalled) {
+      this.getListsOfUser('pageLoad');
+      console.log('this.props.loggedIn', this.props.loggedIn);
+      console.log('this.props.userRecordId', this.props.userRecordId);
+      this.setState({pageLoadListsCalled: true});
+    }
+  }
 
   keyboardListener = (event) => {
     if (event.defaultPrevented) {
@@ -180,7 +187,9 @@ class Main extends Component {
 
   getListsOfUser = (triggeringEvent) => {
     console.log('get lists triggered');
-    API.getLists().then(
+    console.log('this.props.userRecordId', this.props.userRecordId);
+    API.getLists(this.props.userRecordId)
+      .then(
       res => {
         console.log('lists of user:', res.data);
         if(res.data.length > 0) {
@@ -197,7 +206,9 @@ class Main extends Component {
             })
           }
         }
-        this.getListItemsOfList(this.state.listInFocus);
+        if (this.state.listsOfUser.length > 0) {
+          this.getListItemsOfList(this.state.listInFocus);
+        }
       }
     )
   };
@@ -299,7 +310,8 @@ class Main extends Component {
     if(this.state.listTitleInputField.length > 0) {
       ListInput.blur();
       let newList = {
-        listTitle: textValue.trim()
+        listTitle: textValue.trim(),
+        authorId: this.props.userRecordId
       };
       this.saveNewList(newList);
       this.setState({
@@ -507,7 +519,16 @@ class Main extends Component {
                     }}
                   />
                 ))) : (
-                  <p>No Lists</p>
+                  <Entity
+                    position='0 2.5 0.5'
+                    text={{
+                      color: 'white',
+                      align: 'center',
+                      value: 'No lists created',
+                      opacity: 1,
+                      width: 4,
+                    }}
+                  />
                 )
               }
             </ToDoListContainer>

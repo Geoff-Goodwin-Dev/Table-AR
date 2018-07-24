@@ -4,6 +4,7 @@ const controller = {
   findAll: (req, res) => {
     db.Lists
       .find(req.query)
+      .where('authorId').equals(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

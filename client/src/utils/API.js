@@ -22,8 +22,8 @@ export default {
     return axios.delete("/api/routes/listItems/" + id);
   },
   // Gets all Lists
-  getLists: () => {
-    return axios.get("/api/routes/list");
+  getLists: (userRecordId) => {
+    return axios.get("/api/routes/list/" + userRecordId);
   },
   // Saves List to database
   saveLists: (listData) => {
