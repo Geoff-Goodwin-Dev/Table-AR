@@ -139,15 +139,24 @@ class Main extends Component {
     document.addEventListener('exit-vr', (event) => this.toggleVr('exit'));
     console.log('add exit vr listener triggered');
     // this.addKeyboardListener();
+    this.recursiveWaitForLogin();
   };
 
-  componentDidUpdate() {
-    if (this.props.loggedIn && this.props.userRecordId && !this.state.pageLoadListsCalled) {
+  recursiveWaitForLogin = () => {
+    if (this.props.loggedIn && this.props.userRecordId) {
+      console.log('get lists called');
       this.getListsOfUser('pageLoad');
       console.log('this.props.loggedIn', this.props.loggedIn);
       console.log('this.props.userRecordId', this.props.userRecordId);
       this.setState({pageLoadListsCalled: true});
     }
+    else {
+      console.log('waiting');
+      setTimeout(() => this.recursiveWaitForLogin(), 500);
+    }
+  };
+
+  componentDidUpdate() {
     if (this.props.redirectTo) {
       this.setState({ redirectTo: this.props.redirectTo })
     }
@@ -284,7 +293,7 @@ class Main extends Component {
 
   handleAddListClick = () => {
     this.setState({
-      keyboardRotation: '0 90 0',
+      keyboardRotation: '0 60 0',
       listCreateModalIsVisible: true,
       listItemCreateModalIsVisible: false
     });
@@ -421,7 +430,7 @@ class Main extends Component {
           ==============================================================================================*/}
             <Entity
               id='ListOfListsSceneComponent'
-              rotation='0 90 0'
+              rotation='0 60 0'
             >
               {/*=============================================================================================
               Modal Container
