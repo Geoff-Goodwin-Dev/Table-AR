@@ -4,7 +4,7 @@ import {Entity} from 'aframe-react';
 const CheckboxCube = props => (
   <Entity
     parentID={props.id}
-    className="clickable"
+    className='clickable'
     geometry={{
       primitive: 'box',
       depth: 0.19,

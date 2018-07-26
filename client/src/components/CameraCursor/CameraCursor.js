@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {Entity} from 'aframe-react';
 
 const CameraCursor = (props) => (

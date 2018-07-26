@@ -133,11 +133,10 @@ class Main extends Component {
     };
   }
 
-
   componentDidMount() {
-    document.addEventListener('enter-vr', (event) => this.toggleVr('enter'));
+    document.addEventListener('enter-vr', () => this.toggleVr('enter'));
     console.log('add enter vr listener triggered');
-    document.addEventListener('exit-vr', (event) => this.toggleVr('exit'));
+    document.addEventListener('exit-vr', () => this.toggleVr('exit'));
     console.log('add exit vr listener triggered');
     // this.addKeyboardListener();
     this.recursiveWaitForLogin();
@@ -279,11 +278,11 @@ class Main extends Component {
     if (arrayIndex > -1) {
       lizItemsArray.splice(arrayIndex, 1)
     }
-    ;
     this.setState({lizItems: lizItemsArray});
   };
 
   handleAddListItemClick = () => {
+    console.log('handleAddListItemClick triggered');
     this.setState({
       keyboardRotation: '0 0 0',
       listItemCreateModalIsVisible: true,
@@ -663,7 +662,7 @@ class Main extends Component {
                       <Entity
                         className='clickable'
                         primitive='a-checkbox'
-                        position="-0.105 -0.015 0.1"
+                        position='-0.105 -0.015 0.096'
                         width='.15'
                         checked={listItem.complete}
                         name={`checkbox${listItem._id}`}
