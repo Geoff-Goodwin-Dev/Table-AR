@@ -1,27 +1,27 @@
-import React from "react";
+import React from 'react';
 import {Entity} from 'aframe-react';
 
-const AddBlock = () => (
+const AddBlock = props => (
   <Entity
     id='addBlock'
-    className="clickable"
+    className='clickable'
     geometry={{
       primitive: 'box',
       depth: 0.25,
       height: 0.5,
       width: 0.5
     }}
-    position="-2 2.75 0"
+    position='-2 2.75 0'
     material={{
       color: 'green',
       opacity: 0.3,
       side: 'double'
     }}
-    shadow='receive: true;'
+    shadow={{receive: true}}
+    {...props}
   >
     <Entity
-      id="addItem"
-      position="0 0.4 0"
+      position='0 0.4 0'
       text={{
         color: 'white',
         align: 'center',
@@ -42,7 +42,6 @@ const AddBlock = () => (
         color: 'green',
         opacity: 0.9
       }}
-      shadow='receive: true;'
     />
     <Entity
       geometry={{
@@ -55,7 +54,6 @@ const AddBlock = () => (
         color: 'green',
         opacity: 0.9
       }}
-      shadow='receive: true;'
     />
   </Entity>
 );
