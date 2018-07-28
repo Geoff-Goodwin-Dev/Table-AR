@@ -412,23 +412,12 @@ class Main extends Component {
 
   render() {
     if (this.state.redirectTo) {
-      return <Redirect to={{pathname: this.state.redirectTo}}/>
+      return <Redirect to={{pathname: this.state.redirectTo}} />
     } else {
       return (
-        <div className='text-center'>
-          <WebCam inVrMode={this.state.inVrMode}/>
-
-          {/*<Webcam height="80%" width="95%" audio={false} style={{zIndex:-5, overflow:'hidden'}}/>*/}
-
-          <Scene
-            keyboard-shortcuts={{enterVR: false}}
-          >
-            {/*<a-assets>*/}
-            {/*<img id="skyTexture" src="../../images/Prague_Getty.png"/>*/}
-            {/*</a-assets>*/}
-
-            {/*<Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>*/}
-
+        <div className='text-center' >
+          <WebCam inVrMode={this.state.inVrMode} />
+          <Scene keyboard-shortcuts={{enterVR: false}} >
             <CameraCursor/>
 
             <Entity
