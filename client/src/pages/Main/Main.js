@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
 import { Entity, Scene } from 'aframe-react';
 import { CameraCursor } from '../../components/CameraCursor';
-import EntityElement from '../../components/Entity';
+import { EntityElement }  from '../../components/Entity';
 import { AddBlock } from '../../components/AddBlock';
 import SaveBtn from '../../components/SaveBtn';
 import ToDoListContainer from '../../components/ToDoListContainer';
