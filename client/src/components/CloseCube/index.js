@@ -1,1 +1,1 @@
-export { default } from "./CloseCube";
+export { CloseCube } from "./CloseCube";

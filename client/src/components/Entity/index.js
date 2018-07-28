@@ -1,1 +1,1 @@
-export { default } from "./Entity";
+export { EntityElement } from "./Entity";

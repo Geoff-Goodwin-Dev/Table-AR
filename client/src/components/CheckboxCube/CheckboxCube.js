@@ -1,9 +1,9 @@
-import React from "react";
-import {Entity} from 'aframe-react';
+import React from 'react';
+import { Entity } from 'aframe-react';
 
-const CheckboxCube = props => (
+export const CheckboxCube = ({ id, events, children }) => (
   <Entity
-    parentID={props.id}
+    parentID={id}
     className='clickable'
     geometry={{
       primitive: 'box',
@@ -11,18 +11,16 @@ const CheckboxCube = props => (
       height: 0.19,
       width: 0.19
     }}
-    position="0.85 0 0.1"
+    position='.85 0 .1'
     material={{
       color: 'white',
       opacity: 0.5,
       side: 'double'
     }}
     events={{
-      click: props.events.click()
+      click: events.click()
     }}
   >
-    {props.children}
+    {children}
   </Entity>
 );
-
-export default CheckboxCube;

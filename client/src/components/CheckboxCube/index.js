@@ -1,1 +1,1 @@
-export { default } from "./CheckboxCube";
+export { CheckboxCube } from "./CheckboxCube";

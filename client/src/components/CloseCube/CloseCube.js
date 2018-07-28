@@ -1,28 +1,28 @@
-import React from "react";
-import {Entity} from 'aframe-react';
+import React from 'react';
+import { Entity } from 'aframe-react';
 
-const CloseCube = props => (
+export const CloseCube = ({id, events}) => (
   <Entity
-    parentID={props.id}
-    className="clickable"
+    parentID={id}
+    className='clickable'
     geometry={{
       primitive: 'box',
       depth: 0.19,
       height: 0.19,
       width: 0.19
     }}
-    position="1.16 0 0.1"
+    position='1.16 0 .1'
     material={{
       color: 'red',
       opacity: 0.5,
       side: 'double'
     }}
     events={{
-      click: props.events.click()
+      click: events.click()
     }}
   >
     <Entity
-      position="0 0 0.1"
+      position='0 0 .1'
       text={{
         color: 'white',
         align: 'center',
@@ -33,5 +33,3 @@ const CloseCube = props => (
     />
   </Entity>
 );
-
-export default CloseCube;

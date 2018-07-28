@@ -1,9 +1,9 @@
-import React from "react";
-import {Entity} from 'aframe-react';
+import React from 'react';
+import { Entity } from 'aframe-react';
 
-const EntityElement = props => (
+export const EntityElement = props => (
   <Entity
-    className="clickable"
+    className='clickable'
     geometry={{
       primitive: 'box',
       depth: 0.9,
@@ -16,8 +16,6 @@ const EntityElement = props => (
       side: 'double'
     }}
     shadow='receive: true;'
-
-      {...props}/>
+    {...props}
+  />
 );
-
-export default EntityElement;
