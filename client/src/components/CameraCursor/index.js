@@ -1,1 +1,1 @@
-export { default } from "./CameraCursor";
+export { CameraCursor } from "./CameraCursor";

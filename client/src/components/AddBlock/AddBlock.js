@@ -1,7 +1,7 @@
 import React from 'react';
-import {Entity} from 'aframe-react';
+import { Entity } from 'aframe-react';
 
-const AddBlock = props => (
+export const AddBlock = props => (
   <Entity
     id='addBlock'
     className='clickable'
@@ -57,5 +57,3 @@ const AddBlock = props => (
     />
   </Entity>
 );
-
-export default AddBlock;
