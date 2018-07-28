@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React, { Component } from 'react';
 
-class WebCam extends Component {
+export default class WebCam extends Component {
   componentDidMount() {
     const videoL = document.querySelector('#videoL');
     const videoR = document.querySelector('#videoR');
@@ -21,7 +21,6 @@ class WebCam extends Component {
   };
 
   render() {
-
     return (
       <div id='videoBackgroundContainer'
       style={{
@@ -41,9 +40,7 @@ class WebCam extends Component {
             }) : ({
               width: '50%',
               maxWidth: '50%',
-              zIndex: -6,
-              // transform: 'translate(-50%)',
-              // overflow: 'hidden'
+              zIndex: -6
             })
           }
         >
@@ -61,7 +58,6 @@ class WebCam extends Component {
                 zIndex: -6
               }) : ({
                 height: '100vh',
-                // width: '100%',
                 zIndex: -6
               })
             }
@@ -75,9 +71,7 @@ class WebCam extends Component {
             }) : ({
               width: '50%',
               maxWidth: '50%',
-              zIndex: -6,
-              // transform: 'translate(-50%)',
-              // overflow: 'hidden'
+              zIndex: -6
             })
           }
         >
@@ -101,5 +95,3 @@ class WebCam extends Component {
     )
   };
 }
-
-export default WebCam;
