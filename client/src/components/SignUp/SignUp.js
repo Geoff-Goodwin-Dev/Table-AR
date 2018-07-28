@@ -3,7 +3,7 @@ import API from '../../utils/API';
 import './signUp.css';
 import { Redirect } from 'react-router-dom';
 
-class SignUp extends Component {
+export default class SignUp extends Component {
   constructor() {
     super();
     this.state = {
@@ -29,7 +29,6 @@ class SignUp extends Component {
   };
 
   handleFormSubmit = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
     let userInfo = {
@@ -87,12 +86,13 @@ class SignUp extends Component {
               redirectTo: '/todo'
             })
           }
-          else if(response.data.error){
+          else if(response.data.error) {
             this.setState({
               userError: response.data.error
             })
           }
-        }).catch(error => {
+        })
+        .catch(error => {
           console.log(`signup server error: ${error}`);
         });
     }
@@ -182,5 +182,3 @@ class SignUp extends Component {
     }
   }
 }
-
-export default SignUp;

@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import 'aframe-animation-component';
 import 'aframe-material-snickell';
+import { Redirect } from "react-router-dom";
 import { Entity, Scene } from 'aframe-react';
 import { CameraCursor } from '../../components/CameraCursor';
 import { EntityElement }  from '../../components/Entity';
 import { AddBlock } from '../../components/AddBlock';
 import { SaveBtn } from '../../components/SaveBtn';
-import ToDoListContainer from '../../components/ToDoListContainer';
-import ToDoListItem from '../../components/ToDoListItems';
+import { ToDoListContainer } from '../../components/ToDoListContainer';
+import { ToDoListItem } from '../../components/ToDoListItems';
 import { CloseCube } from '../../components/CloseCube';
 import { CheckboxCube } from '../../components/CheckboxCube';
 import WebCam from '../../components/WebCam';
 import API from '../../utils/API';
-import { Redirect } from "react-router-dom";
 
 let textValue = '';
 

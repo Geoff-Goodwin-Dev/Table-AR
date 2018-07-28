@@ -1,16 +1,16 @@
-import React from "react";
-import {Entity} from 'aframe-react';
+import React from 'react';
+import { Entity } from 'aframe-react';
 
-const ToDoListContainer = (props) => (
+export const ToDoListContainer = ({caption, children}) => (
   <Entity
-    id='toDoListContainer'
+    className='toDoListContainer'
     geometry={{
       primitive: 'box',
       depth: 0.4,
       height: 6,
       width: 3
     }}
-    position="0 1 -5"
+    position='0 1 -5'
     material={{
       color: '#222222',
       opacity: 0.3,
@@ -32,19 +32,17 @@ const ToDoListContainer = (props) => (
       }}
     />
     <Entity
-      id="toDoListHeader"
-      position="0 3.5 0"
+      className='toDoListHeader'
+      position='0 3.5 0'
       text={{
         color: 'white',
         align: 'center',
-        value: props.caption,
+        value: caption,
         opacity: 1,
         width: 6,
         side: 'double'
       }}
     />
-    {props.children}
+    {children}
   </Entity>
 );
-
-export default ToDoListContainer;
