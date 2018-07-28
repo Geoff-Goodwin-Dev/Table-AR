@@ -8,8 +8,8 @@ import { AddBlock } from '../../components/AddBlock';
 import SaveBtn from '../../components/SaveBtn';
 import ToDoListContainer from '../../components/ToDoListContainer';
 import ToDoListItem from '../../components/ToDoListItems';
-import CloseCube from '../../components/CloseCube';
-import CheckboxCube from '../../components/CheckboxCube';
+import { CloseCube } from '../../components/CloseCube';
+import { CheckboxCube } from '../../components/CheckboxCube';
 import WebCam from '../../components/WebCam';
 import API from '../../utils/API';
 import { Redirect } from "react-router-dom";
@@ -662,7 +662,8 @@ class Main extends Component {
                       <Entity
                         className='clickable'
                         primitive='a-checkbox'
-                        position='-0.105 -0.015 0.096'
+                        scale='.9 .9 .9'
+                        position='-0.095 -0.01 0.096'
                         width='.15'
                         checked={listItem.complete}
                         name={`checkbox${listItem._id}`}
