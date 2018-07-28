@@ -1,19 +1,17 @@
-import React from "react";
-import {Entity} from 'aframe-react';
+import React from 'react';
+import { Entity } from 'aframe-react';
 
-const SaveBtn = props => (
+export const SaveBtn = ({disabled, position, events}) => (
   <Entity
     className='clickable'
-    disabled={props.disabled}
-    primitive="a-button"
-    scale="0.6 0.6 0.6"
-    position={props.position}
-    width="1.25"
-    value="save"
-    type="raised"
-    button-color="green"
-    events={props.events}
+    disabled={disabled}
+    primitive='a-button'
+    scale='.6 .6 .6'
+    position={position}
+    width='1.25'
+    value='save'
+    type='raised'
+    button-color='green'
+    events={events}
   />
 );
-
-export default SaveBtn;
