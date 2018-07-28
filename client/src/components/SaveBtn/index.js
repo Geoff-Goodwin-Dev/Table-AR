@@ -1,1 +1,1 @@
-export { default } from "./SaveBtn";
+export { SaveBtn } from "./SaveBtn";

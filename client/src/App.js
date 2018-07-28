@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 import Intro from './pages/Intro';
-import Nav from './components/Nav';
+import { Nav } from './components/Nav';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import API from './utils/API';
 import './styles/Intro.css';
 import axios from 'axios';
-
 
 class App extends Component {
   constructor() {
