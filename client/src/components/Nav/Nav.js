@@ -2,7 +2,7 @@ import React from 'react';
 import '../../styles/Intro.css';
 import './Nav.css';
 
-export const Nav = ({loggedIn}) => (
+export const Nav = ({loggedIn, logout}) => (
   <nav>
     <ul>
       <li>
@@ -16,7 +16,7 @@ export const Nav = ({loggedIn}) => (
             type='button'
             id='logOut'
             className='btn btn-primary'
-            onClick={(event) => this.props.logout(event)}
+            onClick={(event) => logout(event)}
           >
             LOGOUT
           </button>
