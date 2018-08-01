@@ -1,14 +1,14 @@
 # Table-AR
 
-## What the App does
+## Overview
 Table-AR will utilizes Augmented Reality to enable effective task management by the use of unique user sessions host lists of items rendered in a three dimensional projected scene married together with a user's incoming video stream
 
 <a href="https://www.youtube.com/watch?v=SQlr5Brc9a0">
     <img src="https://img.youtube.com/vi/SQlr5Brc9a0/0.jpg" alt="Table-AR Youtube Screenshot"/>
 </a>
 
-## What technologies the App implements
-Front-End:
+## Technologies implemented
+<b>Front-End:</b>
 * React 
 * <a href="https://aframe.io" target="_blank">A-Frame</a> which is built off of <a href="https://threejs.org/" target="_blank">Three.js</a> including:
     * <a href="https://www.npmjs.com/package/aframe-react" target="_blank">aframe-react</a>
@@ -16,11 +16,11 @@ Front-End:
 * <a href="http://www.passportjs.org/" target="_blank">Passport.js</a>
 
 
-Back-End:
+<b>Back-End:</b>
 * <a href="https://www.mongodb.com/" target="_blank">MongoDB</a>
 * <a href="http://mongoosejs.com/" target="_blank">Mongoose</a>
 
-## How the App works
+## How it works
 * Users will arrive at the landing page's deployed site <a href="https://table-ar.herokuapp.com" target="_blank">here</a>
 * First time users will access the sign-up page by clicking the sign up button and providing the requested information
 * Returning users will access their personal account by clicking the log on button and providing their username and password
