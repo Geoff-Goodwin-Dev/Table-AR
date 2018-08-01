@@ -176,12 +176,7 @@ class Main extends Component {
   };
 
   handleClickLizItem = (id) => {
-    const lizItemsArray = this.state.lizItems;
-    const result = lizItemsArray.find(lizItem => lizItem.itemId === id);
-    const arrayIndex = lizItemsArray.indexOf(result);
-    if (arrayIndex > -1) {
-      lizItemsArray.splice(arrayIndex, 1)
-    }
+    const lizItemsArray = this.state.lizItems.filter((item) => item.itemId !== id);
     this.setState({lizItems: lizItemsArray});
   };
 
