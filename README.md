@@ -3,23 +3,25 @@
 ## What the App does
 Table-AR will utilizes Augmented Reality to enable effective task management by the use of unique user sessions host lists of items rendered in a three dimensional projected scene married together with a user's incoming video stream
 
-[![Alt text](https://img.youtube.com/vi/SQlr5Brc9a0/0.jpg)](https://www.youtube.com/watch?v=SQlr5Brc9a0)
-
+<a href="https://www.youtube.com/watch?v=SQlr5Brc9a0">
+    <img src="https://img.youtube.com/vi/SQlr5Brc9a0/0.jpg" alt="Table-AR Youtube Screenshot"/>
+</a>
 
 ## What technologies the App implements
 Front-End:
 * React 
-* [A-Frame](https://aframe.io) which is built off of [Three.js](https://threejs.org/)
-    * [aframe-react](https://www.npmjs.com/package/aframe-react)
-    * [aframe-material-snickell](https://www.npmjs.com/package/aframe-material-snickell) based on the [aframe-material](https://github.com/etiennepinchon/aframe-material) component
-* [Passport.js](http://www.passportjs.org/)
+* <a href="https://aframe.io" target="_blank">A-Frame</a> which is built off of <a href="https://threejs.org/" target="_blank">Three.js</a> including:
+    * <a href="https://www.npmjs.com/package/aframe-react" target="_blank">aframe-react</a>
+    * <a href="https://www.npmjs.com/package/aframe-material-snickell" target="_blank">aframe-material-snickell</a> based on the <a href="https://github.com/etiennepinchon/aframe-material" target="_blank">aframe-material</a> component
+* <a href="http://www.passportjs.org/" target="_blank">Passport.js</a>
+
 
 Back-End:
-* [MongoDB](https://www.mongodb.com/)
-* [Mongoose](http://mongoosejs.com/)
+* <a href="https://www.mongodb.com/" target="_blank">MongoDB</a>
+* <a href="http://mongoosejs.com/" target="_blank">Mongoose</a>
 
 ## How the App works
-* Users will arrive at the landing page [here](https://table-ar.herokuapp.com)
+* Users will arrive at the landing page's deployed site <a href="https://table-ar.herokuapp.com" target="_blank">here</a>
 * First time users will access the sign-up page by clicking the sign up button and providing the requested information
 * Returning users will access their personal account by clicking the log on button and providing their username and password
 * Once logged in, users can interact with their to do lists, create new lists, add/remove list items, mark items as complete, etc.
@@ -35,4 +37,4 @@ Back-End:
 
 * Mobile (iphone) experience on Chrome is currently under review to resolve known gaps
 
-* For any questions, comments, or suggestions; please feel to reach out via Github or via email to [ggoodwin.dev@gmail.com](mailto:ggoodwin.dev@gmail.com)
+* For any questions, comments, or suggestions; please feel to reach out via Github or via email to <a href="mailto:ggoodwin.dev@gmail.com">ggoodwin.dev@gmail.com</a>
