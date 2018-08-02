@@ -15,8 +15,6 @@ import WebCam from '../../components/WebCam';
 import API from '../../utils/API';
 import blocks from '../../blocks';
 
-let textValue = '';
-
 class Main extends Component {
   constructor() {
     super();
@@ -205,7 +203,7 @@ class Main extends Component {
     if (this.state.listItemTitleInputField.length > 0) {
       toDoListInput.blur();
       let newListItem = {
-        title: textValue.trim(),
+        title: this.state.listItemTitleInputField.trim(),
         orderNumber: (this.findLargestOrderNumber() + 1),
         listID: this.state.listInFocus,
         authorId: this.props.userRecordId
@@ -223,11 +221,10 @@ class Main extends Component {
     console.log('save list clicked');
     if (this.state.listTitleInputField.length > 0) {
       ListInput.blur();
-      let newList = {
-        listTitle: textValue.trim(),
+      this.saveNewList({
+        listTitle: this.state.listTitleInputField.trim(),
         authorId: this.props.userRecordId
-      };
-      this.saveNewList(newList);
+      });
       this.setState({
         listTitleInputField: '',
         listCreateModalIsVisible: false
@@ -278,17 +275,6 @@ class Main extends Component {
       listItemTitleInputField: '',
       listItemCreateModalIsVisible: false
     });
-  };
-
-  onChangeListItemText = (text) => {
-    this.setState({listItemTitleInputField: text});
-    textValue = text;
-  };
-
-  onChangeListText = (text) => {
-    console.log(text);
-    this.setState({listTitleInputField: text});
-    textValue = text;
   };
 
   handleToggleDone = (event) => {
@@ -353,7 +339,8 @@ class Main extends Component {
                             color='black'
                             width='2'
                             value={this.state.listTitleInputField}
-                            events={{change: () => this.onChangeListText(document.querySelector('#listInputField').value)}} />
+                            events={{change: (e) => this.setState({'listTitleInputField': e.detail})}} />
+
                     <Entity className='clickable'
                             primitive='a-button'
                             position='2.25 0.85 0'
@@ -439,7 +426,7 @@ class Main extends Component {
                             color='black'
                             width='2'
                             value={this.state.listItemTitleInputField}
-                            events={{change: () => this.onChangeListItemText(document.querySelector('#toDoItemInputField').value)}} />
+                            events={{change: (e) => this.setState({'listItemTitleInputField': e.detail})}} />
                     <Entity className='clickable'
                             primitive='a-button'
                             position='2.25 0.85 0'
