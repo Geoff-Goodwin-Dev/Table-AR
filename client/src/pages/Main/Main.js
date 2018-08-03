@@ -87,15 +87,7 @@ class Main extends Component {
   };
 
   toggleVr = (enterExit) => {
-    if (enterExit === 'enter') {
-      this.setState({inVrMode: true});
-    }
-    else if (enterExit === 'exit') {
-      this.setState({inVrMode: false});
-    }
-    else {
-      console.log('something went wrong on entering or exiting VR mode')
-    }
+    (enterExit === 'enter') ? this.setState({inVrMode: true}) : this.setState({inVrMode: false});
   };
 
   getListsOfUser = (triggeringEvent) => {
