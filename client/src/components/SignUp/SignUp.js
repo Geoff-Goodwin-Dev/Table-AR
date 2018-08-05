@@ -111,30 +111,26 @@ export default class SignUp extends Component {
                 <span className='validation' id='usernameValidate'>{this.state.usernameValidation}</span>
                 <br/>
                 <label htmlFor='exampleInputText'>Username</label>
-                <input
-                  name='username'
-                  type='text'
-                  className='form-control'
-                  id='exampleInputText'
-                  aria-describedby='textHelp'
-                  placeholder='Enter username'
-                  value={this.state.username}
-                  onChange={this.handleChange}
-                />
+                <input name='username'
+                       type='text'
+                       className='form-control'
+                       id='exampleInputText'
+                       aria-describedby='textHelp'
+                       placeholder='Enter username'
+                       value={this.state.username}
+                       onChange={this.handleChange} />
               </div>
               <div className='form-group'>
                 <span className='validation' id='emailValidate'>{this.state.emailValidation}</span>
                 <br/>
                 <label htmlFor='exampleInputEmail1'>Email</label>
-                <input
-                  name='email'
-                  type='email'
-                  className='form-control'
-                  id='inputEmail'
-                  value={this.state.email}
-                  placeholder='email@email.com'
-                  onChange={this.handleChange}
-                />
+                <input name='email'
+                       type='email'
+                       className='form-control'
+                       id='inputEmail'
+                       value={this.state.email}
+                       placeholder='email@email.com'
+                       onChange={this.handleChange} />
                 <small id='textHelp' className='form-text text-muted'>
                   We'll never share your email with anyone else.
                 </small>
@@ -143,35 +139,29 @@ export default class SignUp extends Component {
                 <span className='validation' id='passwordValidate'>{this.state.passwordValidation}</span>
                 <br/>
                 <label htmlFor='exampleInputPassword1'>Password</label>
-                <input
-                  name='password'
-                  type='password'
-                  className='form-control'
-                  id='exampleInputPassword1'
-                  value={this.state.password}
-                  placeholder='Password'
-                  onChange={this.handleChange}
-                />
+                <input name='password'
+                       type='password'
+                       className='form-control'
+                       id='exampleInputPassword1'
+                       value={this.state.password}
+                       placeholder='Password'
+                       onChange={this.handleChange} />
               </div>
               <div className='form-group'>
               <br/>
                 <label htmlFor='exampleInputPassword2'>Confirm Password</label>
-                <input
-                  name='passwordConfirm'
-                  type='password'
-                  className='form-control'
-                  id='exampleInputPassword2'
-                  value={this.state.passwordConfirm}
-                  placeholder='Password'
-                  onChange={this.handleChange}
-                />
+                <input name='passwordConfirm'
+                       type='password'
+                       className='form-control'
+                       id='exampleInputPassword2'
+                       value={this.state.passwordConfirm}
+                       placeholder='Password'
+                       onChange={this.handleChange} />
               </div>
-              <button
-                id='submit'
-                type='submit'
-                className='btn btn-primary'
-                onClick={this.handleFormSubmit}
-              >
+              <button id='submit'
+                      type='submit'
+                      className='btn btn-primary'
+                      onClick={this.handleFormSubmit} >
                 Sign Up!
               </button>
               <span id='userError'>{this.state.userError}</span>
