@@ -12,12 +12,10 @@ export const Nav = ({loggedIn, logout}) => (
       </li>
       {loggedIn ? (
         <li>
-          <button
-            type='button'
-            id='logOut'
-            className='btn btn-primary'
-            onClick={(event) => logout(event)}
-          >
+          <button type='button'
+                  id='logOut'
+                  className='btn btn-primary'
+                  onClick={(event) => logout(event)} >
             LOGOUT
           </button>
         </li>

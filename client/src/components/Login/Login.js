@@ -79,33 +79,29 @@ export default class Login extends Component {
             <form>
               <div className='form-group'>
                 <label htmlFor='exampleInputText'>Username</label>
-                <input
-                  name='username'
-                  type='text'
-                  className='form-control'
-                  id='exampleInputText'
-                  aria-describedby='textHelp'
-                  placeholder='Enter username'
-                  value={this.state.username}
-                  onChange={this.handleChange} />
+                <input name='username'
+                       type='text'
+                       className='form-control'
+                       id='exampleInputText'
+                       aria-describedby='textHelp'
+                       placeholder='Enter username'
+                       value={this.state.username}
+                       onChange={this.handleChange} />
               </div>
               <div className='form-group'>
                 <label htmlFor='exampleInputPassword1'>Password</label>
-                <input
-                  name='password'
-                  type='password'
-                  className='form-control'
-                  id='exampleInputPassword1'
-                  value={this.state.password}
-                  placeholder='Password'
-                  onChange={this.handleChange} />
+                <input name='password'
+                       type='password'
+                       className='form-control'
+                       id='exampleInputPassword1'
+                       value={this.state.password}
+                       placeholder='Password'
+                       onChange={this.handleChange} />
               </div>
-              <button
-                id='oldUser'
-                type='submit'
-                className='btn btn-primary'
-                onClick={this.handleFormLogin}
-              >
+              <button id='oldUser'
+                      type='submit'
+                      className='btn btn-primary'
+                      onClick={this.handleFormLogin} >
                 Login
               </button>
               <span id='loginFail'>{this.state.loginFail}</span>
