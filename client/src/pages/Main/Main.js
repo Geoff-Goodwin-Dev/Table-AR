@@ -37,9 +37,7 @@ class Main extends Component {
 
   componentDidMount() {
     document.addEventListener('enter-vr', () => this.toggleVr('enter'));
-    console.log('add enter vr listener triggered');
     document.addEventListener('exit-vr', () => this.toggleVr('exit'));
-    console.log('add exit vr listener triggered');
     // this.addKeyboardListener();
     this.recursiveWaitForLogin();
   };
