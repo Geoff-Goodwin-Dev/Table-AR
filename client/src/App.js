@@ -48,7 +48,8 @@ class App extends Component {
           });
           this.setState({
             redirectTo: '/'
-          })
+          });
+          window.location.reload();
         }
       }).catch(error => {
         console.log('Woops! Logout error!', error);
