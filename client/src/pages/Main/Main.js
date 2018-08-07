@@ -71,17 +71,24 @@ class Main extends Component {
     if (event.defaultPrevented) {
       return;
     }
-    let key = event.key || event.keyCode;
-    if (key === 'Escape' || key === 'Esc' || key === 27) {
-      console.log('escape pressed:', key);
+    if(this.state.listItemCreateModalIsVisible || this.state.listCreateModalIsVisible) {
+      let key = event.key || event.keyCode;
+      if (key === 'Escape' || key === 'Esc' || key === 27) {
+        this.handleCloseModal();
+      }
+      if (key === 'Backspace') {
+        let valueOfInputField = document.querySelector('#toDoItemInputField').value;
+        if (valueOfInputField.length > 0) {
+          this.setState({listItemTitleInputField: valueOfInputField.slice(0, -1)});
+        }
+      }
+      if(key.length === 1 && /^[-_!@#$%^&*()+={[}\]|\\:;"'<,>.?/\w\s]*$/.test(key)) {
+        let valueOfInputField = document.querySelector('#toDoItemInputField').value;
+        valueOfInputField += key;
+        console.log('key pressed', key);
+        this.setState({listItemTitleInputField: valueOfInputField});
+      }
     }
-
-    let valueOfInputField = document.querySelector('#toDoItemInputField').value;
-    valueOfInputField += key;
-    console.log('valueOfInputField', valueOfInputField);
-    console.log('key pressed', key);
-    console.log(event);
-    this.setState({listItemTitleInputField: valueOfInputField});
   };
 
   toggleVr = (enterExit) => {
@@ -256,7 +263,6 @@ class Main extends Component {
   };
 
   handleCloseModal = () => {
-    console.log('x clicked');
     document.querySelector('#toDoItemInputField').blur();
     document.querySelector('#listInputField').blur();
     this.setState({
