@@ -71,22 +71,27 @@ class Main extends Component {
     if (event.defaultPrevented) {
       return;
     }
-    if(this.state.listItemCreateModalIsVisible || this.state.listCreateModalIsVisible) {
+    let {listItemCreateModalIsVisible, listCreateModalIsVisible} = this.state;
+    if(listItemCreateModalIsVisible || listCreateModalIsVisible) {
+      let valueOfInputField = (listItemCreateModalIsVisible) ?
+        document.querySelector('#toDoItemInputField').value :
+        document.querySelector('#listInputField').value;
       let key = event.key || event.keyCode;
       if (key === 'Escape' || key === 'Esc' || key === 27) {
         this.handleCloseModal();
       }
       if (key === 'Backspace') {
-        let valueOfInputField = document.querySelector('#toDoItemInputField').value;
         if (valueOfInputField.length > 0) {
-          this.setState({listItemTitleInputField: valueOfInputField.slice(0, -1)});
+          listItemCreateModalIsVisible ?
+            this.setState({listItemTitleInputField: valueOfInputField.slice(0, -1)}) :
+            this.setState({listTitleInputField: valueOfInputField.slice(0, -1)});
         }
       }
       if(key.length === 1 && /^[-_!@#$%^&*()+={[}\]|\\:;"'<,>.?/\w\s]*$/.test(key)) {
-        let valueOfInputField = document.querySelector('#toDoItemInputField').value;
         valueOfInputField += key;
-        console.log('key pressed', key);
-        this.setState({listItemTitleInputField: valueOfInputField});
+        listItemCreateModalIsVisible ?
+          this.setState({listItemTitleInputField: valueOfInputField}) :
+          this.setState({listTitleInputField: valueOfInputField});
       }
     }
   };
