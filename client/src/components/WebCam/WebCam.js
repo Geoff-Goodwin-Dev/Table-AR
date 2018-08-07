@@ -15,7 +15,7 @@ export default class WebCam extends Component {
         videoR.srcObject = stream;
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log('error:', error);
       });
     }
   };
@@ -23,73 +23,63 @@ export default class WebCam extends Component {
   render() {
     return (
       <div id='videoBackgroundContainer'
-      style={{
-        display: 'flex',
-        position: 'absolute',
-        left: 0,
-        width: '100%'
-      }}
-
-      >
-        <div
-          id='leftVideoContainer'
-          style={
-            (!this.props.inVrMode) ? ({
-              width: '100%',
-              zIndex: -6
-            }) : ({
-              width: '50%',
-              maxWidth: '50%',
-              zIndex: -6
-            })
-          }
-        >
-          <video
-            id='videoL'
-            playsInline
-            muted
-            loop
-            autoPlay
-            style={
-              (!this.props.inVrMode) ? ({
-                position: 'absolute',
-                left: 0,
-                width: '100%',
-                zIndex: -6
-              }) : ({
-                height: '100vh',
-                zIndex: -6
-              })
-            }
-          />
+           style={{
+             display: 'flex',
+             position: 'absolute',
+             left: 0,
+             width: '100%'
+           }} >
+        <div id='leftVideoContainer'
+             style={
+               (!this.props.inVrMode) ? ({
+                 width: '100%',
+                 zIndex: -6
+               }) : ({
+                 width: '50%',
+                 maxWidth: '50%',
+                 zIndex: -6
+               })
+             } >
+          <video id='videoL'
+                 playsInline
+                 muted
+                 loop
+                 autoPlay
+                 style={
+                   (!this.props.inVrMode) ? ({
+                     position: 'absolute',
+                     left: 0,
+                     width: '100%',
+                     zIndex: -6
+                   }) : ({
+                     height: '100vh',
+                     zIndex: -6
+                   })
+                 } />
         </div>
-        <div
-          id='leftVideoContainer'
-          style={
-            (!this.props.inVrMode) ? ({
-              display: 'none'
-            }) : ({
-              width: '50%',
-              maxWidth: '50%',
-              zIndex: -6
-            })
-          }
-        >
-          <video
-            id='videoR'
-            playsInline
-            muted
-            loop
-            autoPlay
-            style={
-              (!this.props.inVrMode) ? ({
-                display: 'none'
-              }) : ({
-                height: '100vh',
-                zIndex: -6
-              })
-            }
-          />
+        <div id='leftVideoContainer'
+             style={
+               (!this.props.inVrMode) ? ({
+                 display: 'none'
+               }) : ({
+                 width: '50%',
+                 maxWidth: '50%',
+                 zIndex: -6
+               })
+             } >
+          <video id='videoR'
+                 playsInline
+                 muted
+                 loop
+                 autoPlay
+                 style={
+                   (!this.props.inVrMode) ? ({
+                     display: 'none'
+                   }) : ({
+                     height: '100vh',
+                     zIndex: -6
+                   })
+                 } />
         </div>
       </div>
     )

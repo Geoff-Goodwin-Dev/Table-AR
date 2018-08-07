@@ -38,9 +38,14 @@ class Main extends Component {
   componentDidMount() {
     document.addEventListener('enter-vr', () => this.toggleVr('enter'));
     document.addEventListener('exit-vr', () => this.toggleVr('exit'));
-    // this.addKeyboardListener();
+    document.addEventListener('keyup', this.keyboardListener, false);
     this.recursiveWaitForLogin();
   };
+
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.keyboardListener, false);
+    console.log('keyup event listener removed');
+  }
 
   recursiveWaitForLogin = () => {
     if (this.props.loggedIn && this.props.userRecordId) {
@@ -77,11 +82,6 @@ class Main extends Component {
     console.log('key pressed', key);
     console.log(event);
     this.setState({listItemTitleInputField: valueOfInputField});
-  };
-
-  addKeyboardListener = () => {
-    console.log('add keyboard listener triggered');
-    document.addEventListener('keyup', (event) => this.keyboardListener(event));
   };
 
   toggleVr = (enterExit) => {
