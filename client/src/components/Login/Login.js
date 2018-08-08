@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import API from '../../utils/API';
 import './Login.css';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 export default class Login extends Component {
   constructor() {
@@ -15,6 +15,10 @@ export default class Login extends Component {
     };
     this.handleFormLogin = this.handleFormLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    document.querySelector('#usernameInput').focus();
   }
 
   handleChange = event => {
@@ -73,16 +77,16 @@ export default class Login extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
-        <div>
+        <div id='loginComponentContainerDiv'>
           <h1 id='loginHeading'>Login</h1>
           <div id='loginForm'>
             <form>
               <div className='form-group'>
-                <label htmlFor='exampleInputText'>Username</label>
+                <label htmlFor='usernameInput'>Username</label>
                 <input name='username'
                        type='text'
                        className='form-control'
-                       id='exampleInputText'
+                       id='usernameInput'
                        aria-describedby='textHelp'
                        placeholder='Enter username'
                        value={this.state.username}
@@ -105,6 +109,14 @@ export default class Login extends Component {
                 Login
               </button>
               <span id='loginFail'>{this.state.loginFail}</span>
+
+              <p id='signUpInstead'>
+                <span>Don't already have an account?  No problem!  You can sign up </span>
+                <Link id='signUpButton' to={'/signUp/'}>
+                  here
+                </Link>
+              </p>
+
             </form>
           </div>
         </div>

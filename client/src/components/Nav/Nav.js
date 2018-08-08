@@ -23,7 +23,7 @@ export const Nav = ({loggedIn, logout}) => (
         null
       }
       <li>
-        <a href='https://github.com/Geoff-Goodwin-Dev/Table-AR/tree/development'>Github</a>
+        <a href='https://github.com/Geoff-Goodwin-Dev/Table-AR/'>Github</a>
       </li>
     </ul>
   </nav>
