@@ -102,8 +102,6 @@ class Main extends Component {
   };
 
   getListsOfUser = (triggeringEvent) => {
-    console.log('get lists triggered');
-    console.log('this.props.userRecordId', this.props.userRecordId);
     API.getLists(this.props.userRecordId)
       .then(
         res => {
@@ -130,7 +128,6 @@ class Main extends Component {
   };
 
   saveNewList = (data) => {
-    console.log('post of list triggered');
     API.saveLists(data).then(
       res => {
         console.log(res);
@@ -139,15 +136,11 @@ class Main extends Component {
           listInFocus: res.data._id,
           listInFocusText: res.data.listTitle
         });
-        console.log('list now in focus', this.state.listInFocus);
-        console.log('list now in focus text', this.state.listInFocusText);
       }
     );
-    // this.getListItemsOfList(this.state.listInFocus);
   };
 
   getListItemsOfList = (listID) => {
-    console.log('get list items triggered');
     API.getTodos(listID).then(
       res => {
         console.log('list items of list:', res.data);
@@ -157,7 +150,6 @@ class Main extends Component {
   };
 
   saveNewListItem = (data) => {
-    console.log('post of list item triggered');
     API.saveTodos(data).then(
       res => {
         console.log(res);
@@ -167,7 +159,6 @@ class Main extends Component {
   };
 
   deleteListItem = (id) => {
-    console.log('delete of list item triggered');
     API.deleteTodos(id).then(
       res => {
         console.log(res);
@@ -189,6 +180,7 @@ class Main extends Component {
       listCreateModalIsVisible: false
     });
     document.querySelector('#toDoItemInputField').focus();
+    // TODO: Need to fix QuerySelector
   };
 
   handleAddListClick = () => {
@@ -198,13 +190,12 @@ class Main extends Component {
       listItemCreateModalIsVisible: false
     });
     document.querySelector('#listInputField').focus();
+    // TODO: Need to fix QuerySelector
   };
 
   handleSaveListItemClick = () => {
-    let toDoListInput = document.querySelector('#toDoItemInputField');
-    console.log('save list item clicked');
     if (this.state.listItemTitleInputField.length > 0) {
-      toDoListInput.blur();
+      document.querySelector('#toDoItemInputField').blur();
       let largestOrderNumber = this.state.listItemsOfList.length > 0 ?
         (this.state.listItemsOfList.map(item => item.orderNumber)).reduce((a, b) => Math.max(a, b)) : 0;
       let newListItem = {
