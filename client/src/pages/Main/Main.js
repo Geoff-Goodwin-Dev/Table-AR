@@ -36,20 +36,20 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('enter-vr', () => this.toggleVr('enter'));
-    document.addEventListener('exit-vr', () => this.toggleVr('exit'));
+    document.addEventListener('enter-vr', this.toggleVr, false);
+    document.addEventListener('exit-vr', this.toggleVr, false);
     document.addEventListener('keyup', this.keyboardListener, false);
     this.recursiveWaitForLogin();
   };
 
   componentWillUnmount() {
     document.removeEventListener('keyup', this.keyboardListener, false);
-    console.log('keyup event listener removed');
+    document.removeEventListener('enter-vr', this.toggleVr, false);
+    document.removeEventListener('exit-vr', this.toggleVr, false);
   }
 
   recursiveWaitForLogin = () => {
     if (this.props.loggedIn && this.props.userRecordId) {
-      console.log('get lists called');
       this.getListsOfUser('pageLoad');
       console.log('this.props.loggedIn', this.props.loggedIn);
       console.log('this.props.userRecordId', this.props.userRecordId);
@@ -96,13 +96,11 @@ class Main extends Component {
     }
   };
 
-  toggleVr = (enterExit) => {
-    (enterExit === 'enter') ? this.setState({inVrMode: true}) : this.setState({inVrMode: false});
+  toggleVr = (event) => {
+    (event.type === 'enter-vr') ? this.setState({inVrMode: true}) : this.setState({inVrMode: false});
   };
 
   getListsOfUser = (triggeringEvent) => {
-    console.log('get lists triggered');
-    console.log('this.props.userRecordId', this.props.userRecordId);
     API.getLists(this.props.userRecordId)
       .then(
         res => {
@@ -129,7 +127,6 @@ class Main extends Component {
   };
 
   saveNewList = (data) => {
-    console.log('post of list triggered');
     API.saveLists(data).then(
       res => {
         console.log(res);
@@ -138,15 +135,11 @@ class Main extends Component {
           listInFocus: res.data._id,
           listInFocusText: res.data.listTitle
         });
-        console.log('list now in focus', this.state.listInFocus);
-        console.log('list now in focus text', this.state.listInFocusText);
       }
     );
-    // this.getListItemsOfList(this.state.listInFocus);
   };
 
   getListItemsOfList = (listID) => {
-    console.log('get list items triggered');
     API.getTodos(listID).then(
       res => {
         console.log('list items of list:', res.data);
@@ -156,7 +149,6 @@ class Main extends Component {
   };
 
   saveNewListItem = (data) => {
-    console.log('post of list item triggered');
     API.saveTodos(data).then(
       res => {
         console.log(res);
@@ -166,7 +158,6 @@ class Main extends Component {
   };
 
   deleteListItem = (id) => {
-    console.log('delete of list item triggered');
     API.deleteTodos(id).then(
       res => {
         console.log(res);
@@ -188,6 +179,7 @@ class Main extends Component {
       listCreateModalIsVisible: false
     });
     document.querySelector('#toDoItemInputField').focus();
+    // TODO: Need to fix QuerySelector
   };
 
   handleAddListClick = () => {
@@ -197,16 +189,17 @@ class Main extends Component {
       listItemCreateModalIsVisible: false
     });
     document.querySelector('#listInputField').focus();
+    // TODO: Need to fix QuerySelector
   };
 
   handleSaveListItemClick = () => {
-    let toDoListInput = document.querySelector('#toDoItemInputField');
-    console.log('save list item clicked');
     if (this.state.listItemTitleInputField.length > 0) {
-      toDoListInput.blur();
+      document.querySelector('#toDoItemInputField').blur();
+      let largestOrderNumber = this.state.listItemsOfList.length > 0 ?
+        (this.state.listItemsOfList.map(item => item.orderNumber)).reduce((a, b) => Math.max(a, b)) : 0;
       let newListItem = {
         title: this.state.listItemTitleInputField.trim(),
-        orderNumber: (this.findLargestOrderNumber() + 1),
+        orderNumber: largestOrderNumber + 1,
         listID: this.state.listInFocus,
         authorId: this.props.userRecordId
       };
@@ -234,19 +227,6 @@ class Main extends Component {
     }
   };
 
-  findLargestOrderNumber = () => {
-    let listItemsArray = this.state.listItemsOfList;
-    console.log(listItemsArray);
-    if (listItemsArray.length > 0) {
-      let itemsOrderNumberArray = listItemsArray.map(item => item.orderNumber);
-      console.log(itemsOrderNumberArray);
-      return itemsOrderNumberArray.reduce((a, b) => Math.max(a, b));
-    }
-    else {
-      return 0;
-    }
-  };
-
   handleSelectListClick = (event) => {
     const {id} = event.target;
     console.log(id, 'selected as list in focus');
@@ -268,8 +248,6 @@ class Main extends Component {
   };
 
   handleCloseModal = () => {
-    document.querySelector('#toDoItemInputField').blur();
-    document.querySelector('#listInputField').blur();
     this.setState({
       listTitleInputField: '',
       listCreateModalIsVisible: false,
@@ -310,8 +288,7 @@ class Main extends Component {
                     position='0 0.65 0' >
               <Entity primitive='a-keyboard'
                       id='listOfListsKeyboard'
-                      className='clickable'
-                      physical-keyboard='true' />
+                      className='clickable' />
             </Entity>
 
             {/*=============================================================================================
@@ -323,40 +300,41 @@ class Main extends Component {
             {/*=============================================================================================
               Modal Container
             ==============================================================================================*/}
-              <Entity id='listOfListsModalContainer'
-                      position='0 0.65 0' >
-                <Entity visible={this.state.listCreateModalIsVisible}
-                        primitive='a-rounded'
-                        position='-1.25 0.45 -2.95'
-                        width='2.5'
-                        height='1'
-                        radius='0.05' >
-                  <Entity primitive='a-form' >
-                    <Entity primitive='a-input'
-                            id='listInputField'
-                            disabled={!this.state.listCreateModalIsVisible}
-                            position='0.25 0.6 0'
-                            placeholder='Description'
-                            color='black'
-                            width='2'
-                            value={this.state.listTitleInputField}
-                            events={{change: (e) => this.setState({'listTitleInputField': e.detail})}} />
-
-                    <Entity className='clickable'
-                            primitive='a-button'
-                            position='2.25 0.85 0'
-                            scale='0.4 0.4 0.4'
-                            width='0.1'
-                            value='X'
-                            type='raised'
-                            button-color='red'
-                            events={{click: () => this.handleCloseModal()}} />
-                    <SaveBtn disabled={this.state.listTitleInputField === ''}
-                             position='1.57 0.25 0.01'
-                             events={{click: () => this.handleSaveListClick()}} />
+              { this.state.listCreateModalIsVisible ?
+                <Entity id='listOfListsModalContainer'
+                        position='0 0.65 0' >
+                  <Entity primitive='a-rounded'
+                          position='-1.25 0.45 -2.95'
+                          width='2.5'
+                          height='1'
+                          radius='0.05' >
+                    <Entity primitive='a-form' >
+                      <Entity primitive='a-input'
+                              id='listInputField'
+                              disabled={!this.state.listCreateModalIsVisible}
+                              position='0.25 0.6 0'
+                              placeholder='Description'
+                              color='black'
+                              width='2'
+                              value={this.state.listTitleInputField}
+                              events={{change: (e) => this.setState({'listTitleInputField': e.detail})}} />
+                      <Entity className='clickable'
+                              primitive='a-button'
+                              position='2.25 0.85 0'
+                              scale='0.4 0.4 0.4'
+                              width='0.1'
+                              value='X'
+                              type='raised'
+                              button-color='red'
+                              events={{click: () => this.handleCloseModal()}} />
+                      <SaveBtn disabled={this.state.listTitleInputField === ''}
+                               position='1.57 0.25 0.01'
+                               events={{click: () => this.handleSaveListClick()}} />
+                    </Entity>
                   </Entity>
-                </Entity>
-              </Entity>
+                </Entity> :
+                null
+              }
 
               {/*=============================================================================================
                 To Do List Container - List of lists
@@ -410,39 +388,40 @@ class Main extends Component {
             {/*=============================================================================================
               Modal Container
              ==============================================================================================*/}
-              <Entity id='ModalContainer'
-                      position='0 0.65 0' >
-                <Entity visible={this.state.listItemCreateModalIsVisible}
-                        primitive='a-rounded'
-                        position='-1.25 0.45 -2.95'
-                        width='2.5'
-                        height='1'
-                        radius='0.05' >
-                  <Entity primitive='a-form' >
-                    <Entity primitive='a-input'
-                            id='toDoItemInputField'
-                            disabled={!this.state.listItemCreateModalIsVisible}
-                            position='0.25 0.6 0'
-                            placeholder='Description'
-                            color='black'
-                            width='2'
-                            value={this.state.listItemTitleInputField}
-                            events={{change: (e) => this.setState({'listItemTitleInputField': e.detail})}} />
-                    <Entity className='clickable'
-                            primitive='a-button'
-                            position='2.25 0.85 0'
-                            scale='0.4 0.4 0.4'
-                            width='0.1'
-                            value='X'
-                            type='raised'
-                            button-color='red'
-                            events={{click: () => this.handleCloseModal()}} />
-                    <SaveBtn disabled={this.state.listItemTitleInputField === ''}
-                             position='1.57 0.25 0.01'
-                             events={{click: () => this.handleSaveListItemClick()}} />
+              {this.state.listItemCreateModalIsVisible ?
+                <Entity id='ModalContainer'
+                        position='0 0.65 0'>
+                  <Entity primitive='a-rounded'
+                          position='-1.25 0.45 -2.95'
+                          width='2.5'
+                          height='1'
+                          radius='0.05'>
+                    <Entity primitive='a-form'>
+                      <Entity primitive='a-input'
+                              id='toDoItemInputField'
+                              disabled={!this.state.listItemCreateModalIsVisible}
+                              position='0.25 0.6 0'
+                              placeholder='Description'
+                              color='black'
+                              width='2'
+                              value={this.state.listItemTitleInputField}
+                              events={{change: (e) => this.setState({'listItemTitleInputField': e.detail})}}/>
+                      <Entity className='clickable'
+                              primitive='a-button'
+                              position='2.25 0.85 0'
+                              scale='0.4 0.4 0.4'
+                              width='0.1'
+                              value='X'
+                              type='raised'
+                              button-color='red'
+                              events={{click: () => this.handleCloseModal()}}/>
+                      <SaveBtn disabled={this.state.listItemTitleInputField === ''}
+                               position='1.57 0.25 0.01'
+                               events={{click: () => this.handleSaveListItemClick()}}/>
+                    </Entity>
                   </Entity>
-                </Entity>
-              </Entity>
+                </Entity> : null
+              }
 
               {/*=============================================================================================
                 To Do List Items Container
