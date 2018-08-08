@@ -50,7 +50,6 @@ class Main extends Component {
 
   recursiveWaitForLogin = () => {
     if (this.props.loggedIn && this.props.userRecordId) {
-      console.log('get lists called');
       this.getListsOfUser('pageLoad');
       console.log('this.props.loggedIn', this.props.loggedIn);
       console.log('this.props.userRecordId', this.props.userRecordId);

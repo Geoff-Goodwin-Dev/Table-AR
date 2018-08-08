@@ -86,44 +86,36 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav loggedIn={this.state.loggedIn} updateUser={this.updateUser} logout={this.logoutUser} />
+          <Nav loggedIn={this.state.loggedIn}
+               updateUser={this.updateUser}
+               logout={this.logoutUser} />
+
           <Switch>
-            <Route
-              exact path='/'
-              render={() =>
-                <Intro
-                  loggedIn={this.state.loggedIn}
-                  redirectTo={this.state.redirectTo}
-                  resetRedirect={this.resetRedirect}
-                />
+            <Route exact path='/' render={() =>
+              <Intro loggedIn={this.state.loggedIn} />
               }
             />
-            <Route
-              exact path='/todo'
-              render={() =>
-                <Main
-                  loggedIn={this.state.loggedIn}
-                  username={this.state.username}
-                  userRecordId={this.state.userRecordId}
-                  redirectTo={this.state.redirectTo}
-                />
+
+            <Route exact path='/todo' render={() =>
+              <Main loggedIn={this.state.loggedIn}
+                    username={this.state.username}
+                    userRecordId={this.state.userRecordId}
+                    redirectTo={this.state.redirectTo} />
               }
             />
-            <Route
-              exact path='/signUp'
-              render={() =>
-               <SignUp
-                 updateUser={this.updateUser}
-               />}
-             />
-            <Route
-              exact path='/login'
-              render={() =>
-                <Login
-                  updateUser={this.updateUser}
-                />}
+
+            <Route exact path='/signUp' render={() =>
+              <SignUp updateUser={this.updateUser} />
+              }
             />
+
+            <Route exact path='/login' render={() =>
+              <Login updateUser={this.updateUser} />
+              }
+            />
+
             <Route component={NotFound} />
+
           </Switch>
         </div>
       </Router>
