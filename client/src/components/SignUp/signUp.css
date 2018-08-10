@@ -29,12 +29,22 @@
   margin: 0 20px;
 }
 
-@media (max-width: 400px) { 
+@media (max-width: 400px) {
+  #signUpComponentContainerDiv{
+    min-width: 300px;
+  }
+
   #signUpHeading{
     margin: 10% 0 0 0%;
     color: #00786B;
     font-size: 40px;
     font-family: 'Kumar One', cursive;
     text-align: center;
+  }
+
+  #signUpForm{
+    width: 90%;
+    margin: 0 auto;
+    min-width: 270px;
   }
 }

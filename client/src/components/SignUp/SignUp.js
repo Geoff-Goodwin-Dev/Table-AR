@@ -103,7 +103,7 @@ export default class SignUp extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
     } else {
       return (
-        <div>
+        <div id='signUpComponentContainerDiv'>
           <h1 id='signUpHeading'>Sign Up</h1>
           <div id='signUpForm'>
             <form>
